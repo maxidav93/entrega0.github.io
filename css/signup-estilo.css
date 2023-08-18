@@ -1,47 +1,47 @@
-* {
+ *{
     margin: 0.6em;
     padding: 0px;
     box-sizing: border-box;
     background-color: F1F0EF;
+    }
     
-}
+
 body{
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
 }
 section{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    width: 150vh;
     flex-direction: column;
-    padding: 1em;
+    padding: 5em;
 }
-section h1{
+h1{
     font-size: 3em;
 }
-section h2{
-    font-size: 3em ;
+h2{
+    font-size: 2em ;
     text-align: center;
     margin-bottom: 0.2em;
     padding: 0.5em;
     width: 100%;
 }
-section form{
+form{
     padding: 1.5em;
     display: flex;
     flex-wrap: wrap;
     max-width: 400px;
     border-width: 20px;
     border-radius: 20px;
-    border: 2px solid black;
+    border: 1px solid rgb(0, 0, 0);
 }
-section form label{
+form label{
     padding:0.2 px ;
     width: 100%;
     margin-bottom: 0.2em;
 }
-section form input{
+form input{
     width: 100%;
     margin-bottom: 0.5em;
     border-radius: 9px;
@@ -52,16 +52,16 @@ section form input{
 
 
 }
-section form input:active{
+form input:active{
     transform: scale(0.97);
 }
-section form input[type="submit"]{
+form input[type="submit"]{
     margin-top: 1.5em;
    background-color: #3498DB;
    color: #E2E2EE ;
    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;
 }
-section form input[type="submit"]:active{
+form input[type="submit"]:active{
     transform: scale(0.97);
 }
 
