@@ -26,7 +26,12 @@ if (!isLoggedIn) {
 const logout = document.getElementById("logout")
 
 logout.addEventListener("click", ()=> {
-  alert("Hasta pronto!")
-  localStorage.removeItem("isLoggedIn")
-  window.location.href = 'login.html';
+
+var confirmacion = confirm("¿Estás seguro de que deseas cerrar sesión?");
+if (confirmacion) {
+    localStorage.removeItem("isLoggedIn")
+    window.location.href = 'login.html'
+}
+
 })
+
