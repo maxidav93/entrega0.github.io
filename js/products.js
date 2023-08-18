@@ -6,15 +6,31 @@ async function fetchProducts() {
     const response = await fetch(apiUrl);
     const products = await response.json();
 
-    products.products.forEach(product => {
+   products.products.forEach(product => {
+    
       const productElement = document.createElement("div");
-      productElement.className = "product";
+      productElement.className = "row justify-content-center";
       productElement.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h2>${product.name}</h2>
-        <p>Precio: ${product.cost} ${product.currency}</p>
-        <p>Descripción: ${product.description}</p>
-        <p>Cantidad Vendidos: ${product.soldCount}</p>
+  
+     
+   <div class="list-group">
+      <div class="list-group-item list-group-item-action cursor-active">
+          <div class="row">
+            <div class="col-3">
+                <img src="${product.image}" alt="${product.name}" class="img-thumbnail">
+            </div>
+            <div class="col">
+              <div class="d-flex w-100 justify-content-between">
+                  <h4 class="mb-1">${product.name}</h4>
+                  <small class="text-muted">Cantidad Vendidos: ${product.soldCount}</small>
+              </div>
+              <p class="mb-1">Precio: ${product.cost} ${product.currency}</p>
+              <p class="mb-1">Descripción: ${product.description}</p>
+           </div>
+         </div>
+       </div>
+    </div>
+  </div>
       `;
       productListElement.appendChild(productElement);
     });
@@ -24,3 +40,4 @@ async function fetchProducts() {
 }
 
 fetchProducts();
+
