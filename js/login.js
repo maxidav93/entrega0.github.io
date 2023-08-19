@@ -2,7 +2,6 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.getElementById("login-form");
-    const errorMessage = document.getElementById("error-message");
 
     loginForm.addEventListener("submit", async function (event) {
         event.preventDefault();
@@ -18,8 +17,7 @@
             // Redireccionar a la página de portada.
             window.location.href = 'index.html';
           } else {
-            errorMessage.innerText = 'Credenciales incorrectas. Por favor, inténtalo de nuevo.';
-            errorMessage.style.display = 'block';
+            alert('Campos incompletos. Por favor inténtalo de nuevo.');
         }
     });
 
