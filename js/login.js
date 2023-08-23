@@ -13,6 +13,7 @@
         if (username && password) {
             // Almacenar la sesión como iniciada en localStorage
             localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem("username", username);
             alert("¡Te damos la bienvenida nuevamente "+ username + "! :D")
             // Redireccionar a la página de portada.
             window.location.href = 'index.html';
