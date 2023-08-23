@@ -35,3 +35,6 @@ if (confirmacion) {
 
 })
 
+const nombreNav = document.getElementById("nombreNav");
+const usernameLocal = localStorage.getItem("username");
+nombreNav.textContent = usernameLocal;
