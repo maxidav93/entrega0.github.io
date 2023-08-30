@@ -1,10 +1,19 @@
 const productListElement = document.getElementById("product-list");
-const apiUrl = "https://japceibal.github.io/emercado-api/cats_products/101.json";
+// const apiUrl = "https://japceibal.github.io/emercado-api/cats_products/101.json";
+
+// Obtener el identificador de la categoría de productos desde el almacenamiento local
+const categoryId = localStorage.getItem("catID");
+
+// Verificar si se obtuvo el identificador de la categoría
+if (categoryId) {
+  const apiUrl = `https://japceibal.github.io/emercado-api/cats_products/${categoryId}.json`;
+
 
 async function fetchProducts() {
   try {
     const response = await fetch(apiUrl);
     const products = await response.json();
+
 
    products.products.forEach(product => {
     
@@ -38,8 +47,15 @@ async function fetchProducts() {
     console.error("Error al cargar los productos:", error);
   }
 }
-
 fetchProducts();
+} else {
+  console.error("Identificador de categoría de productos no encontrado en el almacenamiento local.");
+}
+
+
+ const catName = localStorage.getItem(`catName`)
+
+ document.getElementById("nombreCat").innerHTML = `Verás aquí todos los productos de la categoría: ${catName}.`
 
 
 
