@@ -1,61 +1,90 @@
-const productListElement = document.getElementById("product-list");
-// const apiUrl = "https://japceibal.github.io/emercado-api/cats_products/101.json";
-
-// Obtener el identificador de la categoría de productos desde el almacenamiento local
 const categoryId = localStorage.getItem("catID");
 
 // Verificar si se obtuvo el identificador de la categoría
 if (categoryId) {
-  const apiUrl = `https://japceibal.github.io/emercado-api/cats_products/${categoryId}.json`;
 
+  const url =  ("https://japceibal.github.io/emercado-api/cats_products/"+localStorage.getItem("catID")+".json");
 
-async function fetchProducts() {
-  try {
-    const response = await fetch(apiUrl);
-    const products = await response.json();
+  let cont = document.getElementById("product-list");
+  var arr = []
 
-
-   products.products.forEach(product => {
-    
-      const productElement = document.createElement("div");
-      productElement.className = "row justify-content-center";
-      productElement.innerHTML = `
-  
-     
-   <div class="list-group">
-      <div class="list-group-item list-group-item-action cursor-active">
-          <div class="row">
-            <div class="col-3">
-                <img src="${product.image}" alt="${product.name}" class="img-thumbnail">
-            </div>
-            <div class="col">
-              <div class="d-flex w-100 justify-content-between">
-                  <h4 class="mb-1">${product.name}</h4>
-                  <small class="text-muted">Cantidad Vendidos: ${product.soldCount}</small>
-              </div>
-              <p class="mb-1">Precio: ${product.cost} ${product.currency}</p>
-              <p class="mb-1">Descripción: ${product.description}</p>
-           </div>
-         </div>
-       </div>
-    </div>
-  </div>
-      `;
-      productListElement.appendChild(productElement);
-    });
-  } catch (error) {
-    console.error("Error al cargar los productos:", error);
+  function interfaz(dataN){
+    cont.innerHTML = `<div class="text-center p-4">
+      <h2>Productos</h2>
+      <p class="lead">Veras aquí todos los productos de la categoría ${dataN}</p>
+    </div>`
   }
+
+  function showData(dataN){
+    cont.innerHTML = "";
+    for(let a of dataN){
+      cont.innerHTML += `
+      <div class="row">
+        <div class="list-group">
+          <div class="list-group-item list-group-item-action cursor-active" onclick=productIden(${a.id})>
+            <div class="row">
+              <div class="col-3">
+                <img class="img-thumbnail" src="${a.image}">
+              </div>
+              <div class="col">
+                <div class="d-flex w-100 justify-content-between">
+                  <h4 class="mb-1">${a.name} -${a.currency} ${a.cost}</h4>
+                  <small class="text-muted">${a.soldCount}</small>
+                </div>
+                <p class="mb-1">${a.description}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+  }
+
+  async function fetchdata(){
+    let response = await fetch(url);
+    let data = await response.json();
+    interfaz(data.catName);
+    showData(data.products);
+    arr = data.products;
+  }
+
+  fetchdata();
+
+  function ascendent() {
+    arr.sort(function(a, b) {
+      if ( a.cost < b.cost ){ return -1; }
+      if ( a.cost > b.cost ){ return 1; }
+      return 0;
+    });
+    showData(arr);
+  }
+
+  function descendent() {
+    arr.sort(function(a, b) {
+      if ( a.cost > b.cost ){ return -1; }
+      if ( a.cost < b.cost ){ return 1; }
+      return 0;
+    });
+    showData(arr);
+  }
+
+  function relevance() {
+    arr.sort(function(a, b) {
+      if ( a.soldCount > b.soldCount ){ return -1; }
+      if ( a.soldCount < b.soldCount ){ return 1; }
+      return 0;
+    });
+    showData(arr);
+  }
+
+  const btnAscendent = document.getElementById('clearRangeFilter');
+  btnAscendent.addEventListener('click', ascendent);
+
+  const btnDescendent = document.getElementById('clearRangeFilterDos');
+  btnDescendent.addEventListener('click', descendent);
+
+  const btnRelevance = document.getElementById('sortByCount');
+  btnRelevance.addEventListener('click', relevance);
 }
-fetchProducts();
-} else {
-  console.error("Identificador de categoría de productos no encontrado en el almacenamiento local.");
-}
-
-
- const catName = localStorage.getItem(`catName`)
-
- document.getElementById("nombreCat").innerHTML = `Verás aquí todos los productos de la categoría: ${catName}.`
-
 
 
