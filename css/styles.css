@@ -188,6 +188,10 @@ a.custom-card:hover {
 .checked {
   color: orange;
 }
+
+.buttonpre{
+  background-color: rgb(222, 222, 222);
+}
 /*#logout{
   margin: 0.7em;
   background-color:#E5E7ED ;
