@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const id = localStorage.getItem("catID");
   const url = `https://japceibal.github.io/emercado-api/cats_products/${id}.json`;
+  const catName = localStorage.getItem(`catName`)
+
+document.getElementById("nombreCat").innerHTML = `Verás aquí todos los productos de la categoría: <strong>${catName}</strong>.`
 
   async function fetchProducts(url) {
       try {
