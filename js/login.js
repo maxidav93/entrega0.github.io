@@ -9,7 +9,7 @@
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
         const isLoggedIn = localStorage.getItem('isLoggedIn');
-        
+
         if (username && password) {
             // Almacenar la sesión como iniciada en localStorage
             localStorage.setItem('isLoggedIn', 'true');

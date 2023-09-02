@@ -23,5 +23,5 @@ if (!isLoggedIn) {
     alert("Hola! No has iniciado sesión, ingrese sus datos por favor")
     window.location.href = 'login.html';
 }
-      
+
 
