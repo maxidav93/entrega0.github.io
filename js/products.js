@@ -23,8 +23,10 @@ document.getElementById("nombreCat").innerHTML = `Verás aquí todos los product
           return [];
       }
   }
+
   function showProducts(array) {
       let content = "";
+
       if (array.length > 0) {
           array.forEach(product => {
               content += `
@@ -94,5 +96,3 @@ document.getElementById("nombreCat").innerHTML = `Verás aquí todos los product
 
   init();
 });
-
-
