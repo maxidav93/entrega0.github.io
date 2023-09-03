@@ -44,3 +44,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
 })
 
+document.addEventListener("DOMContentLoaded", function () {
+  const registerForm = document.getElementById("registerSubmit");
+
+  registerForm.addEventListener("click", async function (event) {
+    event.preventDefault();
+
+    const newUsername = document.getElementById('newUsername').value;
+    const newPassword = document.getElementById('newPassword').value;
+
+    if (newUsername && newPassword) {
+      localStorage.setItem('newUsername', newUsername);
+      localStorage.setItem('newPassword', newPassword);
+      
+      alert("¡Registro exitoso para " + newUsername + "! :D");
+      
+
+      window.location.href = 'index.html';
+    } else {
+      alert('Campos incompletos. Por favor inténtalo de nuevo.');
+    }
+  });
+});
