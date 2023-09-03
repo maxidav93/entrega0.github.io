@@ -97,38 +97,3 @@ document.getElementById("nombreCat").innerHTML = `Verás aquí todos los product
 
   init();
 });
-
-  document.getElementById("rangeFilterCount").addEventListener("click", function(){
-    // Obtengo el mínimo y máximo de los intervalos para filtrar por rango de precio
-    const minPrice = document.getElementById("rangeFilterCountMin").value;
-    const maxPrice = document.getElementById("rangeFilterCountMax").value;
-
-    // Convertir los valores a números enteros si son válidos
-    const parsedMinPrice = (minPrice !== "" && !isNaN(minPrice)) ? parseInt(minPrice) : undefined;
-    const parsedMaxPrice = (maxPrice !== "" && !isNaN(maxPrice)) ? parseInt(maxPrice) : undefined;
-
-    // Filtrar productos en base al rango de precio
-    const filteredProducts = arr.filter(product => {
-        if (parsedMinPrice !== undefined && product.cost < parsedMinPrice) {
-            return false;
-        }
-        if (parsedMaxPrice !== undefined && product.cost > parsedMaxPrice) {
-            return false;
-        }
-        return true;
-    });
-
-    showData(filteredProducts);
-});
-
-// Función para limpiar el filtro por rango de precio
-document.getElementById("clearRangeFilter").addEventListener("click", function() {
-  document.getElementById("rangeFilterCountMin").value = "";
-  document.getElementById("rangeFilterCountMax").value = "";
-  showData(arr); // Mostrar todos los productos sin filtro
-});
-
-
-const catName = localStorage.getItem(`catName`)
-
-document.getElementById("nombreCat").innerHTML = `Verás aquí todos los productos de la categoría: <strong>${catName}</strong>.`
