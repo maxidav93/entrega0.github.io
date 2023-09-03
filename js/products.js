@@ -1,88 +1,102 @@
 
-  const url =  ("https://japceibal.github.io/emercado-api/cats_products/"+localStorage.getItem("catID")+".json");
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.querySelector("#container-content");
+  const asc = document.getElementById("ascendente");
+  const desc = document.getElementById("descendente");
+  const rel = document.getElementById("relevancia");
+  const rangoPrecio = document.getElementById("rangoPrecio");
+  const limpiarFiltros = document.getElementById("limpiarFiltros");
+  const buscarInput = document.getElementById("buscar");
 
-  let cont = document.getElementById("product-list");
-  var arr = []
+  const id = localStorage.getItem("catID");
+  const url = `https://japceibal.github.io/emercado-api/cats_products/${id}.json`;
+  const catName = localStorage.getItem(`catName`)
 
-  function interfaz(dataN){
-    cont.innerHTML = `<div class="text-center p-4">
-      <h2>Productos</h2>
-      <p class="lead">Veras aquí todos los productos de la categoría ${dataN}</p>
-    </div>`
+document.getElementById("nombreCat").innerHTML = `Verás aquí todos los productos de la categoría: <strong>${catName}</strong>.`
+
+  async function fetchProducts(url) {
+      try {
+          const response = await fetch(url);
+          const data = await response.json();
+          return data.products;
+      } catch (error) {
+          console.error("Error fetching products:", error);
+          return [];
+      }
   }
 
-  function showData(dataN){
-    cont.innerHTML = "";
-    for(let a of dataN){
-      cont.innerHTML += `
-      <div class="row">
-        <div class="list-group">
-          <div class="list-group-item list-group-item-action cursor-active" onclick=productIden(${a.id})>
-            <div class="row">
-              <div class="col-3">
-                <img class="img-thumbnail" src="${a.image}">
-              </div>
-              <div class="col">
-                <div class="d-flex w-100 justify-content-between">
-                  <h4 class="mb-1">${a.name} -${a.currency} ${a.cost}</h4>
-                  <small class="text-muted">${a.soldCount}</small>
-                </div>
-                <p class="mb-1">${a.description}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>`;
-    }
+  function showProducts(array) {
+      let content = "";
+
+      if (array.length > 0) {
+          array.forEach(product => {
+              content += `
+                  <div class="col-xl-4 col-12 col-md-6 col-lg-3 container-products">
+                      <div class="card col-12 div-products">
+                          <img class="card-image image-products" src="${product.image}">
+                          <h2 class="card-title title-products">${product.name}</h2>
+                          <p class="card-description description-products">${product.description}</p>
+                          <p class="card-cost cost-products">Precio: ${product.currency} ${product.cost}</p>
+                          <p class="card-soldcount soldCount-products">Cantidad vendida: ${product.soldCount}</p>
+                      </div>
+                  </div>
+              `;
+          });
+          container.innerHTML = content;
+      } else {
+          container.innerHTML = `<div class="alert-danger bg-danger alert-error-filter">No se encontraron productos</div>`;
+      }
   }
 
-  async function fetchdata(){
-    let response = await fetch(url);
-    let data = await response.json();
-    interfaz(data.catName);
-    showData(data.products);
-    arr = data.products;
+  function sortProductsBy(property, order) {
+      return function (a, b) {
+          return (order === "asc" ? 1 : -1) * (a[property] - b[property]);
+      };
   }
 
-  fetchdata();
-
-  function ascendent() {
-    arr.sort(function(a, b) {
-      if ( a.cost < b.cost ){ return -1; }
-      if ( a.cost > b.cost ){ return 1; }
-      return 0;
-    });
-    showData(arr);
+  function filterProductsByPriceRange(products, min, max) {
+      return products.filter(product => product.cost >= min && product.cost <= max);
   }
 
-  function descendent() {
-    arr.sort(function(a, b) {
-      if ( a.cost > b.cost ){ return -1; }
-      if ( a.cost < b.cost ){ return 1; }
-      return 0;
-    });
-    showData(arr);
+  function clearFilters(products) {
+      showProducts(products);
   }
 
-  function relevance() {
-    arr.sort(function(a, b) {
-      if ( a.soldCount > b.soldCount ){ return -1; }
-      if ( a.soldCount < b.soldCount ){ return 1; }
-      return 0;
-    });
-    showData(arr);
+  async function init() {
+      const products = await fetchProducts(url);
+      showProducts(products);
+
+      asc.addEventListener("click", () => showProducts(products.slice().sort(sortProductsBy("cost", "asc"))));
+      desc.addEventListener("click", () => showProducts(products.slice().sort(sortProductsBy("cost", "desc"))));
+      rel.addEventListener("click", () => showProducts(products.slice().sort(sortProductsBy("soldCount", "desc"))));
+      rangoPrecio.addEventListener("click", () => {
+          const precioMin = parseFloat(document.getElementById("precioMinimo").value);
+          const precioMax = parseFloat(document.getElementById("precioMaximo").value);
+          const filteredProducts = filterProductsByPriceRange(products, precioMin, precioMax);
+          showProducts(filteredProducts);
+      });
+      limpiarFiltros.addEventListener("click", () => clearFilters(products));
+      buscarInput.addEventListener("input", buscarProductos);
   }
 
-  const btnAscendent = document.getElementById('sortAsc');
-  btnAscendent.addEventListener('click', ascendent);
+  function buscarProductos() {
+      const searchTerm = buscarInput.value.trim().toUpperCase();
+      const cards = document.querySelectorAll(".col-xl-4.col-12.col-md-6.col-lg-3.container-products");
+      
+      cards.forEach(card => {
+          const title = card.querySelector(".card-title.title-products").textContent.toUpperCase();
+          const description = card.querySelector(".card-description.description-products").textContent.toUpperCase();
+          
+          if (title.includes(searchTerm) || description.includes(searchTerm)) {
+              card.style.display = "block";
+          } else {
+              card.style.display = "none";
+          }
+      });
+  }
 
-  const btnDescendent = document.getElementById('sortDesc');
-  btnDescendent.addEventListener('click', descendent);
-
-  const btnRelevance = document.getElementById('sortByCount');
-  btnRelevance.addEventListener('click', relevance);
-
-
+  init();
+});
 
   document.getElementById("rangeFilterCount").addEventListener("click", function(){
     // Obtengo el mínimo y máximo de los intervalos para filtrar por rango de precio
