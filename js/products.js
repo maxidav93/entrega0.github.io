@@ -30,7 +30,7 @@ document.getElementById("nombreCat").innerHTML = `Verás aquí todos los product
       if (array.length > 0) {
           array.forEach(product => {
               content += `
-                  <div class="col-xl-4 col-12 col-md-6 col-lg-3 container-products">
+                  <div class="col-xl-4 col-12 col-md-6 col-lg-3 container-products" onclick=productIden(${product.id})>
                       <div class="card col-12 div-products">
                           <img class="card-image image-products" src="${product.image}">
                           <h2 class="card-title title-products">${product.name}</h2>
@@ -96,3 +96,8 @@ document.getElementById("nombreCat").innerHTML = `Verás aquí todos los product
 
   init();
 });
+
+function productIden(id) {
+    localStorage.setItem("Iden", id);
+    location = "product-info.html"
+  }
