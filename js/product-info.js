@@ -45,12 +45,10 @@ document.addEventListener("DOMContentLoaded", () => {
             img.src = imagenUrl;
             cont.appendChild(img);
         });
-
     }
 
     // Llamar a la función para mostrar los detalles del producto
     displayProductDetails();
-
 });
 
 //Finaliza seccion de los autos
@@ -63,46 +61,56 @@ document.addEventListener("DOMContentLoaded", () => {
     const apiUrl = `https://japceibal.github.io/emercado-api/products_comments/${id}.json`;
 
     async function fetchComments(apiUrl) {
-        try {
-            const res = await fetch(apiUrl);
-            const comments = await res.json();
-            console.log("Datos de la API de comentarios:", comments);
-            return comments;
-        } catch (error) {
-            console.error("Error fetching comments:", error);
-            return [];
-        }
+      try {
+        const res = await fetch(apiUrl);
+        const comments = await res.json();
+        console.log("Datos de la API de comentarios:", comments);
+        return comments;
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+        return [];
+      }
     }
 
     async function displayComments() {
         const commentsData = await fetchComments(apiUrl);
 
         if (commentsData.length === 0) {
-            // Manejar el caso en el que no se pudieron obtener comentarios.
-            commentsContainer.innerHTML = "No se pudieron cargar los comentarios.";
-            return;
+          // Manejar el caso en el que no se pudieron obtener comentarios.
+          commentsContainer.innerHTML = "No se pudieron cargar los comentarios.";
+          return;
         }
 
         // Crear un div individual para cada comentario
         commentsData.forEach(comment => {
-            const commentDiv = document.createElement("div");
-            commentDiv.classList.add("comment");
+          const commentDiv = document.createElement("div");
+          commentDiv.classList.add("comment");
 
-            commentDiv.innerHTML = `
-                <p>Producto: ${comment.product}</p>
-                <p>Puntuación: ${comment.score}</p>
-                <p>Descripción: ${comment.description}</p>
-                <p>Usuario: ${comment.user}</p>
-                <p>Fecha: ${comment.dateTime}</p>
-            `;
+          // Crear un elemento <span> para las estrellas
+          const starRating = document.createElement("span");
+          starRating.classList.add("star-rating");
+          starRating.innerHTML = generateStarRating(comment.score); // Genera las estrellas basadas en la puntuación
+          commentDiv.appendChild(starRating);
 
-            commentsContainer.appendChild(commentDiv);
+          commentDiv.innerHTML += `
+              <p>Producto: ${comment.product}</p>
+              <p>${comment.description}</p>
+              <p>-${comment.user}</p>
+              <p>${comment.dateTime}</p>
+          `;
+
+          commentsContainer.appendChild(commentDiv);
         });
+      }
+
+
+    function generateStarRating(score) {
+      const maxScore = 5; // Máxima puntuación posible
+      const filledStars = '<i class="fa fa-star"></i>'.repeat(score);
+      const emptyStars = '<i class="fa fa-star-o"></i>'.repeat(maxScore - score);
+      return filledStars + emptyStars;
     }
 
     displayComments();
-});
-
-
-
+  });
 

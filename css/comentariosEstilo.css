@@ -1,0 +1,36 @@
+/* Estilos para los comentarios */
+.comment {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+
+  .comment .star-rating {
+    font-size: 24px; /* Tamaño de las estrellas */
+    color: #f39c12; /* Color de las estrellas */
+  }
+
+  .comment p {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+
+  .comment p:first-child {
+    font-weight: bold;
+  }
+
+  .comment p:nth-child(2) {
+    display: none; /* Oculta la puntuación numérica */
+  }
+
+  .comment p:nth-child(4) {
+    color: black; /* Color para el nombre de usuario */
+    font-weight: bold;
+  }
+
+  .comment p:last-child {
+    color: black; /* Color para la fecha */
+    margin-top: 20px;
+  }
