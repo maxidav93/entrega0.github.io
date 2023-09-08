@@ -97,3 +97,7 @@ document.getElementById("nombreCat").innerHTML = `Verás aquí todos los product
   init();
 });
 
+function setProductID(id) {
+    localStorage.setItem("id", id);
+    window.location = "product-info.html"
+}
