@@ -101,4 +101,6 @@ document.getElementById("nombreCat").innerHTML = `Verás aquí todos los product
 function setProductID(id) {
     localStorage.setItem("id", id);
     window.location = "product-info.html"
+
 }
+
