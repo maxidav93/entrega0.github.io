@@ -47,6 +47,24 @@
 <h1>Comentarios</h1>
     <div id="comments-container"></div>
   </main>
+  <h2>Deja tu comentario</h2>
+<form id="comment-form">
+  <div class="form-group">
+    <label for="score">Puntuación:</label>
+    <select class="form-control" id="score" required>
+      <option value="1">1 Estrella</option>
+      <option value="2">2 Estrellas</option>
+      <option value="3">3 Estrellas</option>
+      <option value="4">4 Estrellas</option>
+      <option value="5">5 Estrellas</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="comment">Comentario:</label>
+    <textarea class="form-control" id="comment" rows="4" required></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Enviar Comentario</button>
+</form>
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
@@ -54,7 +72,7 @@
       </p>
       <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
     </div>
-  </footer>
+</div>
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
@@ -63,6 +81,8 @@
       <div></div>
     </div>
   </div>
+
+
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/product-info.js"></script>

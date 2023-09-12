@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (commentsData.length === 0) {
           // Manejar el caso en el que no se pudieron obtener comentarios.
-          commentsContainer.innerHTML = "No se pudieron cargar los comentarios.";
+          commentsContainer.innerHTML = "Todavía no hay comentarios.";
           return;
         }
 
@@ -112,5 +112,52 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     displayComments();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // ...
+
+      // Agrega un evento de escucha para el formulario de comentarios
+      const commentForm = document.getElementById("comment-form");
+      commentForm.addEventListener("submit", (e) => {
+          e.preventDefault(); // Evita la recarga de la página por defecto
+
+          const score = document.getElementById("score").value;
+          const commentText = document.getElementById("comment").value;
+
+          // Crea un nuevo comentario
+          const newComment = {
+              product: "Producto Actual", // Puedes ajustar esto según tu necesidad
+              description: commentText,
+              user: "Usuario Actual", // Puedes ajustar esto según tu necesidad
+              score: parseInt(score),
+              dateTime: new Date().toLocaleString(), // Fecha y hora actual
+          };
+
+          // Envía el nuevo comentario a la API (puedes ajustar la URL según tu necesidad)
+          const apiUrlForNewComment = "URL_DE_TU_API_PARA_GUARDAR_COMENTARIOS";
+          fetch(apiUrlForNewComment, {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify(newComment),
+          })
+          .then((response) => response.json())
+          .then((data) => {
+              console.log("Nuevo comentario agregado:", data);
+              // Recarga la lista de comentarios después de agregar uno nuevo
+              displayComments();
+          })
+          .catch((error) => {
+              console.error("Error al agregar comentario:", error);
+          });
+
+          // Limpia el formulario después de enviar el comentario
+          commentForm.reset();
+      });
+
+      // ...
+  });
+
   });
 
