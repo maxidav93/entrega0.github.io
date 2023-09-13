@@ -52,73 +52,74 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Seccion para los comentarios
 
-document.addEventListener("DOMContentLoaded", () => {
-    const commentsContainer = document.getElementById("comments-container");
-    const id = localStorage.getItem("id");
-    const apiUrl = `https://japceibal.github.io/emercado-api/products_comments/${id}.json`;
 
-    async function fetchComments(apiUrl) {
-      try {
-        const res = await fetch(apiUrl);
-        const comments = await res.json();
-        console.log("Datos de la API de comentarios:", comments);
-        return comments;
-      } catch (error) {
-        console.error("Error fetching comments:", error);
-        return [];
-      }
+  let commentsArray = [];
+
+  const commentsContainer = document.getElementById("comments-container");
+  const id = localStorage.getItem("id");
+  const apiUrl = `https://japceibal.github.io/emercado-api/products_comments/${id}.json`;
+
+  async function fetchComments(apiUrl) {
+    try {
+      const res = await fetch(apiUrl);
+      const comments = await res.json();
+      console.log("Datos de la API de comentarios:", comments);
+      return comments;
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+      return [];
     }
+  }
 
-    async function displayComments() {
-        const commentsData = await fetchComments(apiUrl);
+  async function displayComments() {
+    // Mostrar comentarios almacenados localmente
+    commentsArray.forEach((comment) => {
+      displayComment(comment);
+    });
 
-        if (commentsData.length === 0) {
-          // Manejar el caso en el que no se pudieron obtener comentarios.
-          commentsContainer.innerHTML = "Todavía no hay comentarios.";
-          return;
-        }
+    // Obtener comentarios de la API
+    const apiComments = await fetchComments(apiUrl);
 
-        // Crear un div individual para cada comentario
-        commentsData.forEach(comment => {
-          const commentDiv = document.createElement("div");
-          commentDiv.classList.add("comment");
-
-          // Crear un elemento <span> para las estrellas
-          const starRating = document.createElement("span");
-          starRating.classList.add("star-rating");
-          starRating.innerHTML = generateStarRating(comment.score); // Genera las estrellas basadas en la puntuación
-          commentDiv.appendChild(starRating);
-
-          commentDiv.innerHTML += `
-              <p>Producto: ${comment.product}</p>
-              <p>${comment.description}</p>
-              <p>-${comment.user}</p>
-              <p>${comment.dateTime}</p>
-          `;
-
-          commentsContainer.appendChild(commentDiv);
-        });
-      }
-
-
-    function generateStarRating(score) {
-      const maxScore = 5; // Máxima puntuación posible
-      const filledStars = '<i class="fa fa-star"></i>'.repeat(score);
-      const emptyStars = '<i class="fa fa-star-o"></i>'.repeat(maxScore - score);
-      return filledStars + emptyStars;
+    if (apiComments.length === 0 && commentsArray.length === 0) {
+      // Manejar el caso en el que no hay comentarios.
+      commentsContainer.innerHTML = "Todavía no hay comentarios.";
+    } else {
+      // Mostrar comentarios de la API
+      apiComments.forEach((comment) => {
+        displayComment(comment);
+      });
     }
+  }
 
-    displayComments();
+  function displayComment(comment) {
+    const commentDiv = document.createElement("div");
+    commentDiv.classList.add("comment");
 
+    // Crea un elemento <span> para las estrellas
+    const starRating = document.createElement("span");
+    starRating.classList.add("star-rating");
+    starRating.innerHTML = generateStarRating(comment.score);
+    commentDiv.appendChild(starRating);
 
+    commentDiv.innerHTML += `
+        <p>Producto: ${comment.product}</p>
+        <p>${comment.description}</p>
+        <p>-${comment.user}</p>
+        <p>${comment.dateTime}</p>
+    `;
 
-  });
+    commentsContainer.appendChild(commentDiv);
+  }
 
-  // Arreglo para almacenar comentarios temporalmente
-let commentsArray = [];
+  function generateStarRating(score) {
+    const maxScore = 5;
+    const filledStars = '<i class="fa fa-star"></i>'.repeat(score);
+    const emptyStars = '<i class="fa fa-star-o"></i>'.repeat(maxScore - score);
+    return filledStars + emptyStars;
+  }
 
+  displayComments();
 
-document.addEventListener("DOMContentLoaded", () => {
   // Agrega un evento de escucha para el formulario de comentarios
   const commentForm = document.getElementById("comment-form");
   commentForm.addEventListener("submit", (e) => {
@@ -138,48 +139,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     commentsArray.push(newComment);
 
-    // Almacena los comentarios en el almacenamiento local
-    localStorage.setItem("comments", JSON.stringify(commentsArray));
+
 
     // Muestra los comentarios actualizados en la página
-    displayComments();
-
+    displayComment(newComment);
   });
 
-  function displayComments() {
-    const commentsContainer = document.getElementById("comments-container");
 
 
 
-    // Muestra los comentarios almacenados en el arreglo
-    commentsArray.forEach((comment) => {
-      const commentDiv = document.createElement("div");
-      commentDiv.classList.add("comment");
 
-      // Crea un elemento <span> para las estrellas
-      const starRating = document.createElement("span");
-      starRating.classList.add("star-rating");
-      starRating.innerHTML = generateStarRating(comment.score);
-      commentDiv.appendChild(starRating);
-
-      commentDiv.innerHTML += `
-          <p>Producto: ${comment.product}</p>
-          <p>${comment.description}</p>
-          <p>-${comment.user}</p>
-          <p>${comment.dateTime}</p>
-      `;
-
-      commentsContainer.appendChild(commentDiv);
-    });
-  }
-
-  function generateStarRating(score) {
-    const maxScore = 5;
-    const filledStars = '<i class="fa fa-star"></i>'.repeat(score);
-    const emptyStars = '<i class="fa fa-star-o"></i>'.repeat(maxScore - score);
-    return filledStars + emptyStars;
-  }
-
-
-});
 
