@@ -93,7 +93,6 @@ document.addEventListener("DOMContentLoaded", function(e){
         if (resultObj.status === "ok"){
             currentCategoriesArray = resultObj.data
             showCategoriesList()
-            //sortAndShowCategories(ORDER_ASC_BY_NAME, resultObj.data);
         }
     });
 
@@ -120,8 +119,6 @@ document.addEventListener("DOMContentLoaded", function(e){
     });
 
     document.getElementById("rangeFilterCount").addEventListener("click", function(){
-        //Obtengo el mínimo y máximo de los intervalos para filtrar por cantidad
-        //de productos por categoría.
         minCount = document.getElementById("rangeFilterCountMin").value;
         maxCount = document.getElementById("rangeFilterCountMax").value;
 

@@ -9,8 +9,10 @@ window.addEventListener("load", () => {
   registerSection.style.display = "none";
 });
 
-
-
+loginBtn.addEventListener("click", () => {
+  loginSection.style.display = "block";
+  registerSection.style.display = "none";
+});
 
 registerBtn.addEventListener("click", () => {
   registerSection.style.display = "block";
