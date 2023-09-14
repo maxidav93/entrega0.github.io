@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+#precioMinimo,
+#precioMaximo,
+#rangoPrecio,
+#limpiarFiltros,
+#ascendente,
+#descendente,
+#relevancia {
+  color: #000000;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #6b6b6b;
+  border-radius: 3px;
+  padding: 3px 3px;
+  max-width: 6em;
+  min-width: 6em;
+  max-height: 2em;
+  min-height: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+#filters-container {
+  margin-bottom: 1em;
+}
+
+#precioMaximo::placeholder {
+  color: #000000;
+}
+
+#precioMinimo::placeholder {
+  color: #000000;
+}
+
+#filters-search {
+  max-width: 30em;
+}
+
+#search-icon {
+  background-color: #000000;
+  color: #f39915;
+}
+
+.div-products {
+  transition: transform 0.3s;
+}
+
+.div-products:hover {
+  transform: scale(1.07);
+}
+
+/*Fin de filtros para Botones e inputs*/
+
+
+/*Comienzo de filtros para pagina*/
+
+
+#container-cards {
+  border-color: transparent;
+  align-items: center;
+  max-width: 90%;
+}
+
+#container-content {
+  max-width: 100%;
+  min-width: 100%;
+  justify-content: center;
+  gap: 2em;
+}
+
+@media screen and (max-width:768px) {
+  #container-content {
+    max-width: 450px;
+    min-width: 450px;
+    justify-content: center;
+  }
+}
+
+#product-cards {
+  max-width: 400px;
+  min-width: 400px;
+}
+
+
+/* Fin de tamaño de containers*/
+
+/* Comienzo de styles para cards */
+
+
+#card-img {
+  border-radius: 2px 2px 0px 0px;
+}
+
+#card-text-content {
+  padding: 5px;
+}
+
+h1,
+p {
+  font-size: 90%;
+  font-weight: 1;
+}
+
+#descuento {
+  background-color: #f39915;
+  padding: 2px;
+  margin-top: 3px;
+  width: 5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+}
+
+
+
+/* Scrollbar*/
+
+
+
+body {
+  --sb-track-color: #a0a0a0;
+  --sb-thumb-color: #6b6b6b;
+  --sb-size: 11px;
+
+  scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+}
+
+body::-webkit-scrollbar {
+  width: var(--sb-size)
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 20px;
+}

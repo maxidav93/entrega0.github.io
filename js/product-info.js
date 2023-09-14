@@ -127,22 +127,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const score = document.getElementById("score").value;
     const commentText = document.getElementById("comment").value;
-
+  
+    const usernameLocal = localStorage.getItem("username");
+    
     // Crea un nuevo comentario y agrega al arreglo temporal
     const newComment = {
       product: "Producto Actual", // Puedes ajustar esto según tu necesidad
       description: commentText,
-      user: "Anónimo", // Puedes ajustar esto según tu necesidad
+      user: usernameLocal, // Puedes ajustar esto según tu necesidad
       score: parseInt(score),
       dateTime: new Date().toLocaleString(),
     };
 
     commentsArray.push(newComment);
 
+// Vacía el campo de texto
+   document.getElementById("comment").value = ""; // Vaciar el campo de texto
 
-
+   
     // Muestra los comentarios actualizados en la página
     displayComment(newComment);
+
   });
 
 

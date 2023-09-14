@@ -11,6 +11,7 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/products.css">
 </head>
 
 <body>
@@ -35,13 +36,16 @@
             <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
               <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                  <button class="btn btn-dark " data-bs-toggle="dropdown" aria-expanded="false" style="display: flex; gap: 0.3em;" >
+                  <button class="btn btn-dark " data-bs-toggle="dropdown" aria-expanded="false"
+                    style="display: flex; gap: 0.3em;">
                     <div id="nombreNav"></div>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                       <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                       <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                     </svg>
-                   </button>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
+                      class="bi bi-person-circle" viewBox="0 0 16 16">
+                      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                      <path fill-rule="evenodd"
+                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                    </svg>
+                  </button>
                   <ul class="dropdown-menu dropdown-menu-dark">
                     <li><a class="dropdown-item" href="#">Action</a></li>
                     <li><a class="dropdown-item" href="#">Another action</a></li>
@@ -64,54 +68,53 @@
     <div class="text-center p-4">
       <h2>Productos</h2>
       <p class="lead" id="nombreCat"></p>
-  </div>
-
-    <div class="input-group rounded m-auto pt-4 w-50 ">
-
-      <input type="search" id="buscar" class="form-control" onkeyup="buscarProductos()"
-        placeholder="¿Qué estas buscando?" aria-label="Search" aria-describedby="search-addon" />
-
-      <span class="input-group-text" id="search-addon">
-        <i class="fas fa-search"></i>
-      </span>
     </div>
-    <div class="m-auto justify-content-center w-75 mt-4 d-flex row ">
 
-      <input type="number" placeholder="Precio minimo" class="m-auto btn btn-light mx-1 col-md-2 buttonpre" id="precioMinimo">
-      <input type="number" placeholder="Precio máximo" class="m-auto btn btn-light mx-1 col-md-2 buttonpre" id="precioMaximo">
+    <div id="filters-container">
+      <div class="input-group rounded m-auto pt-4 w-50 " id="filters-search">
+        <input type="search" id="buscar" class="form-control" onkeyup="buscarProductos()"
+          placeholder="¿Qué estas buscando?" aria-label="Search" aria-describedby="search-addon" />
 
-      <label id="rangoPrecio" class="btn btn-light mx-1 col-md-1 border-bottom mt-1">Filtrar</label>
-      <label id="limpiarFiltros" class="btn btn-light mx-1 col-md-1 border-bottom mt-1">Limpiar</label>
+        <span class="input-group-text" id="search-icon">
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
+      <div id="filers-btn" class="m-auto justify-content-center w-75 mt-4 d-flex row ">
+
+        <input type="number" placeholder="Mínimo" class="m-auto btn btn-light mx-1 col-md-2 " id="precioMinimo">
+        <input type="number" placeholder="Máximo" class="m-auto btn btn-light mx-1 col-md-2 buttonpre"
+          id="precioMaximo">
+        <label id="rangoPrecio" class="btn btn-light mx-1 col-md-1 border-bottom mt-1">Filtrar</label>
+        <label id="limpiarFiltros" class="btn btn-light mx-1 col-md-1 border-bottom mt-1">Limpiar</label>
 
 
-      <label id="ascendente" class="btn btn-light active mx-1 col-md-1 border-bottom mt-1">
-        <i class="bi-arrow-up" style="font-size: 18px;">$</i>
-      </label>
+        <label id="ascendente" class="btn btn-light active mx-1 col-md-1 border-bottom mt-1">
+          <i class="bi-arrow-up" style="font-size: 18px;">$</i>
+        </label>
 
-      <label id="descendente" class="btn btn-light mx-1 col-md-1 border-bottom mt-1">
-        <i class="bi-arrow-down" style="font-size: 18px;">$</i>
-      </label>
+        <label id="descendente" class="btn btn-light mx-1 col-md-1 border-bottom mt-1">
+          <i class="bi-arrow-down" style="font-size: 18px;">$</i>
+        </label>
 
-      <label id="relevancia" class="btn btn-light mx-1 col-md-1 border-bottom">
-        <i class="bi bi-sort-down" style="font-size: 25px;"></i>
-      </label>
+        <label id="relevancia" class="btn btn-light mx-1 col-md-1 border-bottom mt-1">
+          <i class="bi bi-sort-down" style="font-size: 25px;"></i>
+        </label>
 
+      </div>
     </div>
-    <div class="container container-products card border-warning">
-      <div class="row row-cols-1 row-cols-md-4 my-3 g-3 col-16 m-auto" id="container-content">
+    
+    <div class="container container-products card" id="container-cards">
+      <div class="row row-cols-1 row-cols-md-4 g-3 col-16" id="container-content">
       </div>
     </div>
   </main>
 
   <footer class="text-muted">
     <div class="container">
-      <p class="float-end">
-        <a href="#">Volver arriba</a>
-      </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
-      <br>
+      <p> Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
     </div>
   </footer>
+
 
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
