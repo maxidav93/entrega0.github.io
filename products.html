@@ -11,7 +11,7 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/filtros.css">
+  <link rel="stylesheet" href="css/products.css">
 </head>
 
 <body>
@@ -71,22 +71,19 @@
     </div>
 
     <div id="filters-container">
-      <div class="input-group rounded m-auto pt-4 w-50 ">
-
+      <div class="input-group rounded m-auto pt-4 w-50 " id="filters-search">
         <input type="search" id="buscar" class="form-control" onkeyup="buscarProductos()"
           placeholder="¿Qué estas buscando?" aria-label="Search" aria-describedby="search-addon" />
 
-        <span class="input-group-text" id="search-addon">
+        <span class="input-group-text" id="search-icon">
           <i class="fas fa-search"></i>
         </span>
       </div>
       <div id="filers-btn" class="m-auto justify-content-center w-75 mt-4 d-flex row ">
 
-        <input type="number" placeholder="Precio minimo" class="m-auto btn btn-light mx-1 col-md-2 buttonpre"
-          id="precioMinimo">
-        <input type="number" placeholder="Precio máximo" class="m-auto btn btn-light mx-1 col-md-2 buttonpre"
+        <input type="number" placeholder="Mínimo" class="m-auto btn btn-light mx-1 col-md-2 " id="precioMinimo">
+        <input type="number" placeholder="Máximo" class="m-auto btn btn-light mx-1 col-md-2 buttonpre"
           id="precioMaximo">
-
         <label id="rangoPrecio" class="btn btn-light mx-1 col-md-1 border-bottom mt-1">Filtrar</label>
         <label id="limpiarFiltros" class="btn btn-light mx-1 col-md-1 border-bottom mt-1">Limpiar</label>
 
@@ -105,8 +102,9 @@
 
       </div>
     </div>
-    <div class="container container-products card border-warning">
-      <div class="row row-cols-1 row-cols-md-4 my-3 g-3 col-16 m-auto" id="container-content">
+    
+    <div class="container container-products card" id="container-cards">
+      <div class="row row-cols-1 row-cols-md-4 g-3 col-16" id="container-content">
       </div>
     </div>
   </main>
