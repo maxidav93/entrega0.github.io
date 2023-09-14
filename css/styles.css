@@ -190,7 +190,7 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
   position: relative;
 }
 
@@ -212,4 +212,16 @@ footer .container {
   color: #000000;
   display: block;
   margin-block-end: 0em;
+}
+
+#caritaTriste {
+  text-align: center;
+
+
+}
+
+.noProductos {
+  background-color:#f39915;
+  color: #000000;
+text-align: center;
 }
