@@ -1,0 +1,19 @@
+#precioMinimo, #precioMaximo, #rangoPrecio, #limpiarFiltros, #ascendente, #descendente, #relevancia {
+    text-decoration: none;
+    color: #000000;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #6b6b6b;
+    border-radius: 3px;
+    padding: 3px 3px;
+    max-width: 6em;
+    min-width: 6em;
+    max-height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+#filters-container {
+    margin-bottom: 1em;
+}
