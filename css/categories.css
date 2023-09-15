@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
-#sortAsc,
+
+/*#sortAsc,
 #sortDesc,
 #sortByCount,
 #rangeFilterCountMin,
@@ -63,7 +64,61 @@
   justify-content: center;
 }
 
+*/
 
+
+#sortAsc,
+#sortDesc,
+#sortByCount {
+ 
+  border-radius: 3px;
+  padding: 3px 3px;
+  max-width: 4em;
+  min-width: 4em;
+  max-height: 2em;
+  min-height: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+#rangeFilterCount {
+  color: #f39915;
+  font-weight: bold;
+  text-decoration: underline;
+  padding: 6px 35px;
+ margin-bottom: 4px;
+ 
+ }
+#clearRangeFilter {
+ background-color: #f39915;
+ color: #fff;
+ padding: 6px 35px;
+ margin-bottom: 4px;
+}
+
+.custom-input {
+  border-color: #f39a15e4;
+  background-color: #fff; /* Cambia el color de fondo */
+  padding: 5px;
+  margin: 0 auto;
+ 
+}
+
+#filers-btn{
+  
+  width: 727.2px ; 
+  height: 124.36px;
+ 
+}
+
+@media screen and (max-width:768px) {
+  #container-content {
+    max-width: 450px;
+    min-width: 450px;
+    justify-content: center;
+  }
+}
 
 /*Cat-list*/
 
