@@ -70,10 +70,9 @@
   display: block; /* Mostrar el botón en una línea separada */
   width: 100%; /* El botón ocupa todo el ancho disponible */
   padding: 10px; /* Espacio interior dentro del botón */
-  background-color: #007bff; /* Color de fondo del botón (puedes ajustarlo) */
-  color: #fff; /* Color del texto del botón */
-  border: none; /* Eliminar borde del botón */
-  border-radius: 5px; /* Borde redondeado del botón */
+  background-color: #f39915; /* Color de fondo del botón (puedes ajustarlo) */
+  color: #000000; /* Color del texto del botón */
+  border: 2px solid #000000; /* Eliminar borde del botón */
   cursor: pointer; /* Cambiar el cursor al pasar por encima del botón */
 }
 

@@ -220,3 +220,20 @@ p {
   font-weight: 1;
 
 }
+
+#libVacía {
+border: 6px solid #000000;
+}
+
+.noProductos {
+  background-color:#f39915;
+  color: #000000;
+text-align: center;
+margin-bottom: 5px;
+}
+
+
+.btn-primary {
+  color: #f39915;
+  background-color: #000000;
+}

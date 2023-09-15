@@ -59,10 +59,12 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             container.innerHTML = content;
             // Ocultar la imagen personalizada si hay productos
-            document.getElementById("caritaTriste").style.display = "none";
+            document.getElementById("libVacía").style.display = "none";
         } else {
+            container.innerHTML = `<div class="noProductos">No se encontraron productos</div>`;
+    // Mostrar la imagen personalizada si no hay productos
+    document.getElementById("libVacía").style.display = "block";
 
-            container.innerHTML = `<div class="">No se encontraron productos</div>`;
         }
     }
 
