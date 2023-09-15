@@ -61,11 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
             // Ocultar la imagen personalizada si hay productos
             document.getElementById("caritaTriste").style.display = "none";
         } else {
-            container.innerHTML = `<div class="noProductos">No se encontraron productos</div>`;
-    // Mostrar la imagen personalizada si no hay productos
-    document.getElementById("caritaTriste").style.display = "block";
 
-
+            container.innerHTML = `<div class="">No se encontraron productos</div>`;
         }
     }
 
@@ -83,6 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function clearFilters(products) {
         showProducts(products);
+        document.getElementById("precioMinimo").value = ""
+        document.getElementById("precioMaximo").value = ""
     }
 
     async function init() {
@@ -99,6 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
             showProducts(filteredProducts);
         });
         limpiarFiltros.addEventListener("click", () => clearFilters(products));
+
         buscarInput.addEventListener("input", buscarProductos);
     }
 
@@ -126,4 +126,9 @@ function setProductID(id) {
     window.location = "product-info.html"
 
 }
-
+document.addEventListener("DOMContentLoaded", function () {
+    var tooltips = document.querySelectorAll('[data-toggle="tooltip"]');
+    tooltips.forEach(function (tooltip) {
+        new bootstrap.Tooltip(tooltip);
+    });
+});

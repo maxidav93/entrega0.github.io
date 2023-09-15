@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+/*
 #precioMinimo,
 #precioMaximo,
 #rangoPrecio,
@@ -41,7 +43,7 @@
   background-color: #000000;
   color: #f39915;
 }
-
+*/
 .div-products {
   transition: transform 0.3s;
 }
@@ -49,6 +51,54 @@
 .div-products:hover {
   transform: scale(1.07);
 }
+
+
+#ascendente,
+#descendente,
+#relevancia {
+ 
+  border-radius: 3px;
+  padding: 3px 3px;
+  max-width: 4em;
+  min-width: 4em;
+  max-height: 2em;
+  min-height: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1); /* Sombreado */
+}
+
+.custom-input {
+  border-color: #f39a15e4;
+  background-color: #fff; /* Cambia el color de fondo */
+  padding: 5px;
+  margin: 0 auto;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1); /* Sombreado */
+}
+
+#rangoPrecio {
+  color: #f39915;
+  font-weight: bold;
+  text-decoration: underline;
+  padding: 6px 35px;
+ margin-bottom: 4px;
+ box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+ }
+#limpiarFiltros {
+ background-color: #f39915;
+ border-color: #f39915;
+ color: #fff;
+ padding: 6px 35px;
+ margin-bottom: 4px;
+ box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); /* Sombreado */
+}
+
+#search-icon {
+  
+  color: #f39915;
+}
+
 
 /*Fin de filtros para Botones e inputs*/
 
@@ -60,6 +110,7 @@
   border-color: transparent;
   align-items: center;
   max-width: 90%;
+  margin-top: 30px;
 }
 
 #container-content {
