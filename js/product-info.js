@@ -1,36 +1,24 @@
 document.addEventListener("DOMContentLoaded", () => {
   const cont = document.getElementById("contenedor");
-
+  const imageThumbnailsContainer = document.getElementById("image-thumbnails");
+  const imagenAmpliada = document.getElementById("imagen-ampliada");
   const id = localStorage.getItem("id");
-  const url = `https://japceibal.github.io/emercado-api/products/${id}.json`;
+  const apiUrl = `https://japceibal.github.io/emercado-api/products/${id}.json`;
 
-  async function fetchProducts(url) {
-      try {
-          const response = await fetch(url);
-          const data = await response.json();
-          console.log("Datos de la API:", data);
-          return data;
-
-          // La API devuelve un objeto que contiene los datos que necesitas
-      } catch (error) {
-          console.error("Error fetching products:", error);
-          return {};
+  fetch(apiUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.status}`);
       }
-  }
-
-  async function displayProductDetails() {
-      const productData = await fetchProducts(url);
-
-      if (Object.keys(productData).length === 0) {
-          // Manejar el caso en el que no se pudo obtener la información
-          cont.innerHTML = "No se pudo cargar la información del producto.";
-          return;
+      return response.json();
+    })
+    .then((data) => {
+      if (!data.images || !Array.isArray(data.images)) {
+        throw new Error("No se encontraron imágenes en la respuesta de la API.");
       }
 
-      // Aquí puedes acceder a los datos del producto
-      const { name, cost, description, category, soldCount, images } = productData;
-
-      // Luego, puedes mostrar los datos en el HTML
+      // Muestra los detalles del producto utilizando los datos ya obtenidos
+      const { name, cost, description, category, soldCount } = data;
       cont.innerHTML = `
       <h1>${name}</h1>
       <p>Precio: ${cost}</p>
@@ -38,22 +26,24 @@ document.addEventListener("DOMContentLoaded", () => {
       <p>Categoría: ${category}</p>
       <p>Cantidad de vendidos: ${soldCount}</p>
     `;
+    
+      // Itera sobre las imágenes y crea miniaturas
+      data.images.forEach((imageUrl, index) => {
+        const imgThumbnail = document.createElement("img");
+        imgThumbnail.src = imageUrl;
+        imgThumbnail.alt = `Imagen ${index + 1}`;
 
-      // para mostrar las imagenes:
-      images.forEach((imagenUrl) => {
-          const img = document.createElement("img");
-          img.src = imagenUrl;
-          cont.appendChild(img);
+        imgThumbnail.addEventListener("mouseover", () => {
+          imagenAmpliada.setAttribute("src", imageUrl);
+        });
+        imageThumbnailsContainer.appendChild(imgThumbnail);
       });
-  }
-
-  // Llamar a la función para mostrar los detalles del producto
-  displayProductDetails();
+    })
+    .catch((error) => {
+      console.error("Error al obtener imágenes de la API:", error);
+    });
 });
 
-//Finaliza seccion de los autos
-
-// Seccion para los comentarios
 
 document.addEventListener("DOMContentLoaded", () => {
   const commentsContainer = document.getElementById("comments-container");
@@ -76,20 +66,17 @@ document.addEventListener("DOMContentLoaded", () => {
       const commentsData = await fetchComments(apiUrl);
 
       if (commentsData.length === 0) {
-        // Manejar el caso en el que no se pudieron obtener comentarios.
         commentsContainer.innerHTML = "Todavía no hay comentarios.";
         return;
       }
 
-      // Crear un div individual para cada comentario
       commentsData.forEach(comment => {
         const commentDiv = document.createElement("div");
         commentDiv.classList.add("comment");
 
-        // Crear un elemento <span> para las estrellas
         const starRating = document.createElement("span");
         starRating.classList.add("star-rating");
-        starRating.innerHTML = generateStarRating(comment.score); // Genera las estrellas basadas en la puntuación
+        starRating.innerHTML = generateStarRating(comment.score);
         commentDiv.appendChild(starRating);
 
         commentDiv.innerHTML += `
@@ -105,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   function generateStarRating(score) {
-    const maxScore = 5; // Máxima puntuación posible
+    const maxScore = 5; 
     const filledStars = '<i class="fa fa-star"></i>'.repeat(score);
     const emptyStars = '<i class="fa fa-star-o"></i>'.repeat(maxScore - score);
     return filledStars + emptyStars;
@@ -114,7 +101,6 @@ document.addEventListener("DOMContentLoaded", () => {
   displayComments();
 
   document.addEventListener("DOMContentLoaded", () => {
-    // ...
 
     // Agrega un evento de escucha para el formulario de comentarios
     const commentForm = document.getElementById("comment-form");
