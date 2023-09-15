@@ -139,3 +139,9 @@ document.addEventListener("DOMContentLoaded", function(e){
         showCategoriesList();
     });
 });
+document.addEventListener("DOMContentLoaded", function () {
+    var tooltips = document.querySelectorAll('[data-toggle="tooltip"]');
+    tooltips.forEach(function (tooltip) {
+        new bootstrap.Tooltip(tooltip);
+    });
+});

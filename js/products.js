@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             container.innerHTML = content;
         } else {
-            container.innerHTML = `<div class="alert-danger bg-danger alert-error-filter">No se encontraron productos</div>`;
+            container.innerHTML = `<div class="">No se encontraron productos</div>`;
         }
     }
     
@@ -77,6 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function clearFilters(products) {
         showProducts(products);
+        document.getElementById("precioMinimo").value = ""
+        document.getElementById("precioMaximo").value = ""
     }
 
     async function init() {
@@ -93,6 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
             showProducts(filteredProducts);
         });
         limpiarFiltros.addEventListener("click", () => clearFilters(products));
+        
         buscarInput.addEventListener("input", buscarProductos);
     }
 
@@ -120,4 +123,9 @@ function setProductID(id) {
     window.location = "product-info.html"
 
 }
-
+document.addEventListener("DOMContentLoaded", function () {
+    var tooltips = document.querySelectorAll('[data-toggle="tooltip"]');
+    tooltips.forEach(function (tooltip) {
+        new bootstrap.Tooltip(tooltip);
+    });
+});
