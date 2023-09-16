@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-  function generateStarRating(score) {
+    function generateStarRating(score) {
     const maxScore = 5; 
     const filledStars = '<i class="fa fa-star"></i>'.repeat(score);
     const emptyStars = '<i class="fa fa-star-o"></i>'.repeat(maxScore - score);
