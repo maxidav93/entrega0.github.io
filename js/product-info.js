@@ -1,56 +1,57 @@
 document.addEventListener("DOMContentLoaded", () => {
   const cont = document.getElementById("contenedor");
+  const imageThumbnailsContainer = document.getElementById("image-thumbnails");
+  const imagenAmpliada = document.getElementById("imagen-ampliada");
   const id = localStorage.getItem("id");
-  const url = `https://japceibal.github.io/emercado-api/products/${id}.json`;
+  const apiUrl = `https://japceibal.github.io/emercado-api/products/${id}.json`;
+  const savedRandomNumbers = JSON.parse(localStorage.getItem('randomNumber'));
 
 
-  async function fetchProducts(url) {
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log("Datos de la API:", data);
-      return data;
-    } catch (error) {
-      console.error("Error fetching products:", error);
-      return {};
-    }
-  }
+  fetch(apiUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (!data.images || !Array.isArray(data.images)) {
+        throw new Error("No se encontraron imágenes en la respuesta de la API.");
+      }
 
-    async function displayProductDetails() {
-        const productData = await fetchProducts(url);
-
-        if (Object.keys(productData).length === 0) {
-            // Manejar el caso en el que no se pudo obtener la información
-            cont.innerHTML = "No se pudo cargar la información del producto.";
-            return;
-        }
-
-        // Aquí puedes acceder a los datos del producto
-        const { name, cost, description, category, soldCount, images } = productData;
-
-        // Luego, puedes mostrar los datos en el HTML
-        cont.innerHTML = `
+      // Muestra los detalles del producto utilizando los datos ya obtenidos
+      const { name, cost, description, category, soldCount, currency } = data;
+      cont.innerHTML = `
         <h1>${name}</h1>
-        <p>Precio: ${cost}</p>
-        <p>Descripción: ${description}</p>
-        <p>Categoría: ${category}</p>
-        <p>Cantidad de vendidos: ${soldCount}</p>
+        <div class="price-txt"><p class="precio">${currency} ${cost}<p class="descuento">${savedRandomNumbers}%OFF</p></p></div>
+        <p class="descripcion"> ${description}</p>
+        <p class="">Categoría: ${category}</p>
+        <p>(${soldCount})</p>
+        <button id="cartBtn">Agregar a carrito</button>
       `;
 
-        // para mostrar las imagenes:
-        images.forEach((imagenUrl) => {
-            const img = document.createElement("img");
-            img.src = imagenUrl;
-            cont.appendChild(img);
-        });
-    }
+      data.images.forEach((imageUrl, index) => {
+        const imgThumbnail = document.createElement("img");
+        imgThumbnail.src = imageUrl;
+        imgThumbnail.alt = `Imagen ${index + 1}`;
 
-    // Llamar a la función para mostrar los detalles del producto
-    displayProductDetails();
+        imgThumbnail.addEventListener("mouseover", () => {
+          imagenAmpliada.setAttribute("src", imageUrl);
+        });
+        imageThumbnailsContainer.appendChild(imgThumbnail);
+
+        if (index === 0) {
+          imagenAmpliada.setAttribute("src", imageUrl);
+        }
+      });
+    })
+    .catch((error) => {
+      console.error("Error al obtener imágenes de la API:", error);
+    });
 });
 
-
 // Seccion para los comentarios
+  let commentsArray = [];
 
 
   let commentsArray = [];
@@ -72,6 +73,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function displayComments() {
+
+    // Mostrar comentarios almacenados localmente
+    commentsArray.forEach((comment) => {
+      displayComment(comment);
+    });
+
+    // Obtener comentarios de la API
+    const apiComments = await fetchComments(apiUrl);
     // Mostrar comentarios almacenados localmente
     commentsArray.forEach((comment) => {
       displayComment(comment);
@@ -80,6 +89,21 @@ document.addEventListener("DOMContentLoaded", () => {
     // Obtener comentarios de la API
     const apiComments = await fetchComments(apiUrl);
 
+    if (apiComments.length === 0 && commentsArray.length === 0) {
+      // Manejar el caso en el que no hay comentarios.
+      commentsContainer.innerHTML = "Todavía no hay comentarios.";
+    } else {
+      // Mostrar comentarios de la API
+      apiComments.forEach((comment) => {
+        displayComment(comment);
+
+      });
+    }
+  }
+
+  function displayComment(comment) {
+    const commentDiv = document.createElement("div");
+    commentDiv.classList.add("comment");
     if (apiComments.length === 0 && commentsArray.length === 0) {
       // Manejar el caso en el que no hay comentarios.
       commentsContainer.innerHTML = "Todavía no hay comentarios.";
@@ -100,7 +124,18 @@ document.addEventListener("DOMContentLoaded", () => {
     starRating.classList.add("star-rating");
     starRating.innerHTML = generateStarRating(comment.score);
     commentDiv.appendChild(starRating);
+    // Crea un elemento <span> para las estrellas
+    const starRating = document.createElement("span");
+    starRating.classList.add("star-rating");
+    starRating.innerHTML = generateStarRating(comment.score);
+    commentDiv.appendChild(starRating);
 
+    commentDiv.innerHTML += `
+        <p>Producto: ${comment.product}</p>
+        <p>${comment.description}</p>
+        <p>-${comment.user}</p>
+        <p>${comment.dateTime}</p>
+    `;
     commentDiv.innerHTML += `
         <p>Producto: ${comment.product}</p>
         <p>${comment.description}</p>
@@ -124,6 +159,35 @@ document.addEventListener("DOMContentLoaded", () => {
   const commentForm = document.getElementById("comment-form");
   commentForm.addEventListener("submit", (e) => {
     e.preventDefault();
+  // Agrega un evento de escucha para el formulario de comentarios
+  const commentForm = document.getElementById("comment-form");
+  commentForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const score = document.getElementById("score").value;
+    const commentText = document.getElementById("comment").value;
+  
+    const usernameLocal = localStorage.getItem("username");
+    
+    // Crea un nuevo comentario y agrega al arreglo temporal
+    const newComment = {
+      product: "Producto Actual", // Puedes ajustar esto según tu necesidad
+      description: commentText,
+      user: usernameLocal, // Puedes ajustar esto según tu necesidad
+      score: parseInt(score),
+      dateTime: new Date().toLocaleString(),
+    };
+
+    commentsArray.push(newComment);
+
+// Vacía el campo de texto
+   document.getElementById("comment").value = ""; // Vaciar el campo de texto
+
+   
+    // Muestra los comentarios actualizados en la página
+    displayComment(newComment);
+
+  });
 
     const score = document.getElementById("score").value;
     const commentText = document.getElementById("comment").value;

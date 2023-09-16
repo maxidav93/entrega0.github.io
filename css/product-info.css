@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+body{
+    font-family: 'Montserrat', sans-serif;
+    background-color: #EEEFEF;
+}
+
+header{
+    margin-bottom: 2em;
+}
+#image-thumbnails {
+    width: 10em;
+    min-width: 10em;
+    max-width: 10em;
+}
+
+.columna > img  {
+    max-width: 10em;
+    border-radius: 3px;
+    margin-bottom: 0.7em; 
+    transition: all 0.5s ease;
+}
+
+.publicacion {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    max-width: 80%;
+    padding: 10px ;
+    margin-left: 120PX ;
+    border-radius: 5px;
+
+}
+    
+
+.imagen-ampliada {
+    max-width: 30em;
+    margin: 0em 2em;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+
+}
+
+.imagen-ampliada > img {
+    max-width: 100%;
+    border: 1px solid #6b6b6b;
+    border-radius: 3px;
+   
+}
+
+.columna img:hover {
+    border: 2.7px solid #f39155;
+    box-shadow: -2px 2px 3px;
+    transform: scale(1.1);
+    filter: opacity(90%);
+}
+
+.price-txt{
+    display: flex;
+}
+#contenedor > .price-txt > .precio {
+    font-size: 200%;
+    font-weight: 600;
+}
+
+#contenedor > .price-txt > .descuento {
+    font-size: 200%;
+    font-weight: 600;
+    background-color: #f39915;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    margin-left: 1em;
+    padding: 1px;
+    max-height: 30px;
+}
+
+#contenedor > #cartBtn {
+    width: 10em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #6b6b6b;
+    color: #000000;
+    border-radius: 4px;
+    padding: 3px;
+
+}
+#contenedor > #cartBtn:hover{
+    transform: scale(1.05);
+}
+
+@media (max-width: 920px) {
+    .publicacion {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .imagen-ampliada {
+      margin: 1em 0;
+    }
+
+    .columna {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: center;
+    }
+  
+    .columna > img {
+      min-width: 2em; 
+    }
+  
+    #image-thumbnails{
+        max-width: 90%;
+        width: 90%;
+        height: auto;
+        gap: 0.4em;
+    }
+    #contenedor {
+      width: 100%;
+    }
+
+    #contenedor > #cartBtn {
+        width: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: translateX(5%) 
+    }
+  }
+  
