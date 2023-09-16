@@ -69,10 +69,10 @@ header{
     justify-content: center;
     align-items: center;
     background-color: #6b6b6b;
-    color: #000000;
     border-radius: 3px;
-    padding: 3px;
+    padding: 3px
 }
+
 
 @media (max-width: 920px) {
     .publicacion {
@@ -102,15 +102,14 @@ header{
         gap: 0.4em;
     }
     #contenedor {
-      width: 100%;
+      width: 90%;
+      transform: translateX(5%);
     }
 
     #contenedor > #cartBtn {
-        width: 90%;
         display: flex;
         justify-content: center;
         align-items: center;
-        transform: translateX(5%) 
     }
   }
   
