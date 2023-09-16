@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const imagenAmpliada = document.getElementById("imagen-ampliada");
   const id = localStorage.getItem("id");
   const apiUrl = `https://japceibal.github.io/emercado-api/products/${id}.json`;
+  const savedRandomNumbers = JSON.parse(localStorage.getItem('randomNumber'));
+
 
   fetch(apiUrl)
     .then((response) => {
@@ -18,16 +20,16 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Muestra los detalles del producto utilizando los datos ya obtenidos
-      const { name, cost, description, category, soldCount } = data;
+      const { name, cost, description, category, soldCount, currency } = data;
       cont.innerHTML = `
-      <h1>${name}</h1>
-      <p>Precio: ${cost}</p>
-      <p>Descripción: ${description}</p>
-      <p>Categoría: ${category}</p>
-      <p>Cantidad de vendidos: ${soldCount}</p>
-    `;
-    
-      // Itera sobre las imágenes y crea miniaturas
+        <h1>${name}</h1>
+        <div class="price-txt"><p class="precio">${currency} ${cost}<p class="descuento">${savedRandomNumbers}%OFF</p></p></div>
+        <p class="descripcion"> ${description}</p>
+        <p class="">Categoría: ${category}</p>
+        <p>(${soldCount})</p>
+        <button id="cartBtn">Agregar a carrito</button>
+      `;
+
       data.images.forEach((imageUrl, index) => {
         const imgThumbnail = document.createElement("img");
         imgThumbnail.src = imageUrl;
@@ -37,6 +39,10 @@ document.addEventListener("DOMContentLoaded", () => {
           imagenAmpliada.setAttribute("src", imageUrl);
         });
         imageThumbnailsContainer.appendChild(imgThumbnail);
+
+        if (index === 0) {
+          imagenAmpliada.setAttribute("src", imageUrl);
+        }
       });
     })
     .catch((error) => {

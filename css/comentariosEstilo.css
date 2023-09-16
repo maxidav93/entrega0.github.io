@@ -1,4 +1,7 @@
-/* Estilos para los comentarios */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+body{
+  font-family: 'Montserrat', sans-serif;
+}
 .comment {
     margin-bottom: 20px;
     padding: 10px;
@@ -86,6 +89,6 @@ h2 {
   margin-left: 15px;
 }
 
-h1 {
+.comentarios > h1 {
   margin-left: 15px;
 }

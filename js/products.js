@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const savedRandomNumbers = JSON.parse(localStorage.getItem('randomNumbers')) || {};
         
         if (!savedRandomNumbers[cardIndex]) {
-            // Genera un número aleatorio si no existe uno guardado para esta tarjeta
             savedRandomNumbers[cardIndex] = Math.floor(Math.random() * (max - min + 1)) + min;
             localStorage.setItem('randomNumbers', JSON.stringify(savedRandomNumbers));
         }
