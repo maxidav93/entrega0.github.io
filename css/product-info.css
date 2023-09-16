@@ -93,6 +93,7 @@ header{
     transform: scale(1.05);
 }
 
+
 @media (max-width: 920px) {
     .publicacion {
       flex-direction: column;
@@ -121,15 +122,14 @@ header{
         gap: 0.4em;
     }
     #contenedor {
-      width: 100%;
+      width: 90%;
+      transform: translateX(5%);
     }
 
     #contenedor > #cartBtn {
-        width: 90%;
         display: flex;
         justify-content: center;
         align-items: center;
-        transform: translateX(5%) 
     }
   }
   
