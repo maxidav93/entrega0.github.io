@@ -2,10 +2,11 @@
 
 body{
     font-family: 'Montserrat', sans-serif;
+    background-color: #EEEFEF;
 }
 
 header{
-    margin-bottom: 3em;
+    margin-bottom: 2em;
 }
 #image-thumbnails {
     width: 10em;
@@ -17,11 +18,20 @@ header{
     max-width: 10em;
     border-radius: 3px;
     margin-bottom: 0.7em; 
+    transition: all 0.5s ease;
 }
 
 .publicacion {
     display: flex;
-    justify-content: center;}
+    justify-content: center;
+    background-color: white;
+    max-width: 80%;
+    padding: 10px ;
+    margin-left: 120PX ;
+    border-radius: 5px;
+
+}
+    
 
 .imagen-ampliada {
     max-width: 30em;
@@ -35,11 +45,15 @@ header{
 .imagen-ampliada > img {
     max-width: 100%;
     border: 1px solid #6b6b6b;
-    border-radius: 3px
+    border-radius: 3px;
+   
 }
 
 .columna img:hover {
-    border: 2.7px solid #f39155
+    border: 2.7px solid #f39155;
+    box-shadow: -2px 2px 3px;
+    transform: scale(1.1);
+    filter: opacity(90%);
 }
 
 .price-txt{
@@ -59,18 +73,23 @@ header{
     justify-content: center;
     border-radius: 3px;
     margin-left: 1em;
-    padding: 3px;
-    max-height: 54px;
+    padding: 1px;
+    max-height: 30px;
 }
 
 #contenedor > #cartBtn {
-    width: 20em;
+    width: 10em;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #6b6b6b;
-    border-radius: 3px;
-    padding: 3px
+    color: #000000;
+    border-radius: 4px;
+    padding: 3px;
+
+}
+#contenedor > #cartBtn:hover{
+    transform: scale(1.05);
 }
 
 
@@ -96,8 +115,8 @@ header{
     }
   
     #image-thumbnails{
-        max-width: 100%;
-        width: 100%;
+        max-width: 90%;
+        width: 90%;
         height: auto;
         gap: 0.4em;
     }
