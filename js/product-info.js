@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   const cont = document.getElementById("contenedor");
-
   const imageThumbnailsContainer = document.getElementById("image-thumbnails");
   const imagenAmpliada = document.getElementById("imagen-ampliada");
   const id = localStorage.getItem("id");
@@ -52,103 +51,102 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Seccion para los comentarios
-  let commentsArray = [];
 
-  const commentsContainer = document.getElementById("comments-container");
-  const id = localStorage.getItem("id");
-  const apiUrl = `https://japceibal.github.io/emercado-api/products_comments/${id}.json`;
 
-  async function fetchComments(apiUrl) {
-    try {
-      const res = await fetch(apiUrl);
-      const comments = await res.json();
-      console.log("Datos de la API de comentarios:", comments);
-      return comments;
-    } catch (error) {
-      console.error("Error fetching comments:", error);
-      return [];
-    }
+let commentsArray = [];
+
+const commentsContainer = document.getElementById("comments-container");
+const id = localStorage.getItem("id");
+const apiUrl = `https://japceibal.github.io/emercado-api/products_comments/${id}.json`;
+
+async function fetchComments(apiUrl) {
+  try {
+    const res = await fetch(apiUrl);
+    const comments = await res.json();
+    console.log("Datos de la API de comentarios:", comments);
+    return comments;
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+    return [];
   }
+}
 
-  async function displayComments() {
+async function displayComments() {
+  // Mostrar comentarios almacenados localmente
+  commentsArray.forEach((comment) => {
+    displayComment(comment);
+  });
 
-    // Mostrar comentarios almacenados localmente
-    commentsArray.forEach((comment) => {
+  // Obtener comentarios de la API
+  const apiComments = await fetchComments(apiUrl);
+
+  if (apiComments.length === 0 && commentsArray.length === 0) {
+    // Manejar el caso en el que no hay comentarios.
+    commentsContainer.innerHTML = "Todavía no hay comentarios.";
+  } else {
+    // Mostrar comentarios de la API
+    apiComments.forEach((comment) => {
       displayComment(comment);
     });
-
-    // Obtener comentarios de la API
-    const apiComments = await fetchComments(apiUrl);
-
-    if (apiComments.length === 0 && commentsArray.length === 0) {
-      // Manejar el caso en el que no hay comentarios.
-      commentsContainer.innerHTML = "Todavía no hay comentarios.";
-    } else {
-      // Mostrar comentarios de la API
-      apiComments.forEach((comment) => {
-        displayComment(comment);
-
-      });
-    }
   }
+}
 
-  function displayComment(comment) {
-    const commentDiv = document.createElement("div");
-    commentDiv.classList.add("comment");
+function displayComment(comment) {
+  const commentDiv = document.createElement("div");
+  commentDiv.classList.add("comment");
 
-    // Crea un elemento <span> para las estrellas
-    const starRating = document.createElement("span");
-    starRating.classList.add("star-rating");
-    starRating.innerHTML = generateStarRating(comment.score);
-    commentDiv.appendChild(starRating);
+  // Crea un elemento <span> para las estrellas
+  const starRating = document.createElement("span");
+  starRating.classList.add("star-rating");
+  starRating.innerHTML = generateStarRating(comment.score);
+  commentDiv.appendChild(starRating);
 
-    commentDiv.innerHTML += `
-        <p>Producto: ${comment.product}</p>
-        <p>${comment.description}</p>
-        <p>-${comment.user}</p>
-        <p>${comment.dateTime}</p>
-    `;
+  commentDiv.innerHTML += `
+      <p>Producto: ${comment.product}</p>
+      <p>${comment.description}</p>
+      <p>-${comment.user}</p>
+      <p>${comment.dateTime}</p>
+  `;
 
-    commentsContainer.appendChild(commentDiv);
-  }
+  commentsContainer.appendChild(commentDiv);
+}
 
+function generateStarRating(score) {
+  const maxScore = 5;
+  const filledStars = '<i class="fa fa-star"></i>'.repeat(score);
+  const emptyStars = '<i class="fa fa-star-o"></i>'.repeat(maxScore - score);
+  return filledStars + emptyStars;
+}
 
-  function generateStarRating(score) {
-    const maxScore = 5;
+displayComments();
 
-    const filledStars = '<i class="fa fa-star"></i>'.repeat(score);
-    const emptyStars = '<i class="fa fa-star-o"></i>'.repeat(maxScore - score);
-    return filledStars + emptyStars;
-  }
+// Agrega un evento de escucha para el formulario de comentarios
+const commentForm = document.getElementById("comment-form");
+commentForm.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-  displayComments();
+  const score = document.getElementById("score").value;
+  const commentText = document.getElementById("comment").value;
 
-  // Agrega un evento de escucha para el formulario de comentarios
-  const commentForm = document.getElementById("comment-form");
-  commentForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const score = document.getElementById("score").value;
-    const commentText = document.getElementById("comment").value;
+  const usernameLocal = localStorage.getItem("username");
   
-    const usernameLocal = localStorage.getItem("username");
-    
-    // Crea un nuevo comentario y agrega al arreglo temporal
-    const newComment = {
-      product: "Producto Actual", // Puedes ajustar esto según tu necesidad
-      description: commentText,
-      user: usernameLocal, // Puedes ajustar esto según tu necesidad
-      score: parseInt(score),
-      dateTime: new Date().toLocaleString(),
-    };
+  // Crea un nuevo comentario y agrega al arreglo temporal
+  const newComment = {
+    product: "Producto Actual", // Puedes ajustar esto según tu necesidad
+    description: commentText,
+    user: usernameLocal, // Puedes ajustar esto según tu necesidad
+    score: parseInt(score),
+    dateTime: new Date().toLocaleString(),
+  };
 
-    commentsArray.push(newComment);
+  commentsArray.push(newComment);
 
 // Vacía el campo de texto
-   document.getElementById("comment").value = ""; // Vaciar el campo de texto
+ document.getElementById("comment").value = ""; // Vaciar el campo de texto
 
-   
-    // Muestra los comentarios actualizados en la página
-    displayComment(newComment);
+ 
+  // Muestra los comentarios actualizados en la página
+  displayComment(newComment);
 
-  });
+});
+
