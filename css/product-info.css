@@ -50,8 +50,7 @@ header{
 }
 
 .columna img:hover {
-    border: 2.7px solid #f39155;
-    box-shadow: -2px 2px 3px;
+  
     transform: scale(1.1);
     filter: opacity(90%);
 }
@@ -82,10 +81,12 @@ header{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #6b6b6b;
-    color: #000000;
+    background-color: #212F3C;
+    color: #ECF0F1 ;
     border-radius: 4px;
     padding: 3px;
+    font-style: oblique;
+   
 
 }
 #contenedor > #cartBtn:hover{
