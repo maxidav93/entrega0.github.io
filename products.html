@@ -80,31 +80,32 @@
         </span>
       </div>
 
-      <div id="filers-btn" class="m-auto w-75 mt-4 d-flex flex-row justify-content-between align-items-center">
+      <div id="filers-btn" class="m-auto w-75 mt-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
         <!-- Los primeros tres labels alineados a la izquierda -->
         <div class="d-flex flex-row align-items-center ">
-          <label id="ascendente" class="btn btn-light active mx-1 col-md-1 border mt-1" data-toggle="tooltip" data-placement="top" title="Ordenar por menor precio">
-            <i class="bi-arrow-up" style="font-size: 18px;">$</i>
-          </label>
-      
-          <label id="descendente" class="btn btn-light mx-1 col-md-1 border mt-1" data-toggle="tooltip" data-placement="top" title="Ordenar por mayor precio">
-            <i class="bi-arrow-down" style="font-size: 18px;">$</i>
-          </label>
-      
-          <label id="relevancia" class="btn btn-light mx-1 col-md-1 border mt-1" data-toggle="tooltip" data-placement="top" title="Ordenar por relevancia">
-            <i class="bi bi-sort-down" style="font-size: 25px;"></i>
-          </label>
+            <label id="ascendente" class="btn btn-light active mx-1 col-12 col-md-1 border mt-1" data-toggle="tooltip" data-placement="top" title="Ordenar por menor precio">
+                <i class="bi-arrow-up" style="font-size: 18px;">$</i>
+            </label>
+    
+            <label id="descendente" class="btn btn-light mx-1 col-12 col-md-1 border mt-1" data-toggle="tooltip" data-placement="top" title="Ordenar por mayor precio">
+                <i class="bi-arrow-down" style="font-size: 18px;">$</i>
+            </label>
+    
+            <label id="relevancia" class="btn btn-light mx-1 col-12 col-md-1 border mt-1" data-toggle="tooltip" data-placement="top" title="Ordenar por relevancia">
+                <i class="bi bi-sort-down" style="font-size: 25px;"></i>
+            </label>
         </div>
-      
+    
         <!-- Los siguientes elementos alineados a la derecha -->
-        <div  class="d-flex flex-row align-items-center justify-content-end">
-         <label for="precio" class="btn btn-light mx-1 col-md-1 custom-label mt-1 ">Precio:</label>
-          <input type="number" placeholder="$ Mínimo" class="m-auto btn btn-light mx-1 col-md-2 custom-input" id="precioMinimo">
-          <input type="number" placeholder="$ Máximo" class="m-auto btn btn-light mx-1 col-md-2 custom-input" id="precioMaximo">
-          <label id="rangoPrecio" class="btn btn-light mx-1 col-md-1 mt-1 d-flex align-items-center justify-content-center">Filtrar</label>
-          <label id="limpiarFiltros" class="btn btn-light mx-1 col-md-1 mt-1 d-flex align-items-center justify-content-center">Limpiar</label>
+        <div class="d-flex flex-column flex-md-row align-items-center justify-content-md-end">
+            <label for="precio" class="btn btn-light mx-1 col-12 col-md-1 custom-label mt-1 ">Precio:</label>
+            <input type="number" placeholder="$ Mínimo" class="m-auto btn btn-light mx-1 col-12 col-md-2 custom-input" id="precioMinimo">
+            <input type="number" placeholder="$ Máximo" class="m-auto btn btn-light mx-1 col-12 col-md-2 custom-input" id="precioMaximo">
+            <label id="rangoPrecio" class="btn btn-light mx-1 col-12 col-md-1 mt-1 d-flex align-items-center justify-content-center">Filtrar</label>
+            <label id="limpiarFiltros" class="btn btn-light mx-1 col-12 col-md-1 mt-1 d-flex align-items-center justify-content-center">Limpiar</label>
         </div>
-      </div>
+    </div>
+    
       
     
     <div class="container container-products card" id="container-cards">
