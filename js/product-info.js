@@ -148,4 +148,81 @@ commentForm.addEventListener("submit", (e) => {
   // Muestra los comentarios actualizados en la página
   displayComment(newComment);
 
+
+
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.querySelector("#related-products");
+
+  const id = localStorage.getItem("catID");
+  const url = `https://japceibal.github.io/emercado-api/cats_products/${id}.json`;
+
+
+  async function fetchAndShowProducts(url) {
+    try {
+      const allProducts = await fetchProducts(url);
+      const currentProduct = await fetchProductById(localStorage.getItem("id"));
+
+      // Filtrar el producto actual de la lista de productos relacionados
+      const productsToShow = allProducts.filter(product => product.id !== currentProduct.id);
+
+      showProducts(productsToShow);
+    } catch (error) {
+      console.error("Error fetching and showing products:", error);
+    }
+  }
+
+  async function fetchProducts(url) {
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      return data.products;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      return [];
+    }
+  }
+
+  async function fetchProductById(id) {
+    const productUrl = `https://japceibal.github.io/emercado-api/products/${id}.json`;
+
+    try {
+      const response = await fetch(productUrl);
+      const product = await response.json();
+      return product;
+    } catch (error) {
+      console.error("Error fetching product by ID:", error);
+      return null;
+    }
+  }
+
+  function showProducts(array) {
+    let content = "";
+
+    if (array.length > 0) {
+      array.forEach((product, index) => {
+        content += `
+          <div onclick="setProductID('${product.id}')" class="col-xl-4 col-12 col-md-6 col-lg-3 container-products" id="product-cards">
+            <div class="card col-12 div-products" id="card">
+              <img class="card-image image-products" id="card-img" src="${product.image}">
+              <div id="card-text-content">
+                <h1 class="card-title title-products">${product.name}</h1>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = content;
+    } else {
+      container.innerHTML = `<div class="">No se encontraron productos relacionados</div>`;
+    }
+  }
+
+  fetchAndShowProducts(url);
+});
+
+function setProductID(id) {
+  localStorage.setItem("id", id);
+  window.location = "product-info.html";
+}
