@@ -1,157 +1,228 @@
 document.addEventListener("DOMContentLoaded", () => {
   const cont = document.getElementById("contenedor");
+  const imageThumbnailsContainer = document.getElementById("image-thumbnails");
+  const imagenAmpliada = document.getElementById("imagen-ampliada");
   const id = localStorage.getItem("id");
-  const url = `https://japceibal.github.io/emercado-api/products/${id}.json`;
+  const apiUrl = `https://japceibal.github.io/emercado-api/products/${id}.json`;
+  const savedRandomNumbers = JSON.parse(localStorage.getItem('randomNumber'));
 
+
+  fetch(apiUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (!data.images || !Array.isArray(data.images)) {
+        throw new Error("No se encontraron imágenes en la respuesta de la API.");
+      }
+
+      // Muestra los detalles del producto utilizando los datos ya obtenidos
+      const { name, cost, description, category, soldCount, currency } = data;
+      cont.innerHTML = `
+        <h1>${name}</h1>
+        <div class="price-txt"><p class="precio">${currency} ${cost}<p class="descuento">${savedRandomNumbers}%OFF</p></p></div>
+        <p class="descripcion"> ${description}</p>
+        <p class="">Categoría: ${category}</p>
+        <p>(${soldCount})</p>
+        <button id="cartBtn">Agregar a carrito</button>
+      `;
+
+      data.images.forEach((imageUrl, index) => {
+        const imgThumbnail = document.createElement("img");
+        imgThumbnail.src = imageUrl;
+        imgThumbnail.alt = `Imagen ${index + 1}`;
+
+        imgThumbnail.addEventListener("mouseover", () => {
+          imagenAmpliada.setAttribute("src", imageUrl);
+        });
+        imageThumbnailsContainer.appendChild(imgThumbnail);
+
+        if (index === 0) {
+          imagenAmpliada.setAttribute("src", imageUrl);
+        }
+      });
+    })
+    .catch((error) => {
+      console.error("Error al obtener imágenes de la API:", error);
+    });
+});
+
+// Seccion para los comentarios
+
+
+let commentsArray = [];
+
+const commentsContainer = document.getElementById("comments-container");
+const id = localStorage.getItem("id");
+const apiUrl = `https://japceibal.github.io/emercado-api/products_comments/${id}.json`;
+
+async function fetchComments(apiUrl) {
+  try {
+    const res = await fetch(apiUrl);
+    const comments = await res.json();
+    console.log("Datos de la API de comentarios:", comments);
+    return comments;
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+    return [];
+  }
+}
+
+async function displayComments() {
+  // Mostrar comentarios almacenados localmente
+  commentsArray.forEach((comment) => {
+    displayComment(comment);
+  });
+
+  // Obtener comentarios de la API
+  const apiComments = await fetchComments(apiUrl);
+
+  if (apiComments.length === 0 && commentsArray.length === 0) {
+    // Manejar el caso en el que no hay comentarios.
+    commentsContainer.innerHTML = "Todavía no hay comentarios.";
+  } else {
+    // Mostrar comentarios de la API
+    apiComments.forEach((comment) => {
+      displayComment(comment);
+    });
+  }
+}
+
+function displayComment(comment) {
+  const commentDiv = document.createElement("div");
+  commentDiv.classList.add("comment");
+
+  // Crea un elemento <span> para las estrellas
+  const starRating = document.createElement("span");
+  starRating.classList.add("star-rating");
+  starRating.innerHTML = generateStarRating(comment.score);
+  commentDiv.appendChild(starRating);
+
+  commentDiv.innerHTML += `
+      <p>Producto: ${comment.product}</p>
+      <p>${comment.description}</p>
+      <p>-${comment.user}</p>
+      <p>${comment.dateTime}</p>
+  `;
+
+  commentsContainer.appendChild(commentDiv);
+}
+
+function generateStarRating(score) {
+  const maxScore = 5;
+  const filledStars = '<i class="fa fa-star"></i>'.repeat(score);
+  const emptyStars = '<i class="fa fa-star-o"></i>'.repeat(maxScore - score);
+  return filledStars + emptyStars;
+}
+
+displayComments();
+
+// Agrega un evento de escucha para el formulario de comentarios
+const commentForm = document.getElementById("comment-form");
+commentForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const score = document.getElementById("score").value;
+  const commentText = document.getElementById("comment").value;
+
+  const usernameLocal = localStorage.getItem("username");
+
+  // Crea un nuevo comentario y agrega al arreglo temporal
+  const newComment = {
+    product: "Producto Actual", // Puedes ajustar esto según tu necesidad
+    description: commentText,
+    user: usernameLocal, // Puedes ajustar esto según tu necesidad
+    score: parseInt(score),
+    dateTime: new Date().toLocaleString(),
+  };
+
+  commentsArray.push(newComment);
+
+// Vacía el campo de texto
+ document.getElementById("comment").value = ""; // Vaciar el campo de texto
+
+
+  // Muestra los comentarios actualizados en la página
+  displayComment(newComment);
+
+
+
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.querySelector("#related-products");
+
+  const id = localStorage.getItem("catID");
+  const url = `https://japceibal.github.io/emercado-api/cats_products/${id}.json`;
+
+
+  async function fetchAndShowProducts(url) {
+    try {
+      const allProducts = await fetchProducts(url);
+      const currentProduct = await fetchProductById(localStorage.getItem("id"));
+
+      // Filtrar el producto actual de la lista de productos relacionados
+      const productsToShow = allProducts.filter(product => product.id !== currentProduct.id);
+
+      showProducts(productsToShow);
+    } catch (error) {
+      console.error("Error fetching and showing products:", error);
+    }
+  }
 
   async function fetchProducts(url) {
     try {
       const response = await fetch(url);
       const data = await response.json();
-      console.log("Datos de la API:", data);
-      return data;
+      return data.products;
     } catch (error) {
       console.error("Error fetching products:", error);
-      return {};
-    }
-  }
-
-    async function displayProductDetails() {
-        const productData = await fetchProducts(url);
-
-        if (Object.keys(productData).length === 0) {
-            // Manejar el caso en el que no se pudo obtener la información
-            cont.innerHTML = "No se pudo cargar la información del producto.";
-            return;
-        }
-
-        // Aquí puedes acceder a los datos del producto
-        const { name, cost, description, category, soldCount, images } = productData;
-
-        // Luego, puedes mostrar los datos en el HTML
-        cont.innerHTML = `
-        <h1>${name}</h1>
-        <p>Precio: ${cost}</p>
-        <p>Descripción: ${description}</p>
-        <p>Categoría: ${category}</p>
-        <p>Cantidad de vendidos: ${soldCount}</p>
-      `;
-
-        // para mostrar las imagenes:
-        images.forEach((imagenUrl) => {
-            const img = document.createElement("img");
-            img.src = imagenUrl;
-            cont.appendChild(img);
-        });
-    }
-
-    // Llamar a la función para mostrar los detalles del producto
-    displayProductDetails();
-});
-
-
-// Seccion para los comentarios
-
-
-  let commentsArray = [];
-
-  const commentsContainer = document.getElementById("comments-container");
-  const id = localStorage.getItem("id");
-  const apiUrl = `https://japceibal.github.io/emercado-api/products_comments/${id}.json`;
-
-  async function fetchComments(apiUrl) {
-    try {
-      const res = await fetch(apiUrl);
-      const comments = await res.json();
-      console.log("Datos de la API de comentarios:", comments);
-      return comments;
-    } catch (error) {
-      console.error("Error fetching comments:", error);
       return [];
     }
   }
 
-  async function displayComments() {
-    // Mostrar comentarios almacenados localmente
-    commentsArray.forEach((comment) => {
-      displayComment(comment);
-    });
+  async function fetchProductById(id) {
+    const productUrl = `https://japceibal.github.io/emercado-api/products/${id}.json`;
 
-    // Obtener comentarios de la API
-    const apiComments = await fetchComments(apiUrl);
-
-    if (apiComments.length === 0 && commentsArray.length === 0) {
-      // Manejar el caso en el que no hay comentarios.
-      commentsContainer.innerHTML = "Todavía no hay comentarios.";
-    } else {
-      // Mostrar comentarios de la API
-      apiComments.forEach((comment) => {
-        displayComment(comment);
-      });
+    try {
+      const response = await fetch(productUrl);
+      const product = await response.json();
+      return product;
+    } catch (error) {
+      console.error("Error fetching product by ID:", error);
+      return null;
     }
   }
 
-  function displayComment(comment) {
-    const commentDiv = document.createElement("div");
-    commentDiv.classList.add("comment");
+  function showProducts(array) {
+    let content = "";
 
-    // Crea un elemento <span> para las estrellas
-    const starRating = document.createElement("span");
-    starRating.classList.add("star-rating");
-    starRating.innerHTML = generateStarRating(comment.score);
-    commentDiv.appendChild(starRating);
-
-    commentDiv.innerHTML += `
-        <p>Producto: ${comment.product}</p>
-        <p>${comment.description}</p>
-        <p>-${comment.user}</p>
-        <p>${comment.dateTime}</p>
-    `;
-
-    commentsContainer.appendChild(commentDiv);
+    if (array.length > 0) {
+      array.forEach((product, index) => {
+        content += `
+          <div onclick="setProductID('${product.id}')" class="col-xl-4 col-12 col-md-6 col-lg-3 container-products" id="product-cards">
+            <div class="card col-12 div-products" id="card">
+              <img class="card-image image-products" id="card-img" src="${product.image}">
+              <div id="card-text-content">
+                <h1 class="card-title title-products">${product.name}</h1>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = content;
+    } else {
+      container.innerHTML = `<div class="">No se encontraron productos relacionados</div>`;
+    }
   }
 
-  function generateStarRating(score) {
-    const maxScore = 5;
-    const filledStars = '<i class="fa fa-star"></i>'.repeat(score);
-    const emptyStars = '<i class="fa fa-star-o"></i>'.repeat(maxScore - score);
-    return filledStars + emptyStars;
-  }
+  fetchAndShowProducts(url);
+});
 
-  displayComments();
-
-  // Agrega un evento de escucha para el formulario de comentarios
-  const commentForm = document.getElementById("comment-form");
-  commentForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const score = document.getElementById("score").value;
-    const commentText = document.getElementById("comment").value;
-
-    const usernameLocal = localStorage.getItem("username");
-
-    // Crea un nuevo comentario y agrega al arreglo temporal
-    const newComment = {
-      product: "Producto Actual", // Puedes ajustar esto según tu necesidad
-      description: commentText,
-      user: usernameLocal, // Puedes ajustar esto según tu necesidad
-      score: parseInt(score),
-      dateTime: new Date().toLocaleString(),
-    };
-
-    commentsArray.push(newComment);
-
-// Vacía el campo de texto
-   document.getElementById("comment").value = ""; // Vaciar el campo de texto
-
-
-    // Muestra los comentarios actualizados en la página
-    displayComment(newComment);
-
-  });
-
-
-
-
-
-
+function setProductID(id) {
+  localStorage.setItem("id", id);
+  window.location = "product-info.html";
+}

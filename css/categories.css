@@ -65,7 +65,21 @@
 }
 
 */
+/* Estilos para los elementos dentro de #filers-btn en pantallas de 768px o menos */
+@media screen and (max-width: 768px) {
+#sortAsc,
+#sortDesc,
+#sortByCount,
+#cantidad,
+#rangeFilterCountMin,
+#rangeFilterCountMax,
+#rangeFilterCount,
+#clearRangeFilter {
+    width: 100%;
+    margin-bottom: 10px;
+}
 
+}
 
 #sortAsc,
 #sortDesc,
@@ -113,20 +127,7 @@
  
 }
 
-#filers-btn{
-  
-  width: 727.2px ; 
-  height: 124.36px;
- 
-}
 
-@media screen and (max-width:768px) {
-  #container-content {
-    max-width: 450px;
-    min-width: 450px;
-    justify-content: center;
-  }
-}
 
 /*Cat-list*/
 

@@ -51,7 +51,21 @@
 .div-products:hover {
   transform: scale(1.07);
 }
-
+/* Media query para pantallas de 768px o menos */
+@media screen and (max-width: 768px) {
+    /* Estilos para los elementos dentro de #filers-btn en pantallas de 768px o menos */
+    #ascendente,
+    #descendente,
+    #relevancia,
+    #precio,
+    #precioMinimo,
+    #precioMaximo,
+    #rangoPrecio,
+    #limpiarFiltros {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
 
 #ascendente,
 #descendente,
