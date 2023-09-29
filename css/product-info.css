@@ -26,9 +26,10 @@ header{
     justify-content: center;
     background-color: white;
     max-width: 80%;
-    padding: 1em ;
+    padding: 10px ;
+    margin-left: 120PX ;
     border-radius: 5px;
-    transform: translateX(11%);
+
 }
     
 
@@ -73,7 +74,6 @@ header{
     margin-left: 1em;
     padding: 1px;
     max-height: 30px;
-    transform: translateY(0.3em);
 }
 
 #contenedor > #cartBtn {
@@ -92,7 +92,6 @@ header{
 #contenedor > #cartBtn:hover{
     transform: scale(1.05);
 }
-
 
 @media (max-width: 920px) {
     .publicacion {
@@ -122,14 +121,15 @@ header{
         gap: 0.4em;
     }
     #contenedor {
-      width: 90%;
-      transform: translateX(5%);
+      width: 100%;
     }
 
     #contenedor > #cartBtn {
+        width: 90%;
         display: flex;
         justify-content: center;
         align-items: center;
+        transform: translateX(5%) 
     }
   }
   

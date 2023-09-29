@@ -166,7 +166,7 @@ nav a {
 
 main {
   min-height: calc(100vh - 210px);
-
+  
 }
 
 a.custom-card,
@@ -191,7 +191,7 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: center; 
   position: relative;
 }
 
@@ -218,22 +218,4 @@ footer .container {
 p {
   font-size: 90%;
   font-weight: 1;
-
-}
-
-#libVacía {
-border: 6px solid #000000;
-}
-
-.noProductos {
-  background-color:#f39915;
-  color: #000000;
-text-align: center;
-margin-bottom: 5px;
-}
-
-
-.btn-primary {
-  color: #f39915;
-  background-color: #000000;
 }
