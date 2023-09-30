@@ -24,7 +24,6 @@ if (!isLoggedIn) {
     window.location.href = 'login.html';
 }
 
-
 function cambiarClase() {
     var checkbox = document.getElementById("toggle");
     var albumDiv = document.querySelector(".album");
@@ -32,6 +31,7 @@ function cambiarClase() {
     if (checkbox.checked) {
       albumDiv.classList.remove("bg-light");
       albumDiv.classList.add("bg-dark");
+      localStorage.setItem("background", "bg-dark");
     }
     checkbox.checked = false;
 
@@ -48,6 +48,7 @@ function cambiarClase() {
     if (checkbox.checked) {
       albumDiv.classList.remove("bg-dark");
       albumDiv.classList.add("bg-light");
+      localStorage.setItem("background", "bg-light");
     }
     checkbox.checked = false;
 
@@ -55,3 +56,25 @@ function cambiarClase() {
 
   var checkbox = document.getElementById("toggle2");
   checkbox.addEventListener("click", cambiarClase2);
+
+  // Función para restaurar el estado almacenado en el localStorage
+function restaurarEstado() {
+    var albumDiv = document.querySelector(".album");
+    var savedBackground = localStorage.getItem("background");
+
+    if (savedBackground === "bg-dark") {
+        albumDiv.classList.remove("bg-light");
+        albumDiv.classList.add("bg-dark");
+        checkbox.checked = false;
+    } else {
+        albumDiv.classList.remove("bg-dark");
+        albumDiv.classList.add("bg-light");
+        checkbox.checked = false;
+    }
+}
+
+// Llama a la función para restaurar el estado cuando la página se carga
+window.addEventListener("load", restaurarEstado);
+
+
+
