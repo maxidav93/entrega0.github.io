@@ -203,14 +203,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (array.length > 0) {
       array.forEach((product, index) => {
         content += `
-          <div onclick="setProductID('${product.id}')" class="col-xl-4 col-12 col-md-6 col-lg-3 container-products" id="product-cards">
-            <div class="card col-12 div-products" id="card">
-              <img class="card-image image-products" id="card-img" src="${product.image}">
-              <div id="card-text-content">
-                <h1 class="card-title title-products">${product.name}</h1>
-              </div>
+        <div id="product-cards-container">
+        <div onclick="setProductID('${product.id}')" class="container-products">
+          <div>
+            <img class="card-image image-products" id="card-img" src="${product.image}">
+            <div id="card-text-content">
+              <h6 class="card-title title-products">${product.name}</h6>
             </div>
           </div>
+        </div>
+      </div>
+      
+      
         `;
       });
       container.innerHTML = content;
