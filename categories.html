@@ -12,6 +12,7 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <link href="css/categories.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -48,9 +49,16 @@
                   </button>
                   <ul class="dropdown-menu dropdown-menu-dark">
                     <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
-                    <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a id="logout" class="dropdown-item" href="#">Cerrar sesión</a></li>
+                      <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a id="logout" class="dropdown-item" href="#">Cerrar sesión</a></li>
+                      <input type="checkbox" id="toggle">
+                      <label for="toggle" id="label_toggle"><i class="fa-solid fa-moon"></i></label>
+
+                      <input type="checkbox" id="toggle2">
+                      <label for="toggle2" id="label_toggle2"><i class="fa-solid fa-sun"></i></label>
+
+                      <div class="contenedor"></div>
                   </ul>
                 </li>
               </ul>
@@ -63,7 +71,7 @@
   </nav>
 
   <br>
-  
+
   <main class="pb-5">
     <div class="text-center p-4">
       <h2>Categorías</h2>
@@ -88,7 +96,7 @@
           <input type="number" placeholder="Max"   class="m-auto btn btn-light mx-1 col-md-2 custom-input"  id="rangeFilterCountMax">
           <button id="rangeFilterCount" class="btn btn-light mx-1 col-md-1 mt-1 d-flex align-items-center justify-content-center">Filtrar</button>
           <button id="clearRangeFilter" class="btn btn-light mx-1 col-md-1 mt-1 d-flex align-items-center justify-content-center">Limpiar</button>
-        
+
       </div>
     </div>
     <br>
