@@ -166,7 +166,7 @@ nav a {
 
 main {
   min-height: calc(100vh - 210px);
-  
+
 }
 
 a.custom-card,
@@ -191,7 +191,7 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
   position: relative;
 }
 
@@ -218,4 +218,16 @@ footer .container {
 p {
   font-size: 90%;
   font-weight: 1;
+}
+
+
+#label_toggle {
+  margin-left: 30px;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+
+#toggle {
+  display: none;
 }
