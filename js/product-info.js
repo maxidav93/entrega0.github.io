@@ -129,7 +129,7 @@ commentForm.addEventListener("submit", (e) => {
   const commentText = document.getElementById("comment").value;
 
   const usernameLocal = localStorage.getItem("username");
-  
+
   // Crea un nuevo comentario y agrega al arreglo temporal
   const newComment = {
     product: "Producto Actual", // Puedes ajustar esto según tu necesidad
@@ -144,7 +144,7 @@ commentForm.addEventListener("submit", (e) => {
 // Vacía el campo de texto
  document.getElementById("comment").value = ""; // Vaciar el campo de texto
 
- 
+
   // Muestra los comentarios actualizados en la página
   displayComment(newComment);
 
