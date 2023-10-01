@@ -159,19 +159,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const url = `https://japceibal.github.io/emercado-api/cats_products/${id}.json`;
 
 
-  async function fetchAndShowProducts(url) {
-    try {
-      const allProducts = await fetchProducts(url);
-      const currentProduct = await fetchProductById(localStorage.getItem("id"));
-
-      // Filtrar el producto actual de la lista de productos relacionados
-      const productsToShow = allProducts.filter(product => product.id !== currentProduct.id);
-
-      showProducts(productsToShow);
-    } catch (error) {
-      console.error("Error fetching and showing products:", error);
-    }
-  }
 
   async function fetchProducts(url) {
     try {
@@ -197,6 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+
   function showProducts(array) {
     let content = "";
 
@@ -220,6 +208,20 @@ document.addEventListener("DOMContentLoaded", () => {
       container.innerHTML = content;
     } else {
       container.innerHTML = `<div class="">No se encontraron productos relacionados</div>`;
+    }
+  }
+
+  async function fetchAndShowProducts(url) {
+    try {
+      const allProducts = await fetchProducts(url);
+      const currentProduct = await fetchProductById(localStorage.getItem("id"));
+
+      // Filtrar el producto actual de la lista de productos relacionados
+      const productsToShow = allProducts.filter(product => product.id !== currentProduct.id);
+
+      showProducts(productsToShow);
+    } catch (error) {
+      console.error("Error fetching and showing products:", error);
     }
   }
 
