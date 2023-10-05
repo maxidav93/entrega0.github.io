@@ -179,3 +179,10 @@ header{
  }
  /* fin estilo productos relacionados */
 
+#product-cards-container:hover{
+  scale: calc(1.05);
+
+}
+#product-cards-container{
+  border-radius: 3px;
+}
