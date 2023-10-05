@@ -24,57 +24,83 @@ if (!isLoggedIn) {
     window.location.href = 'login.html';
 }
 
+function cambiarImagenFondo(url) {
+    var jumbotron = document.querySelector(".jumbotron");
+    jumbotron.style.background = "url('" + url + "') center / cover no-repeat";
+
+
+}
+
 function cambiarClase() {
     var checkbox = document.getElementById("toggle");
     var albumDiv = document.querySelector(".album");
+    var jumbotron = document.querySelector(".jumbotron");
 
     if (checkbox.checked) {
-      albumDiv.classList.remove("bg-light");
-      albumDiv.classList.add("bg-dark");
-      localStorage.setItem("background", "bg-dark");
+        albumDiv.classList.remove("bg-light");
+        albumDiv.classList.add("bg-dark");
+        localStorage.setItem("background", "bg-dark");
+
+        // Cambiar el color de fondo del .jumbotron
+        jumbotron.classList.remove("bg-light");
+        jumbotron.classList.add("bg-dark");
+
+        // Cambiar la imagen de fondo
+        cambiarImagenFondo('img/Frame 2.png', '#212529');
     }
     checkbox.checked = false;
+}
 
-  }
+var checkbox = document.getElementById("toggle");
+checkbox.addEventListener("click", cambiarClase);
 
-  var checkbox = document.getElementById("toggle");
-  checkbox.addEventListener("click", cambiarClase);
-
-
- function cambiarClase2() {
+function cambiarClase2() {
     var checkbox = document.getElementById("toggle2");
     var albumDiv = document.querySelector(".album");
 
     if (checkbox.checked) {
-      albumDiv.classList.remove("bg-dark");
-      albumDiv.classList.add("bg-light");
-      localStorage.setItem("background", "bg-light");
-    }
-    checkbox.checked = false;
-
-  }
-
-  var checkbox = document.getElementById("toggle2");
-  checkbox.addEventListener("click", cambiarClase2);
-
-  // Función para restaurar el estado almacenado en el localStorage
-function restaurarEstado() {
-    var albumDiv = document.querySelector(".album");
-    var savedBackground = localStorage.getItem("background");
-
-    if (savedBackground === "bg-dark") {
-        albumDiv.classList.remove("bg-light");
-        albumDiv.classList.add("bg-dark");
-        checkbox.checked = false;
-    } else {
         albumDiv.classList.remove("bg-dark");
         albumDiv.classList.add("bg-light");
-        checkbox.checked = false;
+        localStorage.setItem("background", "bg-light");
+
+        // Cambiamos solo la imagen de fondo en .jumbotron
+        cambiarImagenFondo('img/cover_back.png');
     }
+    checkbox.checked = false;
 }
 
-// Llama a la función para restaurar el estado cuando la página se carga
-window.addEventListener("load", restaurarEstado);
+var checkbox2 = document.getElementById("toggle2");
+checkbox2.addEventListener("click", cambiarClase2);
 
 
 
+/*
+
+function cambiarImagenFondo(url) {
+    var jumbotron = document.querySelector(".jumbotron");
+    jumbotron.style.backgroundImage = "url('" + url + "')";
+}
+
+function cambiarModo() {
+    var checkbox = document.getElementById("toggle");
+
+    if (checkbox.checked) {
+        document.body.classList.remove("bg-light");
+        document.body.classList.add("bg-dark");
+        localStorage.setItem("background", "bg-dark");
+        cambiarImagenFondo('../img/Frame 1.png');
+    } else {
+        document.body.classList.remove("bg-dark");
+        document.body.classList.add("bg-light");
+        localStorage.setItem("background", "bg-light");
+        cambiarImagenFondo('../img/cover_back.png');
+    }
+
+    checkbox.checked = false;
+}
+
+var checkbox = document.getElementById("toggle");
+checkbox.addEventListener("click", cambiarModo);
+
+// Resto del código...
+*/
