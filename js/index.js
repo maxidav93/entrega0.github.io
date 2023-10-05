@@ -72,35 +72,3 @@ function cambiarClase2() {
 var checkbox2 = document.getElementById("toggle2");
 checkbox2.addEventListener("click", cambiarClase2);
 
-
-
-/*
-
-function cambiarImagenFondo(url) {
-    var jumbotron = document.querySelector(".jumbotron");
-    jumbotron.style.backgroundImage = "url('" + url + "')";
-}
-
-function cambiarModo() {
-    var checkbox = document.getElementById("toggle");
-
-    if (checkbox.checked) {
-        document.body.classList.remove("bg-light");
-        document.body.classList.add("bg-dark");
-        localStorage.setItem("background", "bg-dark");
-        cambiarImagenFondo('../img/Frame 1.png');
-    } else {
-        document.body.classList.remove("bg-dark");
-        document.body.classList.add("bg-light");
-        localStorage.setItem("background", "bg-light");
-        cambiarImagenFondo('../img/cover_back.png');
-    }
-
-    checkbox.checked = false;
-}
-
-var checkbox = document.getElementById("toggle");
-checkbox.addEventListener("click", cambiarModo);
-
-// Resto del código...
-*/
