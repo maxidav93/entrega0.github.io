@@ -159,19 +159,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const url = `https://japceibal.github.io/emercado-api/cats_products/${id}.json`;
 
 
-  async function fetchAndShowProducts(url) {
-    try {
-      const allProducts = await fetchProducts(url);
-      const currentProduct = await fetchProductById(localStorage.getItem("id"));
-
-      // Filtrar el producto actual de la lista de productos relacionados
-      const productsToShow = allProducts.filter(product => product.id !== currentProduct.id);
-
-      showProducts(productsToShow);
-    } catch (error) {
-      console.error("Error fetching and showing products:", error);
-    }
-  }
 
   async function fetchProducts(url) {
     try {
@@ -197,25 +184,44 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+
   function showProducts(array) {
     let content = "";
 
     if (array.length > 0) {
       array.forEach((product, index) => {
         content += `
-          <div onclick="setProductID('${product.id}')" class="col-xl-4 col-12 col-md-6 col-lg-3 container-products" id="product-cards">
-            <div class="card col-12 div-products" id="card">
-              <img class="card-image image-products" id="card-img" src="${product.image}">
-              <div id="card-text-content">
-                <h1 class="card-title title-products">${product.name}</h1>
-              </div>
+        <div id="product-cards-container">
+        <div onclick="setProductID('${product.id}')" class="container-products">
+          <div>
+            <img class="card-image image-products" id="card-img" src="${product.image}">
+            <div id="card-text-content">
+              <h6 class="card-title title-products">${product.name}</h6>
             </div>
           </div>
+        </div>
+      </div>
+      
+      
         `;
       });
       container.innerHTML = content;
     } else {
       container.innerHTML = `<div class="">No se encontraron productos relacionados</div>`;
+    }
+  }
+
+  async function fetchAndShowProducts(url) {
+    try {
+      const allProducts = await fetchProducts(url);
+      const currentProduct = await fetchProductById(localStorage.getItem("id"));
+
+      // Filtrar el producto actual de la lista de productos relacionados
+      const productsToShow = allProducts.filter(product => product.id !== currentProduct.id);
+
+      showProducts(productsToShow);
+    } catch (error) {
+      console.error("Error fetching and showing products:", error);
     }
   }
 

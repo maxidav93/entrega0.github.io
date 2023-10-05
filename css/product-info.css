@@ -17,7 +17,7 @@ header{
 .columna > img  {
     max-width: 10em;
     border-radius: 3px;
-    margin-bottom: 0.7em; 
+    margin-bottom: 0.7em;
     transition: all 0.5s ease;
 }
 
@@ -31,7 +31,7 @@ header{
     border-radius: 5px;
 
 }
-    
+
 
 .imagen-ampliada {
     max-width: 30em;
@@ -46,11 +46,11 @@ header{
     max-width: 100%;
     border: 1px solid #6b6b6b;
     border-radius: 3px;
-   
+
 }
 
 .columna img:hover {
-  
+
     transform: scale(1.1);
     filter: opacity(90%);
 }
@@ -86,7 +86,7 @@ header{
     border-radius: 4px;
     padding: 3px;
     font-style: oblique;
-   
+
 
 }
 #contenedor > #cartBtn:hover{
@@ -98,7 +98,7 @@ header{
       flex-direction: column;
       align-items: center;
     }
-  
+
     .imagen-ampliada {
       margin: 1em 0;
     }
@@ -109,11 +109,11 @@ header{
       flex-wrap: nowrap;
       justify-content: center;
     }
-  
+
     .columna > img {
-      min-width: 2em; 
+      min-width: 2em;
     }
-  
+
     #image-thumbnails{
         max-width: 90%;
         width: 90%;
@@ -129,32 +129,53 @@ header{
         display: flex;
         justify-content: center;
         align-items: center;
-        transform: translateX(5%) 
+        transform: translateX(5%)
     }
   }
-  
-#label_toggle {
+  #comentarios {
     margin-left: 30px;
-    font-size: 1.5em;
-    cursor: pointer;
-  
+    margin-right: 30px;
+ }
+/* estilo productos relacionados */
+
+#product-cards-container {
+    overflow-x: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: auto;
+    margin: 10px;
+
+
   }
-  
-  
-  #toggle {
-  display: none;
-  
+
+
+  #related-products {
+    width: 80vw;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 100px ;
+
   }
-  
-  #label_toggle2 {
-    margin-left: 10px;
-    font-size: 1.5em;
-    cursor: pointer;
-    color: yellow;
+
+  .card {
+    width: 100%;
+    box-sizing: border-box;
   }
-  
-  #toggle2 {
-    display: none;
-  
+
+  .card-image {
+    width: 100%;
+    height: auto; /* Mantiene la proporción original de la imagen */
   }
-  
+
+
+
+.contendor-gral-prelacionados  {
+   margin-left: 30px;
+}
+
+.card-title  {
+
+    margin-top: 10px;
+ }
+ /* fin estilo productos relacionados */
+
