@@ -248,3 +248,12 @@ display: none;
 }
 
 
+.no-products-image {
+  max-width: 1000px; /* Establece el ancho máximo de la imagen */
+ margin-left: -290px;
+}
+
+
+.noProductos {
+  font-size: 20px;
+}

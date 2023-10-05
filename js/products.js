@@ -26,22 +26,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function generateRandomNumber(min, max, cardIndex) {
         const savedRandomNumbers = JSON.parse(localStorage.getItem('randomNumbers')) || {};
-        
+
         if (!savedRandomNumbers[cardIndex]) {
             savedRandomNumbers[cardIndex] = Math.floor(Math.random() * (max - min + 1)) + min;
             localStorage.setItem('randomNumbers', JSON.stringify(savedRandomNumbers));
         }
-    
+
         return savedRandomNumbers[cardIndex];
     }
-    
+
     function showProducts(array) {
         let content = "";
-    
+
         if (array.length > 0) {
             array.forEach((product, index) => {
                 const randomPrice = generateRandomNumber(10, 50, index);
-    
+
                 content += `
                     <div  onclick="setProductID('${product.id}')" class="col-xl-4 col-12 col-md-6 col-lg-3 container-products" id="product-cards">
                         <div class="card col-12 div-products" id="card">
@@ -49,20 +49,27 @@ document.addEventListener("DOMContentLoaded", () => {
                             <div id="card-text-content">
                                 <h1 class="card-title title-products">${product.name}</h1>
                                 <h4 class="card-cost cost-products"><strong>${product.currency} ${product.cost}</strong><p id="descuento">${randomPrice}% OFF</p></h4>
-                                <p class="card-description description-products">${product.description}</p>        
+                                <p class="card-description description-products">${product.description}</p>
                                 <p class="card-soldcount soldCount-products">Vendidos: ${product.soldCount}</p>
-                            </div>  
+                            </div>
                         </div>
                     </div>
                 `;
             });
             container.innerHTML = content;
         } else {
-            container.innerHTML = `<div class="">No se encontraron productos</div>`;
+            const noProductsDiv = document.createElement("div");
+            noProductsDiv.className = "text-center";
+            noProductsDiv.innerHTML = `
+                <p class="noProductos">No se encontraron productos</p>
+                <img src="img/libreria vacia3.jpg" alt="Imagen de producto no encontrado" class="no-products-image">
+            `;
+            container.innerHTML = "";
+            container.appendChild(noProductsDiv);
         }
     }
-    
-    
+
+
 
     function sortProductsBy(property, order) {
         return function (a, b) {
@@ -94,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
             showProducts(filteredProducts);
         });
         limpiarFiltros.addEventListener("click", () => clearFilters(products));
-        
+
         buscarInput.addEventListener("input", buscarProductos);
     }
 
