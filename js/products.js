@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const randomPrice = generateRandomNumber(10, 50, index);
     
                 content += `
-                    <div  onclick="setProductID('${product.id}')" class="col-xl-4 col-12 col-md-6 col-lg-3 container-products" id="product-cards">
+                    <div  onclick="setProductID('${product.id}')" class="w-100 p-3 col-xl-4 col-12 col-md-6 col-lg-3 container-products" id="product-cards">
                         <div class="card col-12 div-products" id="card">
                             <img class="card-image image-products" id="card-img" src="${product.image}">
                             <div id="card-text-content">

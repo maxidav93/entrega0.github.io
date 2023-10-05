@@ -135,16 +135,30 @@
 }
 
 @media screen and (max-width:768px) {
+  #container-cards {
+    max-width: 100%;
+  }
+
   #container-content {
-    max-width: 450px;
-    min-width: 450px;
+    max-width: 100%;
+    min-width: 100%;
     justify-content: center;
   }
+
+  #container-content #product-cards {
+    max-width: 100%;
+    min-width: 100%;
+  }
+
+  .container {
+    padding: 0;
+  }
+
 }
 
 #product-cards {
-  max-width: 400px;
-  min-width: 400px;
+  max-width: 25em;
+  min-width: 25em;
 }
 
 
