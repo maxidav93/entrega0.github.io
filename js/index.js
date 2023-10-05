@@ -35,6 +35,8 @@ function cambiarClase() {
     var checkbox = document.getElementById("toggle");
     var albumDiv = document.querySelector(".album");
     var jumbotron = document.querySelector(".jumbotron");
+    var btn = document.querySelector(".btn.btn-light.btn-lg.btn-block");
+
 
     if (checkbox.checked) {
         albumDiv.classList.remove("bg-light");
@@ -47,6 +49,9 @@ function cambiarClase() {
 
         // Cambiar la imagen de fondo
         cambiarImagenFondo('img/Frame 2.png', '#212529');
+         // Cambiar la clase del botón
+         btn.classList.remove("btn-light");
+         btn.classList.add("btn-dark");
     }
     checkbox.checked = false;
 }
@@ -57,6 +62,7 @@ checkbox.addEventListener("click", cambiarClase);
 function cambiarClase2() {
     var checkbox = document.getElementById("toggle2");
     var albumDiv = document.querySelector(".album");
+    var btn = document.querySelector(".btn.btn-dark.btn-lg.btn-block");
 
     if (checkbox.checked) {
         albumDiv.classList.remove("bg-dark");
@@ -65,6 +71,9 @@ function cambiarClase2() {
 
         // Cambiamos solo la imagen de fondo en .jumbotron
         cambiarImagenFondo('img/cover_back.png');
+        // Cambiar la clase del botón
+        btn.classList.remove("btn-dark");
+        btn.classList.add("btn-light");
     }
     checkbox.checked = false;
 }
