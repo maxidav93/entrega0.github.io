@@ -4,24 +4,24 @@ const URL = "https://japceibal.github.io/emercado-api/user_cart/25801.json";
 fetch(URL)
   .then(response => response.json())
   .then(data => {
-    console.log(data); 
+    console.log(data);
     mostrarInformacionEnHTML(data);
   })
   .catch(error => console.error('Error al realizar la solicitud:', error));
 
   function mostrarInformacionEnHTML(data) {
     const carritoContainer = document.getElementById('carritoContainer');
-  
+
     // Verificar si hay productos en el carrito
     if (!data.articles || data.articles.length === 0) {
       carritoContainer.innerHTML = '<p class="alert alert-warning">El carrito está vacío</p>';
       return;
     }
-  
+
     // Crear un contenedor con clase table-responsive
     const tableContainer = document.createElement('div');
     tableContainer.classList.add('table-responsive', 'col-md-8', 'mx-auto');
-  
+
     // Crear una tabla dinámica con clases de Bootstrap
     const tabla = document.createElement('table');
     tabla.classList.add('table', 'table-striped', 'table-bordered');
@@ -40,10 +40,10 @@ fetch(URL)
         <!-- Los datos del carrito se agregarán aquí dinámicamente -->
       </tbody>
     `;
-  
+
     // Obtener el cuerpo de la tabla para agregar filas
     const tbody = tabla.querySelector('tbody');
-  
+
     // Iterar sobre los productos en el carrito
     data.articles.forEach(producto => {
       // Crear una fila para cada producto
@@ -58,16 +58,15 @@ fetch(URL)
         <td>${producto.currency}</td>
         <td>${producto.unitCost * producto.count}</td>
       `;
-  
+
       // Agregar la fila al cuerpo de la tabla
       tbody.appendChild(fila);
     });
-  
+
     // Agregar la tabla al contenedor
     tableContainer.appendChild(tabla);
-  
+
     // Limpiar el contenedor y agregar el contenedor con la tabla
     carritoContainer.innerHTML = '';
     carritoContainer.appendChild(tableContainer);
   }
-  
