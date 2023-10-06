@@ -257,3 +257,37 @@ display: none;
 .noProductos {
   font-size: 20px;
 }
+
+/* Estilo para acortar los campos de texto */
+#checkoutForm input[type="text"] {
+  width: 30%;
+
+
+}
+
+
+.mb-3 {
+  margin-left: 300px;
+  margin-bottom: -200px;
+}
+
+
+#tipoEnvio {
+  width: 30%;
+}
+
+
+.btn-primary {
+  width: 30%;
+  margin-left: 300px;
+  margin-top: 20px;
+}
+
+
+
+
+#checkoutForm {
+  margin-top: 150px;
+}
+
+

@@ -74,9 +74,39 @@
 
     </div>
     <div id="carritoContainer">
-    
+    </div>
+    <div id="carritoContainer">
+      <!-- Agrega un formulario para seleccionar el tipo de envío y la dirección -->
+      <form id="checkoutForm">
+        <div class="mb-3">
+          <label for="tipoEnvio" class="form-label">Tipo de Envío</label>
+          <select class="form-select" id="tipoEnvio" required>
+            <option value="" disabled selected>Selecciona un tipo de envío</option>
+            <option value="premium">Premium 2 a 5 días(15%)</option>
+            <option value="express">Express 5 a 8 días(7%)</option>
+            <option value="estandar">Standard 12 a 15 días(5%)</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="calle" class="form-label">Calle</label>
+          <input type="text" class="form-control" id="calle" placeholder="Ingresa tu calle" required>
+        </div>
+        <div class="mb-3">
+          <label for="numero" class="form-label">Número</label>
+          <input type="text" class="form-control" id="numero" placeholder="Ingresa el número" required>
+        </div>
+        <div class="mb-3">
+          <label for="esquina" class="form-label">Esquina</label>
+          <input type="text" class="form-control" id="esquina" placeholder="Ingresa la esquina" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Proceder al Pago</button>
+      </form>
     </div>
   </main>
+  <div id="spinner-wrapper">
+    <div class="lds-ring">
+    </div>
+  </div>
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
@@ -85,19 +115,11 @@
       <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
     </div>
   </footer>
-  <div id="spinner-wrapper">
-    <div class="lds-ring">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  </div>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/logout.js"></script>
-  
+
 </body>
 
 </html>
