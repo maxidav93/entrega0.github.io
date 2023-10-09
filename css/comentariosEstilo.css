@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+body{
+  font-family: 'Montserrat', sans-serif;
+}
+.comment {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+
+  .comment .star-rating {
+    font-size: 24px; /* Tamaño de las estrellas */
+    color: #f39c12; /* Color de las estrellas */
+  }
+
+  .comment p {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+
+  .comment p:first-child {
+    font-weight: bold;
+  }
+
+  .comment p:nth-child(2) {
+    display: none; /* Oculta la puntuación numérica */
+  }
+
+  .comment p:nth-child(4) {
+    color: black; /* Color para el nombre de usuario */
+    font-weight: bold;
+  }
+
+  .comment p:last-child {
+    color: black; /* Color para la fecha */
+    margin-top: 20px;
+  }
+
+  /* Estilos para el formulario de comentarios */
+#comment-form {
+  max-width: 700px; /* Ancho máximo del formulario */
+  margin: 20px; /* Centrar el formulario horizontalmente */
+  padding: 20px; /* Espacio interior alrededor del formulario */
+}
+
+/* Estilos para la etiqueta de puntuación */
+#comment-form label[for="score"] {
+  display: block; /* Mostrar la etiqueta en una línea separada */
+  margin-bottom: 10px; /* Espacio inferior entre la etiqueta y el select */
+}
+
+/* Estilos para el select de puntuación */
+#score {
+  width: 100%; /* El select ocupa todo el ancho disponible */
+  padding: 10px; /* Espacio interior dentro del select */
+  border: 1px solid #ccc; /* Borde del select */
+  border-radius: 5px; /* Borde redondeado */
+}
+
+/* Estilos para el campo de comentario */
+#comment {
+  width: 100%; /* El textarea ocupa todo el ancho disponible */
+  padding: 10px; /* Espacio interior dentro del textarea */
+  border: 1px solid #ccc; /* Borde del textarea */
+  border-radius: 5px; /* Borde redondeado */
+  resize: vertical; /* Permite que el textarea sea redimensionable verticalmente */
+}
+
+/* Estilos para el botón de enviar comentario */
+#comment-form button[type="submit"] {
+  display: block; /* Mostrar el botón en una línea separada */
+  width: 100%; /* El botón ocupa todo el ancho disponible */
+  padding: 10px; /* Espacio interior dentro del botón */
+  background-color: #007bff; /* Color de fondo del botón (puedes ajustarlo) */
+  color: #fff; /* Color del texto del botón */
+  border: none; /* Eliminar borde del botón */
+  border-radius: 5px; /* Borde redondeado del botón */
+  cursor: pointer; /* Cambiar el cursor al pasar por encima del botón */
+}
+
+#comments-container {
+  margin-left: 15px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin-left: 15px;
+}
+
+.comentarios > h1 {
+  margin-left: 15px;
+}

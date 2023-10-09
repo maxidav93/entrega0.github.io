@@ -1,12 +1,11 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
 .jumbotron,
 .card-body,
 .container,
 .site-header {
-  font-family: 'Verdana', serif !important;
-}
-
-.jumbotron .display-4 {
-  font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
 }
 
 nav a {
@@ -65,15 +64,6 @@ nav a {
 
 .jumbotron .lead {
   font-size: 38px;
-}
-
-footer {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-}
-
-footer p {
-  margin-bottom: .25rem;
 }
 
 .site-header a {
@@ -177,6 +167,7 @@ footer p {
 
 main {
   min-height: calc(100vh - 210px);
+
 }
 
 a.custom-card,
@@ -189,17 +180,80 @@ a.custom-card:hover {
   color: orange;
 }
 
-.buttonpre{
+.buttonpre {
   background-color: rgb(222, 222, 222);
 }
-/*#logout{
-  margin: 0.7em;
-  background-color:#E5E7ED ;
-  border-radius: 9px;
-  padding: 1px;
-  color:black ;
-  font-size: 11px;
+
+footer {
+  bottom: 0;
+  background-color: #f39915;
+  width: 100%;
+  height: 4em;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.text-muted a {
+  text-decoration: none;
+  color: #000000;
+  background-color: #e9ecef;
+  border-radius: 3px;
+  padding: 5px 7px;
+}
+
+footer .container {
+  text-align: center;
+}
+
+
+.container p {
+  font-family: 'Montserrat', sans-serif;
+  color: #000000;
+  display: block;
+  margin-block-end: 0em;
+}
+
+p {
+  font-size: 90%;
+  font-weight: 1;
+}
+
+
+#label_toggle {
+  margin-left: 30px;
+  font-size: 1.5em;
+  cursor: pointer;
 
 }
-*/
+
+
+#toggle {
+display: none;
+
+}
+
+#label_toggle2 {
+  margin-left: 10px;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: yellow;
+}
+
+#toggle2 {
+  display: none;
+
+}
+
+
+.no-products-image {
+  max-width: 1000px; /* Establece el ancho máximo de la imagen */
+ margin-left: -290px;
+}
+
+
+.noProductos {
+  font-size: 20px;
+}
