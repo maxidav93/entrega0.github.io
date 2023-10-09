@@ -44,24 +44,41 @@ fetch(URL)
     // Obtener el cuerpo de la tabla para agregar filas
     const tbody = tabla.querySelector('tbody');
 
-    // Iterar sobre los productos en el carrito
-    data.articles.forEach(producto => {
-      // Crear una fila para cada producto
-      const fila = document.createElement('tr');
-      fila.innerHTML = `
-        <td><img src="${producto.image}" alt="${producto.name}" style="width: 60px;"></td>
-        <td>${producto.name}</td>
-        <td class="col-1">
-          <input type="number" class="btn btn-sm" value="${producto.count}" min="1" onchange="cambiarCantidad(${producto.id}, this.value)">
-        </td>
-        <td>${producto.unitCost}</td>
-        <td>${producto.currency}</td>
-        <td>${producto.unitCost * producto.count}</td>
-      `;
 
-      // Agregar la fila al cuerpo de la tabla
-      tbody.appendChild(fila);
-    });
+// Iterar sobre los productos en el carrito
+data.articles.forEach(producto => {
+  // Crear una fila para cada producto
+  const fila = document.createElement('tr');
+  const subtotalCell = document.createElement('td'); // Agregamos una celda para el subtotal
+  fila.innerHTML = `
+    <td><img src="${producto.image}" alt="${producto.name}" style="width: 60px;"></td>
+    <td>${producto.name}</td>
+    <td class="col-1">
+      <input type="number" class="btn btn-sm cantidad" value="${producto.count}" min="1" data-producto-id="${producto.id}">
+    </td>
+    <td>${producto.unitCost}</td>
+    <td>${producto.currency}</td>
+  `;
+
+  // Agregar la fila al cuerpo de la tabla
+  tbody.appendChild(fila);
+  fila.appendChild(subtotalCell); // Agregamos la celda del subtotal
+
+  // Función para calcular el subtotal y actualizar la celda
+  const actualizarSubtotal = () => {
+    const cantidadInput = fila.querySelector('.cantidad');
+    const cantidad = parseInt(cantidadInput.value);
+    const subtotal = cantidad * producto.unitCost;
+    subtotalCell.textContent = subtotal;
+  };
+
+  // Escuchar el evento 'change' en el campo de cantidad
+  fila.querySelector('.cantidad').addEventListener('change', actualizarSubtotal);
+
+  // Calcular el subtotal inicial
+  actualizarSubtotal();
+});
+
 
     // Agregar la tabla al contenedor
     tableContainer.appendChild(tabla);
