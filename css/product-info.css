@@ -39,6 +39,7 @@ header{
     display: flex;
     align-items: center;
     border-radius: 5px;
+    position: relative;
 
 }
 
@@ -185,5 +186,33 @@ header{
 }
 #product-cards-container{
   border-radius: 3px;
+}
+
+#btn-right:hover{
+scale: calc(1.1);
+background-color: #ECF0F1;
+}
+
+#btn-left:hover{
+  scale: calc(1.1);
+  background-color: #ECF0F1;
+
+}
+.btn-left, .btn-right {
+  position: absolute;
+  top: 50%; /* Alinea verticalmente al centro */
+  transform: translateY(-50%); /* Alinea verticalmente al centro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2px;
+}
+
+.btn-left {
+  left: 10px; /* Ajusta la distancia desde el borde izquierdo */
+}
+
+.btn-right {
+  right: 10px; /* Ajusta la distancia desde el borde derecho */
 }
 

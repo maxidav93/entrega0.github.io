@@ -5,7 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const id = localStorage.getItem("id");
   const apiUrl = `https://japceibal.github.io/emercado-api/products/${id}.json`;
   const savedRandomNumbers = JSON.parse(localStorage.getItem('randomNumber'));
-
+  const nextButton = document.getElementById("btn-right");
+  const prevButton = document.getElementById("btn-left");
+  const control = document.getElementsByClassName("imagen-ampliada")
 
   fetch(apiUrl)
     .then((response) => {
@@ -45,39 +47,36 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
       // Variables para el carrusel
-  let currentImageIndex = 0;
-  const images = data.images;
+      let currentImageIndex = 0;
+      const images = data.images;
 
-  // Función para mostrar la imagen actual en el carrusel
-  function showCurrentImage() {
-    const currentImage = images[currentImageIndex];
-    imagenAmpliada.setAttribute("src", currentImage);
-  }
+      // Función para mostrar la imagen actual en el carrusel
+      function showCurrentImage() {
+        const currentImage = images[currentImageIndex];
+        imagenAmpliada.setAttribute("src", currentImage);
+      }
 
-  // Agrega botones de navegación al carrusel
-  const prevButton = document.createElement("button");
-  prevButton.textContent = "<";
-  prevButton.addEventListener("click", () => {
-    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-    showCurrentImage();
-  });
+      // Agrega botones de navegación al carrusel
 
-  const nextButton = document.createElement("button");
-  nextButton.textContent = ">";
-  nextButton.addEventListener("click", () => {
-    currentImageIndex = (currentImageIndex + 1) % images.length;
-    showCurrentImage();
-  });
+      prevButton.addEventListener("click", () => {
+        currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+        showCurrentImage();
+      });
 
-  // Agrega los botones al DOM
-  const carouselControls = document.createElement("div");
-  carouselControls.classList.add("carousel-controls");
-  carouselControls.appendChild(prevButton);
-  carouselControls.appendChild(nextButton);
-  cont.appendChild(carouselControls);
+      nextButton.addEventListener("click", () => {
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        showCurrentImage();
+      });
 
-  // Mostrar la primera imagen del carrusel al cargar la página
-  showCurrentImage();
+      // Agrega los botones al DOM
+      
+
+      control.appendChild(prevButton);
+      control.appendChild(nextButton);
+      cont.appendChild(imagenAmpliada);
+
+      // Mostrar la primera imagen del carrusel al cargar la página
+      showCurrentImage();
 
     })
     .catch((error) => {
