@@ -94,7 +94,7 @@ header{
 }
 
 @media (max-width: 920px) {
-    .publicacion {
+    #publicacion {
       flex-direction: column;
       align-items: center;
     }
@@ -186,3 +186,4 @@ header{
 #product-cards-container{
   border-radius: 3px;
 }
+

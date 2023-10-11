@@ -44,6 +44,41 @@ document.addEventListener("DOMContentLoaded", () => {
           imagenAmpliada.setAttribute("src", imageUrl);
         }
       });
+      // Variables para el carrusel
+  let currentImageIndex = 0;
+  const images = data.images;
+
+  // Función para mostrar la imagen actual en el carrusel
+  function showCurrentImage() {
+    const currentImage = images[currentImageIndex];
+    imagenAmpliada.setAttribute("src", currentImage);
+  }
+
+  // Agrega botones de navegación al carrusel
+  const prevButton = document.createElement("button");
+  prevButton.textContent = "<";
+  prevButton.addEventListener("click", () => {
+    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+    showCurrentImage();
+  });
+
+  const nextButton = document.createElement("button");
+  nextButton.textContent = ">";
+  nextButton.addEventListener("click", () => {
+    currentImageIndex = (currentImageIndex + 1) % images.length;
+    showCurrentImage();
+  });
+
+  // Agrega los botones al DOM
+  const carouselControls = document.createElement("div");
+  carouselControls.classList.add("carousel-controls");
+  carouselControls.appendChild(prevButton);
+  carouselControls.appendChild(nextButton);
+  cont.appendChild(carouselControls);
+
+  // Mostrar la primera imagen del carrusel al cargar la página
+  showCurrentImage();
+
     })
     .catch((error) => {
       console.error("Error al obtener imágenes de la API:", error);
@@ -141,8 +176,8 @@ commentForm.addEventListener("submit", (e) => {
 
   commentsArray.push(newComment);
 
-// Vacía el campo de texto
- document.getElementById("comment").value = ""; // Vaciar el campo de texto
+  // Vacía el campo de texto
+  document.getElementById("comment").value = ""; // Vaciar el campo de texto
 
 
   // Muestra los comentarios actualizados en la página
