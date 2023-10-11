@@ -5,7 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const id = localStorage.getItem("id");
   const apiUrl = `https://japceibal.github.io/emercado-api/products/${id}.json`;
   const savedRandomNumbers = JSON.parse(localStorage.getItem('randomNumber'));
-
+  const nextButton = document.getElementById("btn-right");
+  const prevButton = document.getElementById("btn-left");
+  const control = document.getElementsByClassName("imagen-ampliada")
 
   fetch(apiUrl)
     .then((response) => {
@@ -45,6 +47,38 @@ document.addEventListener("DOMContentLoaded", () => {
           imagenAmpliada.setAttribute("src", imageUrl);
         }
       });
+      // Variables para el carrusel
+      let currentImageIndex = 0;
+      const images = data.images;
+
+      // Función para mostrar la imagen actual en el carrusel
+      function showCurrentImage() {
+        const currentImage = images[currentImageIndex];
+        imagenAmpliada.setAttribute("src", currentImage);
+      }
+
+      // Agrega botones de navegación al carrusel
+
+      prevButton.addEventListener("click", () => {
+        currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+        showCurrentImage();
+      });
+
+      nextButton.addEventListener("click", () => {
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        showCurrentImage();
+      });
+
+      // Agrega los botones al DOM
+      
+
+      control.appendChild(prevButton);
+      control.appendChild(nextButton);
+      cont.appendChild(imagenAmpliada);
+
+      // Mostrar la primera imagen del carrusel al cargar la página
+      showCurrentImage();
+
     })
     .catch((error) => {
       console.error("Error al obtener imágenes de la API:", error);
@@ -142,8 +176,8 @@ commentForm.addEventListener("submit", (e) => {
 
   commentsArray.push(newComment);
 
-// Vacía el campo de texto
- document.getElementById("comment").value = ""; // Vaciar el campo de texto
+  // Vacía el campo de texto
+  document.getElementById("comment").value = ""; // Vaciar el campo de texto
 
 
   // Muestra los comentarios actualizados en la página
