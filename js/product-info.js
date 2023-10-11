@@ -22,7 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // Muestra los detalles del producto utilizando los datos ya obtenidos
       const { name, cost, description, category, soldCount, currency } = data;
       cont.innerHTML = `
-        <h1>${name}</h1>
+      
+        <h1 class="mt-5">${name}</h1>
         <div class="price-txt"><p class="precio">${currency} ${cost}<p class="descuento">${savedRandomNumbers}%OFF</p></p></div>
         <p class="descripcion"> ${description}</p>
         <p class="">Categoría: ${category}</p>
