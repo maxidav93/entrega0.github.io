@@ -24,7 +24,7 @@ fetch(URL)
 
     // Crear una tabla dinámica con clases de Bootstrap
     const tabla = document.createElement('table');
-    tabla.classList.add('table', 'table-striped', 'table-bordered');
+    tabla.classList.add('table');
     tabla.innerHTML = `
       <thead class="thead-dark">
         <tr>

@@ -266,17 +266,12 @@ display: none;
 }
 
 
-
-
-#tipoEnvio {
-  width: 30%;
+#formContainer {
+  margin-left: 255px;
+  margin-right: 255px;
 }
 
 
-.btn-primary {
-  width: 30%;
-  margin-top: 20px;
-}
 
 
 
