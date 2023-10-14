@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <p class="descripcion"> ${description}</p>
         <p class="">Categoría: ${category}</p>
         <p>(${soldCount})</p>
-        <button id="cartBtn">Agregar a carrito</button>
+        <button id="cartBtn" onclick="agregarAlCarrito()">Agregar a carrito</button>
       `;
 
       data.images.forEach((imageUrl, index) => {
@@ -265,4 +265,29 @@ document.addEventListener("DOMContentLoaded", () => {
 function setProductID(id) {
   localStorage.setItem("id", id);
   window.location = "product-info.html";
+}
+
+
+function agregarAlCarrito() {
+  let idProdCarrito = localStorage.getItem("id");
+  
+  const carritoActual = JSON.parse(localStorage.getItem("carrito")) || { productos: [] };
+
+  const productoEnCarrito = carritoActual.productos.find(producto => producto.id === idProdCarrito);
+
+  if (productoEnCarrito) {
+    
+    productoEnCarrito.cantidad += 1;
+  } else {
+    carritoActual.productos.push({ id: idProdCarrito, cantidad: 1 });
+  }
+
+ 
+  localStorage.setItem("carrito", JSON.stringify(carritoActual));
+
+  
+  console.log("Producto agregado al carrito:", carritoActual);
+
+  // Opcional: Redirigir al usuario a la página del carrito
+ // window.location = "cart.html";
 }
