@@ -265,15 +265,19 @@ display: none;
 
 }
 
-
-#formContainer {
-  margin-left: 255px;
-  margin-right: 255px;
+#form {
+margin-left: 70px;
+margin-right: 70px;
+margin-top: 10px;
+margin-bottom: 10px;
 }
 
+.table-container {
+  margin-bottom: 0;
+}
 
-
-
-
+.table-responsive table {
+  margin-bottom: 0;
+}
 
 
