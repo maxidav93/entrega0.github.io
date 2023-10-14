@@ -20,13 +20,13 @@ fetch(URL)
 
     // Crear un contenedor con clase table-responsive
     const tableContainer = document.createElement('div');
-    tableContainer.classList.add( 'mx-auto', 'table-responsive');
+    tableContainer.classList.add(  'table-responsive');
 
     // Crear una tabla dinámica con clases de Bootstrap
     const tabla = document.createElement('table');
     tabla.classList.add('table', 'table-striped','table-bordered', 'w-100', 'table-responsive');
     tabla.innerHTML = `
-      <thead class="thead-dark">
+      <thead class="thead-dark text-center">
         <tr>
           <th>Producto</th>
           <th>Nombre</th>
@@ -37,7 +37,7 @@ fetch(URL)
           <th></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="text-center">
         <!-- Los datos del carrito se agregarán aquí dinámicamente -->
       </tbody>
     `;

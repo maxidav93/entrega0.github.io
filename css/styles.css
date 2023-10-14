@@ -269,7 +269,7 @@ display: none;
 margin-left: 70px;
 margin-right: 70px;
 margin-top: 10px;
-margin-bottom: 10px;
+margin-bottom: 40px;
 }
 
 .table-container {
@@ -279,5 +279,7 @@ margin-bottom: 10px;
 .table-responsive table {
   margin-bottom: 0;
 }
-
+.btn-sm{
+  width: 100px;
+}
 
