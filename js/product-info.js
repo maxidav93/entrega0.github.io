@@ -1,3 +1,6 @@
+
+let productActual;
+
 document.addEventListener("DOMContentLoaded", () => {
   const cont = document.getElementById("contenedor");
   const imageThumbnailsContainer = document.getElementById("image-thumbnails");
@@ -8,8 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextButton = document.getElementById("btn-right");
   const prevButton = document.getElementById("btn-left");
   const control = document.getElementsByClassName("imagen-ampliada")
-  let xampleArr = [];
-
+  
 
   fetch(apiUrl)
     .then((response) => {
@@ -22,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!data.images || !Array.isArray(data.images)) {
         throw new Error("No se encontraron imágenes en la respuesta de la API.");
       }
-
+      productActual = data
       // Muestra los detalles del producto utilizando los datos ya obtenidos
       const { name, cost, description, category, soldCount, currency } = data;
       cont.innerHTML = `
@@ -284,40 +286,25 @@ document.addEventListener("DOMContentLoaded", () => {
 function agregarAlCarrito() {
   let idProdCarrito = localStorage.getItem("id");
 
-  // Obtener el carrito del LocalStorage
-  const carritoActual = JSON.parse(localStorage.getItem("carrito")) || { productos: [] };
+  let carrito = JSON.parse(localStorage.getItem('carrito'))
+  let producto = carrito.find(producto => producto.id === Number(idProdCarrito));
+  let objIndex = carrito.findIndex((obj => obj.id === Number(idProdCarrito)));
 
-  // Obtener la información del producto precargado
-  const productoPrecargado = JSON.parse(localStorage.getItem("productoPrecargado"));
-  
-  localStorage.setItem("carrito", JSON.stringify(carritoActual));
-  console.log("Datos del carrito guardados en el LocalStorage:", carritoActual);
-  
-  if (productoPrecargado && carritoActual) {
-    // Verificar si el producto ya está en el carrito
-    const productoEnCarrito = carritoActual.productos.find(producto => producto.id === idProdCarrito);
+  if(producto){
+    carrito[objIndex] = {...producto, count:  producto.count + 1 } 
+  } else {
+    carrito.push({
+      name : productActual.name, 
+      unitCost: productActual.cost, 
+      count: 1,
+      currency: productActual.currency,
+      id: productActual.id,
+      image: productActual.images[0],
+    });
+  }
 
-    if (productoEnCarrito) {
-      // Incrementar la cantidad si el producto ya está en el carrito
-      productoEnCarrito.cantidad += 1;
-    } else {
-      // Agregar el producto al carrito si no está presente
-      carritoActual.productos.push({
-        id: productoPrecargado.id,
-        name: productoPrecargado.name,
-        count: 1, 
-        unitCost: productoPrecargado.cost, 
-        currency: productoPrecargado.currency,
-        image: productoPrecargado.images[0], 
-      });
-    }
-
-    // Guardar el carrito actualizado en el LocalStorage
-    localStorage.setItem("carrito", JSON.stringify(carritoActual));
-
-    console.log("Producto agregado al carrito:", carritoActual);
+  localStorage.setItem("carrito", JSON.stringify([...carrito]));
 
     // Opcional: Actualizar la interfaz del carrito en tiempo real si es necesario
     mostrarInformacionEnHTML();
   }
-}

@@ -4,6 +4,8 @@ const loginSection = document.getElementById("loginSection");
 const registerSection = document.getElementById("registerSection");
 
 
+const API_URL = "https://japceibal.github.io/emercado-api/user_cart/25801.json";
+
 window.addEventListener("load", () => {
   loginSection.style.display = "block";
   registerSection.style.display = "none";
@@ -19,7 +21,7 @@ registerBtn.addEventListener("click", () => {
   loginSection.style.display = "none";
 });
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
   const loginForm = document.getElementById("loginSubmit"); 
 
   loginForm.addEventListener("click", async function (event) { 
@@ -30,12 +32,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
 
     if (username && password) {
+      //Almacenar datos iniciales de carrito del usuario
+      await loadCarrito()
       // Almacenar la sesión como iniciada en localStorage
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem("username", username);
       alert("¡Te damos la bienvenida nuevamente " + username + "! :D")
       // Redireccionar a la página de portada.
       window.location.href = 'index.html';
+
     } else {
       alert('Campos incompletos. Por favor inténtalo de nuevo.');
     }
@@ -65,3 +70,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+async function loadCarrito(){
+  //TODO: hacer funcion async await
+  fetch(API_URL)
+    .then(response => response.json())
+    .then(data => {
+      localStorage.setItem('carrito', JSON.stringify(data.articles));
+
+  })
+  .catch(error => console.error('Error al realizar la solicitud:', error));      
+}
