@@ -98,6 +98,8 @@ header{
     #publicacion {
       flex-direction: column;
       align-items: center;
+      max-width: 100%;
+      margin: 0;
     }
 
     .imagen-ampliada {
@@ -132,10 +134,38 @@ header{
         align-items: center;
         transform: translateX(5%)
     }
+
+    main #comentarios {
+      margin: 0;
+   }
+
+   main #comentarios #comments-container {
+    margin-left: 5px;
+    margin-right: 5px;
+   }
+
+   main .contendor-gral-prelacionados{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0;
+   }
+
+   main .contendor-gral-prelacionados h2 {
+    margin-left: 0;
+   }
+
+   #related-products{
+    display: flex;
+    flex-direction: column;
+   }
   }
+
+
   #comentarios {
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-left: 1.875em;
+    margin-right: 1.875em;
  }
 /* estilo productos relacionados */
 
