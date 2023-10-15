@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextButton = document.getElementById("btn-right");
   const prevButton = document.getElementById("btn-left");
   const control = document.getElementsByClassName("imagen-ampliada")
+  let xampleArr = [];
+
 
   fetch(apiUrl)
     .then((response) => {
@@ -267,27 +269,55 @@ function setProductID(id) {
   window.location = "product-info.html";
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+
+  const productoPrecargado = JSON.parse(localStorage.getItem("productoPrecargado"));
+  console.log("Producto precargado del LocalStorage:", productoPrecargado);
+  if (productoPrecargado) {
+    localStorage.setItem("productoPrecargado", JSON.stringify(productoPrecargado));
+  }
+
+
+
+});
 
 function agregarAlCarrito() {
   let idProdCarrito = localStorage.getItem("id");
-  
+
+  // Obtener el carrito del LocalStorage
   const carritoActual = JSON.parse(localStorage.getItem("carrito")) || { productos: [] };
 
-  const productoEnCarrito = carritoActual.productos.find(producto => producto.id === idProdCarrito);
-
-  if (productoEnCarrito) {
-    
-    productoEnCarrito.cantidad += 1;
-  } else {
-    carritoActual.productos.push({ id: idProdCarrito, cantidad: 1 });
-  }
-
- 
-  localStorage.setItem("carrito", JSON.stringify(carritoActual));
-
+  // Obtener la información del producto precargado
+  const productoPrecargado = JSON.parse(localStorage.getItem("productoPrecargado"));
   
-  console.log("Producto agregado al carrito:", carritoActual);
+  localStorage.setItem("carrito", JSON.stringify(carritoActual));
+  console.log("Datos del carrito guardados en el LocalStorage:", carritoActual);
+  
+  if (productoPrecargado && carritoActual) {
+    // Verificar si el producto ya está en el carrito
+    const productoEnCarrito = carritoActual.productos.find(producto => producto.id === idProdCarrito);
 
-  // Opcional: Redirigir al usuario a la página del carrito
- // window.location = "cart.html";
+    if (productoEnCarrito) {
+      // Incrementar la cantidad si el producto ya está en el carrito
+      productoEnCarrito.cantidad += 1;
+    } else {
+      // Agregar el producto al carrito si no está presente
+      carritoActual.productos.push({
+        id: productoPrecargado.id,
+        name: productoPrecargado.name,
+        count: 1, 
+        unitCost: productoPrecargado.cost, 
+        currency: productoPrecargado.currency,
+        image: productoPrecargado.images[0], 
+      });
+    }
+
+    // Guardar el carrito actualizado en el LocalStorage
+    localStorage.setItem("carrito", JSON.stringify(carritoActual));
+
+    console.log("Producto agregado al carrito:", carritoActual);
+
+    // Opcional: Actualizar la interfaz del carrito en tiempo real si es necesario
+    mostrarInformacionEnHTML();
+  }
 }
