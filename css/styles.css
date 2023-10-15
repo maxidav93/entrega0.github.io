@@ -265,28 +265,21 @@ display: none;
 
 }
 
-
-.mb-3 {
-  margin-left: 300px;
-  margin-bottom: -200px;
+#form {
+margin-left: 70px;
+margin-right: 70px;
+margin-top: 10px;
+margin-bottom: 40px;
 }
 
-
-#tipoEnvio {
-  width: 30%;
+.table-container {
+  margin-bottom: 0;
 }
 
-
-.btn-primary {
-  width: 30%;
-  margin-top: 20px;
+.table-responsive table {
+  margin-bottom: 0;
 }
-
-
-
-
-#checkoutForm {
-  margin-top: 150px;
+.btn-sm{
+  width: 100px;
 }
-
 

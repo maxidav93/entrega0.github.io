@@ -17,6 +17,14 @@
       carritoContainer.innerHTML = '<p class="alert alert-warning">El carrito está vacío</p>';
       return;
     }
+
+    // Crear un contenedor con clase table-responsive
+    const tableContainer = document.createElement('div');
+    tableContainer.classList.add(  'table-responsive');
+
+    // Crear una tabla dinámica con clases de Bootstrap
+    const tabla = document.createElement('table');
+    tabla.classList.add('table', 'table-striped','table-bordered', 'w-100', 'table-responsive');
     const tableContainer = document.createElement("div");
     tableContainer.classList.add("table-responsive", "col-md-8", "mx-auto");
   
