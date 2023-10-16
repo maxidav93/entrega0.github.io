@@ -1,3 +1,4 @@
+let productActual;
 document.addEventListener("DOMContentLoaded", () => {
   const cont = document.getElementById("contenedor");
   const imageThumbnailsContainer = document.getElementById("image-thumbnails");
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!data.images || !Array.isArray(data.images)) {
         throw new Error("No se encontraron imágenes en la respuesta de la API.");
       }
-
+      productActual = data
       // Muestra los detalles del producto utilizando los datos ya obtenidos
       const { name, cost, description, category, soldCount, currency } = data;
       cont.innerHTML = `
@@ -30,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <p class="descripcion"> ${description}</p>
         <p class="">Categoría: ${category}</p>
         <p>(${soldCount})</p>
-        <button id="cartBtn">Agregar a carrito</button>
+        <button id="cartBtn" onclick="agregarAlCarrito()">Agregar a carrito</button>
       `;
 
       data.images.forEach((imageUrl, index) => {
@@ -267,3 +268,25 @@ function setProductID(id) {
   localStorage.setItem("id", id);
   window.location = "product-info.html";
 }
+function agregarAlCarrito() {
+  let idProdCarrito = localStorage.getItem("id");
+  let carrito = JSON.parse(localStorage.getItem('carrito'))
+  let producto = carrito.find(producto => producto.id === Number(idProdCarrito));
+  let objIndex = carrito.findIndex((obj => obj.id === Number(idProdCarrito)));
+
+  if(producto){
+      carrito[objIndex] = {...producto, count:  producto.count + 1 } 
+    } else {
+      carrito.push({
+        name : productActual.name, 
+        unitCost: productActual.cost, 
+        count: 1,
+        currency: productActual.currency,
+        id: productActual.id,
+        image: productActual.images[0],
+      });
+    }
+    localStorage.setItem("carrito", JSON.stringify([...carrito]));
+alert("Se agregó su producto seleccionado al carrito.")
+    mostrarInformacionEnHTML();
+  }    
