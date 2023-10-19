@@ -67,13 +67,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
-async function loadCarrito(){
-  //TODO: hacer funcion async await
-  fetch(API_URL)
-    .then(response => response.json())
-    .then(data => {
-      localStorage.setItem('carrito', JSON.stringify(data.articles));
 
-  })
-  .catch(error => console.error('Error al realizar la solicitud:', error));      
+async function loadCarrito() {
+  try {
+    const carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
+
+    const response = await fetch(API_URL);
+    const data = await response.json();
+
+    // Filtrar productos duplicados
+    const productosNuevos = data.articles.filter(nuevoProducto => {
+      return !carritoActual.some(productoExistente => productoExistente.id === nuevoProducto.id);
+    });
+
+    // Agregar los productos filtrados al carrito existente
+    const nuevoCarrito = [...carritoActual, ...productosNuevos];
+
+    // Almacenar el nuevo carrito en el localStorage
+    localStorage.setItem('carrito', JSON.stringify(nuevoCarrito));
+  } catch (error) {
+    console.error('Error al cargar el carrito:', error);
+  }
 }
