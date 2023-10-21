@@ -4,13 +4,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function mostrarInformacionEnHTML(data) {
   const carritoContainer = document.getElementById('carritoContainer');
-  const subtotalTotalValue = document.getElementById('subtotalTotalValue'); // Elemento donde se mostrará el subtotal total
-
   const carritoActual = JSON.parse(localStorage.getItem("carrito"))
 
   if (!carritoActual || carritoActual.length === 0) {
     carritoContainer.innerHTML = '<p class="alert alert-warning">El carrito está vacío</p>';
-    subtotalTotalValue.textContent = '$0.00'; // Establecer el subtotal total a $0.00 si el carrito está vacío
+
     return;
   }
 
@@ -36,14 +34,14 @@ function mostrarInformacionEnHTML(data) {
       </tbody>
     `;
 
-    // Obtener el cuerpo de la tabla para agregar filas
-    const tbody = tabla.querySelector('tbody');
+  // Obtener el cuerpo de la tabla para agregar filas
+  const tbody = tabla.querySelector('tbody');
 
 
-    carritoActual.forEach(producto => {
-      const fila = document.createElement("tr");
-      const subtotalCell = document.createElement("td");
-      fila.innerHTML = `
+  carritoActual.forEach(producto => {
+    const fila = document.createElement("tr");
+    const subtotalCell = document.createElement("td");
+    fila.innerHTML = `
         <td><img src="${producto.image}" alt="${producto.name}" style="width: 70px;"></td>
         <td>${producto.name}</td>
         <td class="col-1">
@@ -53,34 +51,77 @@ function mostrarInformacionEnHTML(data) {
         <td>${producto.currency}</td>
         `;
 
-        tbody.appendChild(fila);
-        fila.appendChild(subtotalCell);
 
-        const accionesCell = document.createElement('td');
-        accionesCell.innerHTML = `
+    tbody.appendChild(fila);
+    fila.appendChild(subtotalCell);
 
-           <svg onclick="borrarProducto(${producto.id})" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-           <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-         </svg>
+    //Boton de borrar
+
+    const accionesCell = document.createElement('td');
+    accionesCell.innerHTML = `
+
+           <i  onclick="borrarProducto(${producto.id})"   class='btn custom-delete-btn fas fa-trash-alt'
+         id="botonBorrar"
+           </i>
 
         `;
-        fila.appendChild(accionesCell);
+    fila.appendChild(accionesCell);
+    accionesCell.setAttribute("id" , "tdboton")
 
-        //TODO: modificar para que se actualice el localStorage
-        const actualizarSubtotal = () => {
 
-          const cantidadInput = fila.querySelector(".cantidad");
-          const cantidad = parseInt(cantidadInput.value);
+    //TODO: modificar para que se actualice el localStorage
+    const actualizarSubtotal = () => {
 
-          const subtotal = cantidad * producto.unitCost;
-          subtotalCell.innerHTML = `<span>${subtotal.toFixed(2)}</span>`;
-        };
+      const cantidadInput = fila.querySelector(".cantidad");
+      const cantidad = parseInt(cantidadInput.value);
 
-        fila.querySelector(".cantidad").addEventListener("change", actualizarSubtotal);
-        actualizarSubtotal();
-      });
+      const subtotal = cantidad * producto.unitCost;
+      subtotalCell.textContent = subtotal;
+    };
 
-      tableContainer.appendChild(tabla);
-      carritoContainer.innerHTML = "";
-      carritoContainer.appendChild(tableContainer);
-    }
+    fila.querySelector(".cantidad").addEventListener("change", actualizarSubtotal);
+    actualizarSubtotal();
+  });
+
+  tableContainer.appendChild(tabla);
+  carritoContainer.innerHTML = "";
+  carritoContainer.appendChild(tableContainer);
+}
+function eliminarProductoDelLocalStorage(id) {
+  // Obten el contenido actual del Local Storage
+  var productosEnLocalStorage = JSON.parse(localStorage.getItem('carrito')) || [];
+
+  // Filtra los productos para eliminar el que coincide con el ID
+  productosEnLocalStorage = productosEnLocalStorage.filter(function(producto) {
+      return producto.id !== id;
+  });
+
+  // Actualiza el Local Storage con la nueva lista de productos
+  localStorage.setItem('carrito', JSON.stringify(productosEnLocalStorage));
+};
+
+
+  function borrarProducto(id) {
+        // Muestra una alerta de confirmación
+        var confirmacion = confirm('¿Estás seguro de que deseas eliminar este producto?');
+
+        // Si el usuario hace clic en "Aceptar" en la alerta de confirmación
+        if (confirmacion) {
+
+    // Encuentra el elemento SVG haciendo referencia al ícono del bote de basura
+    var iElement = document.querySelector('i[onclick="borrarProducto(' + id + ')"]');
+
+    // Encuentra el elemento padre del SVG
+    var parentElement = iElement.parentElement;
+
+    // Encuentra el elemento padre de la fila que contiene el ícono del bote de basura
+    var rowElement = parentElement.parentElement;
+
+    // Elimina la fila completa
+    rowElement.remove();
+    // Elimina el producto del Local Storage
+    eliminarProductoDelLocalStorage(id);
+}};
+
+
+
