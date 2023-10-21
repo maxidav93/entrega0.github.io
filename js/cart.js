@@ -2,10 +2,10 @@ document.addEventListener("DOMContentLoaded", () => {
   mostrarInformacionEnHTML();
 });
 
-let carritoActual = JSON.parse(localStorage.getItem("carrito")) || [];
-
 function mostrarInformacionEnHTML(data) {
   const carritoContainer = document.getElementById('carritoContainer');
+
+  const carritoActual = JSON.parse(localStorage.getItem("carrito"))
 
   if (!carritoActual || carritoActual.length === 0) {
     carritoContainer.innerHTML = '<p class="alert alert-warning">El carrito está vacío</p>';
@@ -45,7 +45,7 @@ function mostrarInformacionEnHTML(data) {
         <td><img src="${producto.image}" alt="${producto.name}" style="width: 70px;"></td>
         <td>${producto.name}</td>
         <td class="col-1">
-          <input type="number" class="btn btn-sm cantidad" value="${producto.count}" min="1" data-producto-id="${producto.id}">
+        <input type="number" class="btn btn-sm cantidad" value="${producto.count}" min="1" data-producto-id="${producto.id}">
         </td>
         <td>${producto.unitCost}</td>
         <td>${producto.currency}</td>
@@ -53,56 +53,34 @@ function mostrarInformacionEnHTML(data) {
 
     tbody.appendChild(fila);
     fila.appendChild(subtotalCell);
-      //Boton de borrar
 
-  const accionesCell = document.createElement('td');
-  accionesCell.innerHTML = `
-    <i  onclick="borrarProducto(${producto.id})" class='btn custom-delete-btn fas fa-trash-alt' id="botonBorrar"></i>
-  `;
-  fila.appendChild(accionesCell);
-  accionesCell.setAttribute("id", "tdboton");
+    //Boton de borrar
 
-  // Asignar un evento al cambio de cantidad
-  fila.querySelector(".cantidad").addEventListener("change", () => {
-    actualizarSubtotal(fila, producto, producto.id);
-  });
-    // Mostrar el subtotal al cargar la página
-    actualizarSubtotal(fila, producto, producto.id);
-  });
+    const accionesCell = document.createElement('td');
+    accionesCell.innerHTML = `
 
+           <i  onclick="borrarProducto(${producto.id})"   class='btn custom-delete-btn fas fa-trash-alt'
+         id="botonBorrar"
+           </i>
 
-
-
-
-
+        `;
+    fila.appendChild(accionesCell);
     accionesCell.setAttribute("id" , "tdboton")
 
 
+    //TODO: modificar para que se actualice el localStorage
+    const actualizarSubtotal = () => {
 
+      const cantidadInput = fila.querySelector(".cantidad");
+      const cantidad = parseInt(cantidadInput.value);
 
-// Función para actualizar el subtotal
-function actualizarSubtotal(fila, producto, id) {
-  const cantidadInput = fila.querySelector(".cantidad");
-  const cantidad = parseInt(cantidadInput.value);
-  const subtotalCell = fila.querySelector("td:last-child");  // Última celda de la fila para mostrar el subtotal
+      const subtotal = cantidad * producto.unitCost;
+      subtotalCell.textContent = subtotal;
+    };
 
-  if (producto.currency === 'UYU') {
-    subtotalCell.textContent = `UYU ${cantidad * producto.unitCost * 40}`;
-  } else {
-    subtotalCell.textContent = `${producto.currency} ${(cantidad * producto.unitCost).toFixed(2)}`;
-  }
-
-  // Actualizar el producto en el Local Storage con la nueva cantidad
-  const productoIndex = carritoActual.findIndex(item => item.id === id);
-  if (productoIndex !== -1) {
-    carritoActual[productoIndex].count = cantidad;
-    localStorage.setItem('carrito', JSON.stringify(carritoActual));
-  }
-
-  // Actualizar el costo total
-  mostrarCosto();
-}
-
+    fila.querySelector(".cantidad").addEventListener("change", actualizarSubtotal);
+    actualizarSubtotal();
+  });
 
   tableContainer.appendChild(tabla);
   carritoContainer.innerHTML = "";
@@ -142,17 +120,7 @@ function eliminarProductoDelLocalStorage(id) {
     rowElement.remove();
     // Elimina el producto del Local Storage
     eliminarProductoDelLocalStorage(id);
-  }
-}
-// Agregar un producto al carrito
-function agregarProductoAlCarrito(producto) {
-  // Agrega el producto al carrito (carritoActual)
-  carritoActual.push(producto);
+}};
 
-  // Actualiza el Local Storage con los productos
-  localStorage.setItem("carrito", JSON.stringify(carritoActual));
 
-  // Llama a mostrarInformacionEnHTML para actualizar la vista
-  mostrarInformacionEnHTML();
-}
 
