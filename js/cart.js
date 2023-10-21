@@ -2,17 +2,14 @@ document.addEventListener("DOMContentLoaded", () => {
   mostrarInformacionEnHTML();
 });
 
+let carritoActual = JSON.parse(localStorage.getItem("carrito")) || [];
+
 function mostrarInformacionEnHTML(data) {
   const carritoContainer = document.getElementById('carritoContainer');
-  const subtotalTotalValue = document.getElementById('subtotalTotalValue');
-
-  const carritoActual = JSON.parse(localStorage.getItem("carrito"))
 
   if (!carritoActual || carritoActual.length === 0) {
     carritoContainer.innerHTML = '<p class="alert alert-warning">El carrito está vacío</p>';
-    subtotalTotalValue.textContent = '$0.00'; // Establece el total en $0.00
     return;
-
   }
 
   const tableContainer = document.createElement("div");
@@ -39,7 +36,6 @@ function mostrarInformacionEnHTML(data) {
 
   // Obtener el cuerpo de la tabla para agregar filas
   const tbody = tabla.querySelector('tbody');
-  let total = 0; // Inicializa el total
 
 
   carritoActual.forEach(producto => {
@@ -49,7 +45,7 @@ function mostrarInformacionEnHTML(data) {
         <td><img src="${producto.image}" alt="${producto.name}" style="width: 70px;"></td>
         <td>${producto.name}</td>
         <td class="col-1">
-        <input type="number" class="btn btn-sm cantidad" value="${producto.count}" min="1" data-producto-id="${producto.id}">
+          <input type="number" class="btn btn-sm cantidad" value="${producto.count}" min="1" data-producto-id="${producto.id}">
         </td>
         <td>${producto.unitCost}</td>
         <td>${producto.currency}</td>
@@ -69,35 +65,43 @@ function mostrarInformacionEnHTML(data) {
 
         `;
     fila.appendChild(accionesCell);
+        // Asignar un evento al cambio de cantidad
+        fila.querySelector(".cantidad").addEventListener("change", () => {
+          actualizarSubtotal(fila, producto, producto.id);
+        });
+
+
     accionesCell.setAttribute("id" , "tdboton")
 
 
-    //TODO: modificar para que se actualice el localStorage
-    const actualizarSubtotal = () => {
-
-      const cantidadInput = fila.querySelector(".cantidad");
-      const cantidad = parseInt(cantidadInput.value);
-
-      const subtotal = cantidad * producto.unitCost;
-      subtotalCell.textContent = subtotal;
 
 
+  function actualizarSubtotal(inputElement, id) { // Función para recalcular el subtotal de un artículo.
+    if (inputElement.value < 1)
+        inputElement.value = originalValue;
+    else {
+        const subtotal = document.getElementById(id);
+        const value = inputElement.value
+        subtotal.textContent = subtotal.getAttribute('data-articleUnitCost') * value;
 
+        let index = 0;
 
+        while (index < cart.length && id !== cart[index].id)
+            index++;
 
+        cart[index].count = value;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        cart = JSON.parse(localStorage.getItem('cart'));
+    }
 
-    };
-
-    fila.querySelector(".cantidad").addEventListener("change", actualizarSubtotal);
-    actualizarSubtotal();
-  });
+    mostrarCosto(carritoActual);
+}
 
   tableContainer.appendChild(tabla);
   carritoContainer.innerHTML = "";
   carritoContainer.appendChild(tableContainer);
-
 }
-function eliminarProductoDelLocalStorage(id) {
+,function eliminarProductoDelLocalStorage(id) {
   // Obten el contenido actual del Local Storage
   var productosEnLocalStorage = JSON.parse(localStorage.getItem('carrito')) || [];
 
@@ -108,7 +112,7 @@ function eliminarProductoDelLocalStorage(id) {
 
   // Actualiza el Local Storage con la nueva lista de productos
   localStorage.setItem('carrito', JSON.stringify(productosEnLocalStorage));
-};
+});
 
 
   function borrarProducto(id) {
@@ -131,29 +135,6 @@ function eliminarProductoDelLocalStorage(id) {
     rowElement.remove();
     // Elimina el producto del Local Storage
     eliminarProductoDelLocalStorage(id);
-}};
-
-function calcularTotal() {
-  const carritoActual = JSON.parse(localStorage.getItem("carrito"));
-  let total = 0;
-
-  if (carritoActual) {
-    carritoActual.forEach(producto => {
-      const cantidadInput = document.querySelector(`input[data-producto-id="${producto.id}"]`);
-      const cantidad = parseInt(cantidadInput.value);
-      const subtotal = cantidad * producto.unitCost;
-      total += subtotal;
-    });
   }
-
-  return total;
 }
-
-
-
-
-
-
-
-
-
+}
