@@ -1,3 +1,8 @@
+const subtotalTotalValue = document.getElementById('subtotalTotalValue');
+const carritoActual = JSON.parse(localStorage.getItem("carrito"));
+const subtotalCell = document.createElement("td");
+
+
 document.addEventListener("DOMContentLoaded", () => {
   mostrarInformacionEnHTML();
 });
@@ -8,6 +13,7 @@ function mostrarInformacionEnHTML(data) {
 
   if (!carritoActual || carritoActual.length === 0) {
     carritoContainer.innerHTML = '<p class="alert alert-warning">El carrito está vacío</p>';
+    subtotalTotalValue.textContent = '$0.00';
 
     return;
   }
@@ -40,7 +46,8 @@ function mostrarInformacionEnHTML(data) {
 
   carritoActual.forEach(producto => {
     const fila = document.createElement("tr");
-    const subtotalCell = document.createElement("td");
+
+    subtotalCell.textContent = '0'; // Inicializa el contenido de Subtotal en 0
     fila.innerHTML = `
         <td><img src="${producto.image}" alt="${producto.name}" style="width: 70px;"></td>
         <td>${producto.name}</td>
@@ -49,39 +56,55 @@ function mostrarInformacionEnHTML(data) {
         </td>
         <td>${producto.unitCost}</td>
         <td>${producto.currency}</td>
-        `;
-
+        <td>0</td>
+    `;
 
     tbody.appendChild(fila);
     fila.appendChild(subtotalCell);
 
-    //Boton de borrar
-
+    // Boton de borrar
     const accionesCell = document.createElement('td');
     accionesCell.innerHTML = `
-
-           <i  onclick="borrarProducto(${producto.id})"   class='btn custom-delete-btn fas fa-trash-alt'
-         id="botonBorrar"
-           </i>
-
-        `;
+        <i  onclick="borrarProducto(${producto.id})"   class='btn custom-delete-btn fas fa-trash-alt' id="botonBorrar"></i>
+    `;
     fila.appendChild(accionesCell);
-    accionesCell.setAttribute("id" , "tdboton")
 
-
-    //TODO: modificar para que se actualice el localStorage
     const actualizarSubtotal = () => {
+        const cantidadInput = fila.querySelector(".cantidad");
+        const cantidad = parseInt(cantidadInput.value);
+        const costoUnitario = parseFloat(producto.unitCost);
+        const subtotal = cantidad * costoUnitario;
+        subtotalCell.textContent = subtotal.toFixed(2); // Actualiza el valor en la celda Subtotal
 
-      const cantidadInput = fila.querySelector(".cantidad");
-      const cantidad = parseInt(cantidadInput.value);
 
-      const subtotal = cantidad * producto.unitCost;
-      subtotalCell.textContent = subtotal;
+
+
     };
 
+    function actualizarSubtotalTotal() {
+
+
+      if (carritoActual && carritoActual.length > 0) {
+          let total = 0;
+          carritoActual.forEach(producto => {
+
+              const cantidad = parseInt(cantidadInput.value);
+              const costoUnitario = parseFloat(producto.unitCost);
+              const subtotal = cantidad * costoUnitario;
+              total += subtotal;
+          });
+
+          subtotalTotalValue.textContent = '$' + total.toFixed(2);
+      } else {
+          subtotalTotalValue.textContent = '$0.00';
+      }
+  }
+
+
+
     fila.querySelector(".cantidad").addEventListener("change", actualizarSubtotal);
-    actualizarSubtotal();
-  });
+    actualizarSubtotal(); // Llama a actualizarSubtotal para mostrar el subtotal inicial
+});
 
   tableContainer.appendChild(tabla);
   carritoContainer.innerHTML = "";
@@ -122,6 +145,3 @@ function eliminarProductoDelLocalStorage(id) {
     // Elimina el producto del Local Storage
     eliminarProductoDelLocalStorage(id);
 }};
-
-
-
