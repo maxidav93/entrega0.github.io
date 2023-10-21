@@ -57,11 +57,9 @@ function mostrarInformacionEnHTML(data) {
     //Boton de borrar
    
     const accionesCell = document.createElement('td');
-     const deleteIcon = document.createElement('i');
-    deleteIcon.className = 'btn custom-delete-btn fas fa-trash-alt'; 
     accionesCell.innerHTML = `
           
-           <i class='btn custom-delete-btn fas fa-trash-alt'
+           <i  onclick="borrarProducto(${producto.id})"   class='btn custom-delete-btn fas fa-trash-alt'
          id="botonBorrar"
            </i>
         
@@ -110,10 +108,10 @@ function eliminarProductoDelLocalStorage(id) {
         if (confirmacion) {
     
     // Encuentra el elemento SVG haciendo referencia al ícono del bote de basura
-    var svgElement = document.querySelector('svg[onclick="borrarProducto(' + id + ')"]');
+    var iElement = document.querySelector('i[onclick="borrarProducto(' + id + ')"]');
 
     // Encuentra el elemento padre del SVG 
-    var parentElement = svgElement.parentElement;
+    var parentElement = iElement.parentElement;
 
     // Encuentra el elemento padre de la fila que contiene el ícono del bote de basura
     var rowElement = parentElement.parentElement;

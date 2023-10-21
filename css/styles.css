@@ -291,5 +291,4 @@ margin-bottom: 40px;
 .custom-delete-btn:hover {
   color: red;
   scale: calc(1.15);
-  border: red;
 }
