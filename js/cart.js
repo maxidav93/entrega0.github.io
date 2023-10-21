@@ -73,7 +73,7 @@ function mostrarInformacionEnHTML(data) {
           const cantidad = parseInt(cantidadInput.value);
 
           const subtotal = cantidad * producto.unitCost;
-          subtotalCell.textContent = subtotal;
+          subtotalCell.innerHTML = `<span>${subtotal.toFixed(2)}</span>`;
         };
 
         fila.querySelector(".cantidad").addEventListener("change", actualizarSubtotal);

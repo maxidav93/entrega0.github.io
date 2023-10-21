@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Muestra los detalles del producto utilizando los datos ya obtenidos
       const { name, cost, description, category, soldCount, currency } = data;
       cont.innerHTML = `
-      
+
         <h1 class="mt-5">${name}</h1>
         <div class="price-txt"><p class="precio">${currency} ${cost}<p class="descuento">${savedRandomNumbers}%OFF</p></p></div>
         <p class="descripcion"> ${description}</p>
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       // Agrega los botones al DOM
-      
+
 
       control.appendChild(prevButton);
       control.appendChild(nextButton);
@@ -237,8 +237,8 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
       </div>
-      
-      
+
+
         `;
       });
       container.innerHTML = content;
@@ -275,11 +275,11 @@ function agregarAlCarrito() {
   let objIndex = carrito.findIndex((obj => obj.id === Number(idProdCarrito)));
 
   if(producto){
-      carrito[objIndex] = {...producto, count:  producto.count + 1 } 
+      carrito[objIndex] = {...producto, count:  producto.count + 1 }
     } else {
       carrito.push({
-        name : productActual.name, 
-        unitCost: productActual.cost, 
+        name : productActual.name,
+        unitCost: productActual.cost,
         count: 1,
         currency: productActual.currency,
         id: productActual.id,
@@ -289,4 +289,4 @@ function agregarAlCarrito() {
     localStorage.setItem("carrito", JSON.stringify([...carrito]));
 alert("Se agregó su producto seleccionado al carrito.")
     mostrarInformacionEnHTML();
-  }    
+  }
