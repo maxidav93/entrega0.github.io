@@ -283,3 +283,13 @@ margin-bottom: 40px;
   width: 100px;
 }
 
+.custom-delete-btn {
+  cursor: pointer;
+  color: inherit;
+  padding: 3px 6px;
+}
+.custom-delete-btn:hover {
+  color: red;
+  scale: calc(1.15);
+  border: red;
+}
