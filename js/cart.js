@@ -53,22 +53,26 @@ function mostrarInformacionEnHTML(data) {
 
     tbody.appendChild(fila);
     fila.appendChild(subtotalCell);
+      //Boton de borrar
 
-    //Boton de borrar
+  const accionesCell = document.createElement('td');
+  accionesCell.innerHTML = `
+    <i  onclick="borrarProducto(${producto.id})" class='btn custom-delete-btn fas fa-trash-alt' id="botonBorrar"></i>
+  `;
+  fila.appendChild(accionesCell);
+  accionesCell.setAttribute("id", "tdboton");
 
-    const accionesCell = document.createElement('td');
-    accionesCell.innerHTML = `
+  // Asignar un evento al cambio de cantidad
+  fila.querySelector(".cantidad").addEventListener("change", () => {
+    actualizarSubtotal(fila, producto, producto.id);
+  });
+    // Mostrar el subtotal al cargar la página
+    actualizarSubtotal(fila, producto, producto.id);
+  });
 
-           <i  onclick="borrarProducto(${producto.id})"   class='btn custom-delete-btn fas fa-trash-alt'
-         id="botonBorrar"
-           </i>
 
-        `;
-    fila.appendChild(accionesCell);
-        // Asignar un evento al cambio de cantidad
-        fila.querySelector(".cantidad").addEventListener("change", () => {
-          actualizarSubtotal(fila, producto, producto.id);
-        });
+
+
 
 
     accionesCell.setAttribute("id" , "tdboton")
@@ -76,32 +80,35 @@ function mostrarInformacionEnHTML(data) {
 
 
 
-  function actualizarSubtotal(inputElement, id) { // Función para recalcular el subtotal de un artículo.
-    if (inputElement.value < 1)
-        inputElement.value = originalValue;
-    else {
-        const subtotal = document.getElementById(id);
-        const value = inputElement.value
-        subtotal.textContent = subtotal.getAttribute('data-articleUnitCost') * value;
+// Función para actualizar el subtotal
+function actualizarSubtotal(fila, producto, id) {
+  const cantidadInput = fila.querySelector(".cantidad");
+  const cantidad = parseInt(cantidadInput.value);
+  const subtotalCell = fila.querySelector("td:last-child");  // Última celda de la fila para mostrar el subtotal
 
-        let index = 0;
+  if (producto.currency === 'UYU') {
+    subtotalCell.textContent = `UYU ${cantidad * producto.unitCost * 40}`;
+  } else {
+    subtotalCell.textContent = `${producto.currency} ${(cantidad * producto.unitCost).toFixed(2)}`;
+  }
 
-        while (index < cart.length && id !== cart[index].id)
-            index++;
+  // Actualizar el producto en el Local Storage con la nueva cantidad
+  const productoIndex = carritoActual.findIndex(item => item.id === id);
+  if (productoIndex !== -1) {
+    carritoActual[productoIndex].count = cantidad;
+    localStorage.setItem('carrito', JSON.stringify(carritoActual));
+  }
 
-        cart[index].count = value;
-        localStorage.setItem('cart', JSON.stringify(cart));
-        cart = JSON.parse(localStorage.getItem('cart'));
-    }
-
-    mostrarCosto(carritoActual);
+  // Actualizar el costo total
+  mostrarCosto();
 }
+
 
   tableContainer.appendChild(tabla);
   carritoContainer.innerHTML = "";
   carritoContainer.appendChild(tableContainer);
 }
-,function eliminarProductoDelLocalStorage(id) {
+function eliminarProductoDelLocalStorage(id) {
   // Obten el contenido actual del Local Storage
   var productosEnLocalStorage = JSON.parse(localStorage.getItem('carrito')) || [];
 
@@ -112,7 +119,7 @@ function mostrarInformacionEnHTML(data) {
 
   // Actualiza el Local Storage con la nueva lista de productos
   localStorage.setItem('carrito', JSON.stringify(productosEnLocalStorage));
-});
+};
 
 
   function borrarProducto(id) {
@@ -137,4 +144,15 @@ function mostrarInformacionEnHTML(data) {
     eliminarProductoDelLocalStorage(id);
   }
 }
+// Agregar un producto al carrito
+function agregarProductoAlCarrito(producto) {
+  // Agrega el producto al carrito (carritoActual)
+  carritoActual.push(producto);
+
+  // Actualiza el Local Storage con los productos
+  localStorage.setItem("carrito", JSON.stringify(carritoActual));
+
+  // Llama a mostrarInformacionEnHTML para actualizar la vista
+  mostrarInformacionEnHTML();
 }
+
