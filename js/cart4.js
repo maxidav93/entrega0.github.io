@@ -132,13 +132,17 @@ function mostrarInformacionEnHTML(data) {
 }
 
 function mostrarCosto() {
-  let subtotal = 0;
-  carritoActual.forEach(producto => {
-    if (producto.currency === 'UYU') {
-      subtotal += producto.count * producto.unitCost * 40;
+    if (!carritoActual || carritoActual.length === 0) {
+      document.getElementById("subtotalCosto").textContent = "$0.00";
     } else {
-      subtotal += producto.count * producto.unitCost;
+      let subtotal = 0;
+      carritoActual.forEach(producto => {
+        if (producto.currency === 'UYU') {
+          subtotal += producto.count * producto.unitCost * 40;
+        } else {
+          subtotal += producto.count * producto.unitCost;
+        }
+      });
+      document.getElementById("subtotalCosto").textContent = `${parseFloat(subtotal).toFixed(2)}`;
     }
-  });
-  document.getElementById("subtotalCosto").textContent = `${parseFloat(subtotal).toFixed(2)}`;
-}
+  }
