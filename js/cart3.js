@@ -48,6 +48,11 @@ function mostrarInformacionEnHTML(data) {
       </td>
       <td>${producto.unitCost}</td>
       <td>${producto.currency}</td>
+      <td>
+      <button class="btn btn-danger btn-sm eliminar-producto" data-producto-id="${producto.id}">
+        Eliminar
+      </button>
+    </td>
     `;
 
     tbody.appendChild(fila);
