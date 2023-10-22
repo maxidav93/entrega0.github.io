@@ -2,126 +2,113 @@ let carritoContainer = document.getElementById('carritoContainer');
 let carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
 
 document.addEventListener("DOMContentLoaded", () => {
-    mostrarInformacionEnHTML();
+  mostrarInformacionEnHTML();
 });
 
 function mostrarInformacionEnHTML(data) {
-    if (!carritoActual || carritoActual.length === 0) {
-        carritoContainer.innerHTML = '<p class="alert alert-warning">El carrito está vacío</p>';
-        return;
-    }
+  if (!carritoActual || carritoActual.length === 0) {
+    carritoContainer.innerHTML = '<p class="alert alert-warning">El carrito está vacío</p>';
+    return;
+  }
 
-    const tableContainer = document.createElement("div");
-    tableContainer.classList.add("table-responsive");
+  const tableContainer = document.createElement("div");
+  tableContainer.classList.add("table-responsive");
 
-    const tabla = document.createElement('table');
-    tabla.classList.add('table', 'table-striped', 'table-bordered', 'w-100', 'table-responsive');
-    tabla.innerHTML = `
-        <thead class="thead-dark text-center">
-            <tr>
-                <th>Producto</th>
-                <th>Nombre</th>
-                <th class="col-1">Cantidad</th>
-                <th>Costo</th>
-                <th>Moneda</th>
-                <th>Subtotal</th>
-                <th>Eliminar</th>
-            </tr>
-        </thead>
-        <tbody class="text-center">
-            <!-- Los datos del carrito se agregarán aquí dinámicamente -->
-        </tbody>
-    `;
+  const tabla = document.createElement('table');
+  tabla.classList.add('table', 'table-striped', 'table-bordered', 'w-100', 'table-responsive');
+  tabla.innerHTML = `
+    <thead class="thead-dark text-center">
+      <tr>
+        <th>Producto</th>
+        <th>Nombre</th>
+        <th class="col-1">Cantidad</th>
+        <th>Costo</th>
+        <th>Moneda</th>
+        <th>Subtotal</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody class="text-center">
+      <!-- Los datos del carrito se agregarán aquí dinámicamente -->
+    </tbody>
+  `;
 
-    const tbody = tabla.querySelector('tbody');
+  // Obtener el cuerpo de la tabla para agregar filas
+  const tbody = tabla.querySelector('tbody');
 
-    carritoActual.forEach(producto => {
-        const fila = crearFilaProducto(producto);
-        tbody.appendChild(fila);
-    });
-
-    tableContainer.appendChild(tabla);
-    carritoContainer.innerHTML = "";
-    carritoContainer.appendChild(tableContainer);
-}
-
-function crearFilaProducto(producto) {
+  carritoActual.forEach(producto => {
     const fila = document.createElement("tr");
-
-    const imagenCell = document.createElement("td");
-    imagenCell.innerHTML = `<img src="${producto.image}" alt="${producto.name}" style="width: 70px;">`;
-
-    const nombreCell = document.createElement("td");
-    nombreCell.textContent = producto.name;
-
-    const cantidadCell = document.createElement("td");
-    cantidadCell.innerHTML = `
-        <input type="number" class="btn btn-sm cantidad" value="${producto.count}" min="1" data-producto-id="${producto.id}">
-    `;
-
-    const costoCell = document.createElement("td");
-    costoCell.textContent = producto.unitCost;
-
-    const monedaCell = document.createElement("td");
-    monedaCell.textContent = producto.currency;
-
     const subtotalCell = document.createElement("td");
 
-    const eliminarCell = document.createElement("td");
-    eliminarCell.innerHTML = `
-        <button class="btn btn-danger" data-producto-id="${producto.id}">Eliminar</button>
+    fila.innerHTML = `
+      <td><img src="${producto.image}" alt="${producto.name}" style="width: 70px;"></td>
+      <td>${producto.name}</td>
+      <td class="col-1">
+        <input type="number" class="btn btn-sm cantidad" value="${producto.count}" min="1" data-producto-id="${producto.id}">
+      </td>
+      <td>${producto.unitCost}</td>
+      <td>${producto.currency}</td>
     `;
 
-    fila.appendChild(imagenCell);
-    fila.appendChild(nombreCell);
-    fila.appendChild(cantidadCell);
-    fila.appendChild(costoCell);
-    fila.appendChild(monedaCell);
+    tbody.appendChild(fila);
     fila.appendChild(subtotalCell);
-    fila.appendChild(eliminarCell);
 
-    cantidadCell.querySelector(".cantidad").addEventListener("change", () => {
-        actualizarSubtotal(fila, producto);
-    });
+    // Función para actualizar el subtotal
+    const actualizarSubtotal = () => {
+      const cantidadInput = fila.querySelector(".cantidad");
+      const cantidad = parseInt(cantidadInput.value);
 
-    eliminarCell.querySelector("button").addEventListener("click", () => {
-        eliminarProducto(producto.id);
-    });
-
-    actualizarSubtotal(fila, producto);
-
-    return fila;
-}
-
-function actualizarSubtotal(fila, producto) {
-    const cantidadInput = fila.querySelector(".cantidad");
-    const cantidad = parseInt(cantidadInput.value);
-    const subtotal = fila.querySelector("td:last-child");
-    if (producto.currency === 'UYU') {
+      if (producto.currency === 'UYU') {
         const subtotalValue = cantidad * producto.unitCost * 40;
-        subtotal.textContent = `UYU ${subtotalValue}`;
-    } else {
+        subtotalCell.textContent = `UYU ${subtotalValue}`;
+      } else {
         const subtotalValue = cantidad * producto.unitCost;
-        subtotal.textContent = `${producto.currency} ${(subtotalValue).toFixed(2)}`;
-    }
-    displayCosts();
+        subtotalCell.textContent = `${producto.currency} ${(subtotalValue).toFixed(2)}`;
+      }
+
+      // Actualizar el producto en el carritoActual con la nueva cantidad
+      const productoIndex = carritoActual.findIndex(item => item.id === producto.id);
+      if (productoIndex !== -1) {
+        carritoActual[productoIndex].count = cantidad;
+        localStorage.setItem('carrito', JSON.stringify(carritoActual));
+      }
+
+      mostrarCosto();
+    };
+
+    fila.querySelector(".cantidad").addEventListener("change", actualizarSubtotal);
+    actualizarSubtotal();
+  });
+
+  tableContainer.appendChild(tabla);
+  carritoContainer.innerHTML = "";
+  carritoContainer.appendChild(tableContainer);
 }
 
-function eliminarProducto(id) {
-    carritoActual = carritoActual.filter(producto => producto.id !== id);
-    localStorage.setItem("carrito", JSON.stringify(carritoActual));
-    mostrarInformacionEnHTML();
+function mostrarCosto() {
+  let subtotal = 0;
+  carritoActual.forEach(producto => {
+    if (producto.currency === 'UYU') {
+      subtotal += producto.count * producto.unitCost * 40;
+    } else {
+      subtotal += producto.count * producto.unitCost;
+    }
+  });
+  document.getElementById("subtotalCosto").textContent = `${parseFloat(subtotal).toFixed(2)}`;
 }
 
-function displayCosts() {
-    let subtotal = 0;
-    carritoActual.forEach(producto => {
-        if (producto.currency === 'UYU') {
-            subtotal += producto.count * producto.unitCost * 40;
-        } else {
-            subtotal += producto.count * producto.unitCost;
-        }
-    }
-    );
-    document.getElementById("subtotalCosto").textContent = `${parseFloat(subtotal).toFixed(2)}`;
+function agregarProductoAlCarrito(producto) {
+  // Agregar el producto al carritoActual
+  carritoActual.push(producto);
+  // Actualizar el almacenamiento local
+  localStorage.setItem('carrito', JSON.stringify(carritoActual));
+  // Actualizar la vista
+  mostrarInformacionEnHTML();
+}
+
+function eliminarProductoDelLocalStorage(id) {
+  // Filtrar los productos para eliminar el que coincide con el ID
+  carritoActual = carritoActual.filter(producto => producto.id !== id);
+  // Actualizar el almacenamiento local
+  localStorage.setItem('carrito', JSON.stringify(carritoActual));
 }
