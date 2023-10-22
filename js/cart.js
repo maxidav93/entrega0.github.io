@@ -25,7 +25,6 @@ function mostrarInformacionEnHTML(data) {
         <th>Costo</th>
         <th>Moneda</th>
         <th>Subtotal</th>
-        <th>Acción</th>
       </tr>
     </thead>
     <tbody class="text-center">
