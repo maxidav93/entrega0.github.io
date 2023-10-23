@@ -3,7 +3,7 @@ const elementoCosto = document.getElementById("subtotalCosto")
 const carritoContainer = document.getElementById('carritoContainer');
 const campoCostoEnvio = document.getElementById("envioCosto");
 
-const carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
+let carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -78,16 +78,15 @@ function mostrarInformacionEnHTML() {
     eliminarButton.dataset.productoId = producto.id;
     eliminarButton.addEventListener("click", () => {
 
-      const productoId = producto.id;
+      let productoId = producto.id;
       var confirmacion = confirm('¿Estás seguro de que deseas eliminar este producto?');
-
+      console.log("ID del producto a eliminar:", productoId);
       // Si el usuario hace clic en "Aceptar" en la alerta de confirmación
       if (confirmacion) {
       carritoActual = carritoActual.filter(item => item.id !== productoId);
       localStorage.setItem('carrito', JSON.stringify(carritoActual));
       mostrarInformacionEnHTML();
       mostrarCosto();
-      calcularCosto();
       }
     });
 
