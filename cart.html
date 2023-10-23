@@ -79,6 +79,7 @@
 
       <div class=" col-md-8 mx-auto  border shadow">
          <div id="carritoContainer" class="table-responsive "></div>
+         <div id="aviso"></div>
       </div>
       <br>
       <h5  class="col-12 col-md-8 mx-auto my-3 p-3">Datos de envío:</h5>
@@ -120,18 +121,25 @@
           </form>
         </div>
           </div>
+          <br>
+          <h5  class="col-12 col-md-8 mx-auto my-3 p-3">Costos:</h5>
+          <div class=" col-md-8 mx-auto  border shadow">
           <div id="total">
             <ul class="list-group">
               <li id="Total" class="list-group-item">
-                <strong>Total: </strong><span id="subtotalCosto">$0.00</span>
+                Subtotal: <span>USD </span><span id="subtotalCosto" >0.00</span>
               </li>
 
-              <li class="list-group-item">Costo de envío</li>
+              <li class="list-group-item">
+                Costo de envío: <span>USD </span><span id="envioCosto" >0.00</span>
+              </li>
 
               <li class="list-group-item">Total($)</li>
 
             </ul>
           </div>
+        </div>
+        <br>
   </main>
   <div id="spinner-wrapper">
     <div class="lds-ring">

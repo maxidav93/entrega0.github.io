@@ -1,11 +1,16 @@
-let carritoContainer = document.getElementById('carritoContainer');
-let carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
+const tipoEnvio = document.getElementById("tipoEnvio");
+const elementoCosto = document.getElementById("subtotalCosto")
+const carritoContainer = document.getElementById('carritoContainer');
+const campoCostoEnvio = document.getElementById("envioCosto");
+
+const carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
+
 
 document.addEventListener("DOMContentLoaded", () => {
   mostrarInformacionEnHTML();
 });
 
-function mostrarInformacionEnHTML(data) {
+function mostrarInformacionEnHTML() {
   if (!carritoActual || carritoActual.length === 0) {
     carritoContainer.innerHTML = '<p class="alert alert-warning">El carrito está vacío</p>';
     return;
@@ -68,15 +73,22 @@ function mostrarInformacionEnHTML(data) {
     const subtotalCell = document.createElement("td");
 
     // Botón de eliminación
-    const eliminarButton = document.createElement("button");
-    eliminarButton.textContent = "Eliminar";
-    eliminarButton.classList.add("btn", "btn-danger", "btn-sm");
+    const eliminarButton = document.createElement("i");
+    eliminarButton.classList.add("btn", "custom-delete-btn", "fas", "fa-trash-alt");
     eliminarButton.dataset.productoId = producto.id;
     eliminarButton.addEventListener("click", () => {
+
       const productoId = producto.id;
+      var confirmacion = confirm('¿Estás seguro de que deseas eliminar este producto?');
+
+      // Si el usuario hace clic en "Aceptar" en la alerta de confirmación
+      if (confirmacion) {
       carritoActual = carritoActual.filter(item => item.id !== productoId);
       localStorage.setItem('carrito', JSON.stringify(carritoActual));
       mostrarInformacionEnHTML();
+      mostrarCosto();
+      calcularCosto();
+      }
     });
 
     // Celda de la acción con el botón de eliminación
@@ -88,13 +100,10 @@ function mostrarInformacionEnHTML(data) {
       const cantidad = parseInt(cantidadInput.value);
       let subtotalValue = 0;
 
-      if (producto.currency === 'UYU') {
-        subtotalValue = cantidad * producto.unitCost * 40;
-        subtotalCell.textContent = `UYU ${subtotalValue}`;
-      } else {
+   
         subtotalValue = cantidad * producto.unitCost;
-        subtotalCell.textContent = `${producto.currency} ${(subtotalValue).toFixed(2)}`;
-      }
+        subtotalCell.textContent = ` ${(subtotalValue).toFixed(2)}`;
+      
 
       // Actualizar el producto en el carritoActual con la nueva cantidad
       const productoIndex = carritoActual.findIndex(item => item.id === producto.id);
@@ -132,12 +141,51 @@ function mostrarInformacionEnHTML(data) {
 
 function mostrarCosto() {
   let subtotal = 0;
+
   carritoActual.forEach(producto => {
     if (producto.currency === 'UYU') {
-      subtotal += producto.count * producto.unitCost * 40;
+      subtotal += producto.count * producto.unitCost / 40;
     } else {
       subtotal += producto.count * producto.unitCost;
     }
   });
-  document.getElementById("subtotalCosto").textContent = `${parseFloat(subtotal).toFixed(2)}`;
+  
+ 
+
+  elementoCosto.textContent = `${parseFloat(subtotal).toFixed(2)}`;
+
+  
+
+function obtenerTipodeEnvio() {
+  
+    let valorSeleccionado = tipoEnvio.value;
+  
+    console.log("Tipo de Envío:", valorSeleccionado); 
+    // Define las tarifas de envío para cada tipo
+    const tarifasEnvio = {
+      premium: 0.15,   // 15%
+      express: 0.07,   // 7%
+      estandar: 0.05   // 5%
+    };
+    return tarifasEnvio[valorSeleccionado];
+  } 
+
+
+campoCostoEnvio.addEventListener("change", calcularCosto());
+
+
+    function calcularCosto() {
+      let valorSeleccionado = obtenerTipodeEnvio() ?? 0
+      
+      let costoEnvio = subtotal * valorSeleccionado;
+      console.log("Costo de Envío:", costoEnvio);
+  
+      
+      campoCostoEnvio.textContent = `${parseFloat(costoEnvio).toFixed(2)}`;
+     
+}
+
+
+tipoEnvio.addEventListener("change", () => calcularCosto() )
+
 }
