@@ -2,7 +2,7 @@ const tipoEnvio = document.getElementById("tipoEnvio");
 const elementoCosto = document.getElementById("subtotalCosto")
 const carritoContainer = document.getElementById('carritoContainer');
 const campoCostoEnvio = document.getElementById("envioCosto");
-
+const campoCostoTotal = document.getElementById("totalCosto");
 let carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
 
 
@@ -36,6 +36,7 @@ function mostrarInformacionEnHTML() {
       <!-- Los datos del carrito se agregarán aquí dinámicamente -->
     </tbody>
   `;
+
 
   // Obtener el cuerpo de la tabla para agregar filas
   const tbody = tabla.querySelector('tbody');
@@ -80,13 +81,12 @@ function mostrarInformacionEnHTML() {
 
       let productoId = producto.id;
       var confirmacion = confirm('¿Estás seguro de que deseas eliminar este producto?');
-      console.log("ID del producto a eliminar:", productoId);
       // Si el usuario hace clic en "Aceptar" en la alerta de confirmación
       if (confirmacion) {
-      carritoActual = carritoActual.filter(item => item.id !== productoId);
-      localStorage.setItem('carrito', JSON.stringify(carritoActual));
-      mostrarInformacionEnHTML();
-      mostrarCosto();
+        carritoActual = carritoActual.filter(item => item.id !== productoId);
+        localStorage.setItem('carrito', JSON.stringify(carritoActual));
+        mostrarInformacionEnHTML();
+        mostrarCosto();
       }
     });
 
@@ -99,10 +99,10 @@ function mostrarInformacionEnHTML() {
       const cantidad = parseInt(cantidadInput.value);
       let subtotalValue = 0;
 
-   
-        subtotalValue = cantidad * producto.unitCost;
-        subtotalCell.textContent = ` ${(subtotalValue).toFixed(2)}`;
-      
+
+      subtotalValue = cantidad * producto.unitCost;
+      subtotalCell.textContent = ` ${(subtotalValue).toFixed(2)}`;
+
 
       // Actualizar el producto en el carritoActual con la nueva cantidad
       const productoIndex = carritoActual.findIndex(item => item.id === producto.id);
@@ -147,19 +147,15 @@ function mostrarCosto() {
     } else {
       subtotal += producto.count * producto.unitCost;
     }
+
   });
-  
- 
+
 
   elementoCosto.textContent = `${parseFloat(subtotal).toFixed(2)}`;
 
-  
 
-function obtenerTipodeEnvio() {
-  
+  function obtenerTipodeEnvio() {
     let valorSeleccionado = tipoEnvio.value;
-  
-    console.log("Tipo de Envío:", valorSeleccionado); 
     // Define las tarifas de envío para cada tipo
     const tarifasEnvio = {
       premium: 0.15,   // 15%
@@ -167,24 +163,25 @@ function obtenerTipodeEnvio() {
       estandar: 0.05   // 5%
     };
     return tarifasEnvio[valorSeleccionado];
-  } 
+  }
 
 
-campoCostoEnvio.addEventListener("change", calcularCosto());
+  function calcularCosto() {
+    let valorSeleccionado = obtenerTipodeEnvio() ?? 0
+    let costoEnvio = subtotal * valorSeleccionado;
+    campoCostoEnvio.textContent = `${parseFloat(costoEnvio).toFixed(2)}`;
+    calcularTotal();
+
+  }
 
 
-    function calcularCosto() {
-      let valorSeleccionado = obtenerTipodeEnvio() ?? 0
-      
-      let costoEnvio = subtotal * valorSeleccionado;
-      console.log("Costo de Envío:", costoEnvio);
-  
-      
-      campoCostoEnvio.textContent = `${parseFloat(costoEnvio).toFixed(2)}`;
-     
-}
+  function calcularTotal() {
+    let total = parseFloat(elementoCosto.textContent) + parseFloat(campoCostoEnvio.textContent);
+    campoCostoTotal.textContent = total.toFixed(2);
+  }
+  calcularTotal();
 
-
-tipoEnvio.addEventListener("change", () => calcularCosto() )
+  campoCostoEnvio.addEventListener("change", calcularCosto());
+  tipoEnvio.addEventListener("change", () => calcularCosto());
 
 }
