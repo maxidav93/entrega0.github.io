@@ -141,3 +141,101 @@ function mostrarCosto() {
   });
   document.getElementById("subtotalCosto").textContent = `${parseFloat(subtotal).toFixed(2)}`;
 }
+
+
+
+
+/* Payment Modal Section */
+
+const openModal = document.getElementById("openModal");
+const closeModal = document.getElementById("closeBtn")
+const mainModal = document.getElementById("mainModal");
+const creditCheckbox = document.getElementById("creditOption");
+const transferCheckbox = document.getElementById("transferOption");
+const creditInputs = document.querySelector(".creditInputs");
+const transferInputs = document.querySelector(".transferInputs");
+const inputVencimiento = document.getElementById("vencimiento");
+const accNumInput = document.getElementById("accNum");
+const pageOverlay = document.querySelector(".page-overlay");
+
+
+window.addEventListener("load", () => {
+  mainModal.style.display= "none"
+});
+
+openModal.addEventListener("click", () => {
+  if (mainModal.style.display === "none") {
+    mainModal.style.display = "flex";
+    pageOverlay.style.display = "block"; 
+  }
+});
+
+closeModal.addEventListener("click", () => {
+  if (mainModal.style.display === "flex" || pageOverlay.style.display === "block") {
+    mainModal.style.display = "none";
+    pageOverlay.style.display = "none";
+  }
+});
+
+
+// formato de input de vencimiento 
+inputVencimiento.addEventListener("input", function () {
+  let inputValue = inputVencimiento.value;
+
+  if (/^\d{2}$/.test(inputValue)) {
+    inputVencimiento.value = inputValue + "/";
+  } else if (/^\d{2}\/\d{2}$/.test(inputValue)) {
+    inputVencimiento.value = inputValue.slice(0, 5);
+  }
+});
+
+
+// formato de input de numero de cuenta
+
+accNumInput.addEventListener("input", function () {
+  const value = accNumInput.value.replace(/[^\d]/g, '');
+
+  if (value.length > 12) {
+      accNumInput.value = value.slice(0, 12);
+  } else if (value.length > 8) {
+      accNumInput.value = value.slice(0, 4) + '-' + value.slice(4, 8) + '-' + value.slice(8);
+  } else if (value.length > 4) {
+      accNumInput.value = value.slice(0, 4) + '-' + value.slice(4);
+  } else {
+      accNumInput.value = value;
+  }
+});
+
+creditCheckbox.addEventListener("change", function () {
+  if (creditCheckbox.checked) {
+      enableInputs(creditInputs);
+      transferCheckbox.checked = false; 
+      disableInputs(transferInputs);
+  } else {
+      disableInputs(creditInputs);
+  }
+});
+
+transferCheckbox.addEventListener("change", function () {
+  if (transferCheckbox.checked) {
+      enableInputs(transferInputs);
+      creditCheckbox.checked = false;
+      disableInputs(creditInputs);
+  } else {
+      disableInputs(transferInputs);
+  }
+});
+
+function enableInputs(section) {
+  const inputs = section.querySelectorAll("input");
+  for (const input of inputs) {
+      input.removeAttribute("disabled");
+  }
+}
+
+function disableInputs(section) {
+  const inputs = section.querySelectorAll("input");
+  for (const input of inputs) {
+      input.setAttribute("disabled", "true");
+  }
+}

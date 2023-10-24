@@ -9,11 +9,15 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="css/cart.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
 <body>
+  <div class="page-overlay" style="display: none;"></div>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -48,7 +52,9 @@
                   <ul class="dropdown-menu dropdown-menu-dark">
                     <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
                     <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
-                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                      <hr class="dropdown-divider">
+                    </li>
                     <li><a id="logout" class="dropdown-item" href="#">Cerrar sesión</a></li>
                     <input type="checkbox" id="toggle">
                     <label for="toggle" id="label_toggle"><i class="fa-solid fa-moon"></i></label>
@@ -73,65 +79,107 @@
       <h2>Carrito de compras</h2>
       <p class="lead"></p>
     </div>
-    <h5  class="col-12 col-md-8 mx-auto my-3 p-3">Artículos a comprar:</h5>
+    <h5 class="col-12 col-md-8 mx-auto my-3 p-3">Artículos a comprar:</h5>
 
 
 
-      <div class=" col-md-8 mx-auto  border shadow">
-         <div id="carritoContainer" class="table-responsive "></div>
-      </div>
-      <br>
-      <h5  class="col-12 col-md-8 mx-auto my-3 p-3">Datos de envío:</h5>
-      <div id="formContainer" class="col-12 col-md-8 mx-auto my-3 border shadow p-3">
-          <form id="form" class="row g-3 ">
-            <div class="col-12">
+    <div class=" col-md-8 mx-auto  border shadow">
+      <div id="carritoContainer" class="table-responsive "></div>
+    </div>
+    <br>
+    <h5 class="col-12 col-md-8 mx-auto my-3 p-3">Datos de envío:</h5>
+    <div id="formContainer" class="col-12 col-md-8 mx-auto my-3 border shadow p-3">
+      <form id="form" class="row g-3 ">
+        <div class="col-12">
 
-              <label for="tipoEnvio" class="form-label">Tipo de Envío</label>
-                <select class="form-select" id="tipoEnvio" required>
-                    <option value="" disabled selected>Selecciona un tipo de envío</option>
-                    <option value="premium">Premium 2 a 5 días(15%)</option>
-                    <option value="express">Express 5 a 8 días(7%)</option>
-                    <option value="estandar">Standard 12 a 15 días(5%)</option>
-                </select>
-                </div>
-            <div class="col-12">
-              <label for="inputAddress" class="form-label">Dirección</label>
-              <input type="text" class="form-control" id="inputAddress" placeholder="Calle y número">
-            </div>
-            <div class="col-12">
-              <label for="inputAddress2" class="form-label">Esquina</label>
-              <input type="text" class="form-control" id="inputAddress2" placeholder="Esquina">
-            </div>
-            <div class="col-md-6">
-              <label for="inputCity" class="form-label">Ciudad</label>
-              <input type="text" class="form-control" id="inputCity">
-            </div>
-            <div class="col-md-4">
-              <label for="inputState" class="form-label">Barrio</label>
-              <select id="inputState" class="form-select">
-                <option selected>Elige...</option>
-                <option>...</option>
-              </select>
-            </div>
-            <div class="col-md-2">
-              <label for="inputZip" class="form-label">Código postal</label>
-              <input type="text" class="form-control" id="inputZip">
-            </div>
-          </form>
+          <label for="tipoEnvio" class="form-label">Tipo de Envío</label>
+          <select class="form-select" id="tipoEnvio" required>
+            <option value="" disabled selected>Selecciona un tipo de envío</option>
+            <option value="premium">Premium 2 a 5 días(15%)</option>
+            <option value="express">Express 5 a 8 días(7%)</option>
+            <option value="estandar">Standard 12 a 15 días(5%)</option>
+          </select>
         </div>
+        <div class="col-12">
+          <label for="inputAddress" class="form-label">Dirección</label>
+          <input type="text" class="form-control" id="inputAddress" placeholder="Calle y número">
+        </div>
+        <div class="col-12">
+          <label for="inputAddress2" class="form-label">Esquina</label>
+          <input type="text" class="form-control" id="inputAddress2" placeholder="Esquina">
+        </div>
+        <div class="col-md-6">
+          <label for="inputCity" class="form-label">Ciudad</label>
+          <input type="text" class="form-control" id="inputCity">
+        </div>
+        <div class="col-md-4">
+          <label for="inputState" class="form-label">Barrio</label>
+          <select id="inputState" class="form-select">
+            <option selected>Elige...</option>
+            <option>...</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label for="inputZip" class="form-label">Código postal</label>
+          <input type="text" class="form-control" id="inputZip">
+        </div>
+      </form>
+    </div>
+    </div>
+    <div id="total">
+      <ul class="list-group">
+        <li id="Total" class="list-group-item">
+          <strong>Total: </strong><span id="subtotalCosto">$0.00</span>
+        </li>
+
+        <li class="list-group-item">Costo de envío</li>
+
+        <li class="list-group-item">Total($)</li>
+
+      </ul>
+    </div>
+
+    <section id="modal">
+      <div class="modalCont">
+        <div id="paymentModal">
+          <div class="secModalTitle">FORMA DE PAGO</div>
+          <div class="modalCont">
+            <div class="modalType"></div>
+            <button id="openModal">Selecciona</button>
           </div>
-          <div id="total">
-            <ul class="list-group">
-              <li id="Total" class="list-group-item">
-                <strong>Total: </strong><span id="subtotalCosto">$0.00</span>
-              </li>
+        </div>
 
-              <li class="list-group-item">Costo de envío</li>
-
-              <li class="list-group-item">Total($)</li>
-
-            </ul>
+        <div id="mainModal">
+          <div class="modalTitle">
+            <h1>Forma de pago</h1>
           </div>
+          <div class="credit">
+            <input type="checkbox" name="credit" id="creditOption">
+            <label for="creditOption">Tarjeta de crédito</label>
+            <div class="creditInputs">
+              <input type="number" id="cardNum" >
+              <label for="cardNum">Numero de tarjeta</label>
+
+              <input type="number" id="segNum" placeholder="123" maxlength="3">
+              <label for="segNum">Código de Seguridad</label>
+
+              <input type="text" placeholder="mm/aa" name="vencimiento" id="vencimiento" maxlength="5">
+              <label for="vencimiento">Vencimiento</label>
+            </div>
+          </div>
+          <div class="bankTransfer">
+            <input type="checkbox" name="transferOption" id="transferOption">
+            <label for="transferOption">Transferencia Bancaria</label>
+            <div class="transferInputs">
+              <input type="text" id="accNum" placeholder="XXXX-XXXX-XXXX" maxlength="14">
+              <label for="accNum">Acc Number</label>
+            </div>
+          </div>
+          <div class="closeModalBtn"><button id="closeBtn">Close</button></div>
+        </div>
+      </div>
+    </section>
+
   </main>
   <div id="spinner-wrapper">
     <div class="lds-ring">
@@ -140,7 +188,8 @@
   <footer class="text-muted">
     <div class="container">
 
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
+      </p>
     </div>
   </footer>
   <script src="js/bootstrap.bundle.min.js"></script>
