@@ -48,7 +48,7 @@ function cambiarClase() {
         jumbotron.classList.add("bg-dark");
 
         // Cambiar la imagen de fondo
-        cambiarImagenFondo('img/Frame 2.png', '#212529');
+        cambiarImagenFondo('img/imagenIndexSinFondo2.png', '#212529');
          // Cambiar la clase del botón
          btn.classList.remove("btn-light");
          btn.classList.add("btn-dark");
@@ -109,7 +109,7 @@ function restaurarEstadoModoOscuro() {
         btn.classList.remove("btn-light");
         btn.classList.add("btn-dark");
         // Llamar a la función para cambiar la imagen de fondo
-        cambiarImagenFondo('img/Frame 2.png', '#212529');
+        cambiarImagenFondo('img/imagenIndexSinFondo2.png', '#212529');
     } else {
         // Si el modo oscuro no está habilitado, aplicar los estilos de luz
         albumDiv.classList.remove("bg-dark");
