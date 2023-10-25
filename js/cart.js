@@ -253,6 +253,7 @@ accNumInput.addEventListener("input", function () {
   }
 });
 
+
 creditCheckbox.addEventListener("change", function () {
   if (creditCheckbox.checked) {
       enableInputs(creditInputs);
