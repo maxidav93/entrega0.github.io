@@ -83,6 +83,50 @@
 
 
 
+
+      <div class=" col-md-8 mx-auto  border shadow">
+         <div id="carritoContainer" class="table-responsive "></div>
+         <div id="aviso"></div>
+      </div>
+      <br>
+      <h5  class="col-12 col-md-8 mx-auto my-3 p-3">Datos de envío:</h5>
+      <div id="formContainer" class="col-12 col-md-8 mx-auto my-3 border shadow p-3">
+          <form id="form" class="row g-3 ">
+            <div class="col-12">
+
+              <label for="tipoEnvio" class="form-label">Tipo de Envío</label>
+                <select class="form-select" id="tipoEnvio" required>
+                    <option value="" disabled selected>Selecciona un tipo de envío</option>
+                    <option value="premium">Premium 2 a 5 días(15%)</option>
+                    <option value="express">Express 5 a 8 días(7%)</option>
+                    <option value="estandar">Standard 12 a 15 días(5%)</option>
+                </select>
+                </div>
+            <div class="col-12">
+              <label for="inputAddress" class="form-label">Dirección</label>
+              <input type="text" class="form-control" id="inputAddress" placeholder="Calle y número">
+            </div>
+            <div class="col-12">
+              <label for="inputAddress2" class="form-label">Esquina</label>
+              <input type="text" class="form-control" id="inputAddress2" placeholder="Esquina">
+            </div>
+            <div class="col-md-6">
+              <label for="inputCity" class="form-label">Ciudad</label>
+              <input type="text" class="form-control" id="inputCity">
+            </div>
+            <div class="col-md-4">
+              <label for="inputState" class="form-label">Barrio</label>
+              <select id="inputState" class="form-select">
+                <option selected>Elige...</option>
+                <option>...</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label for="inputZip" class="form-label">Código postal</label>
+              <input type="text" class="form-control" id="inputZip">
+            </div>
+          </form>
+
     <div class=" col-md-8 mx-auto  border shadow">
       <div id="carritoContainer" class="table-responsive "></div>
     </div>
@@ -111,6 +155,7 @@
         <div class="col-md-6">
           <label for="inputCity" class="form-label">Ciudad</label>
           <input type="text" class="form-control" id="inputCity">
+
         </div>
         <div class="col-md-4">
           <label for="inputState" class="form-label">Barrio</label>
@@ -147,6 +192,24 @@
             <div class="modalType"></div>
             <button id="openModal">Selecciona</button>
           </div>
+
+          <br>
+          <h5  class="col-12 col-md-8 mx-auto my-3 p-3">Costos:</h5>
+          <div class=" col-md-8 mx-auto  border shadow">
+          <div id="total">
+            <ul class="list-group">
+              <li id="Total" class="list-group-item">
+                Subtotal: <span>USD </span><span id="subtotalCosto" >0.00</span>
+              </li>
+
+              <li class="list-group-item">
+                Costo de envío: <span>USD </span><span id="envioCosto" >0.00</span>
+              </li>
+
+              <li class="list-group-item">
+                Total: <span>USD </span><span id="totalCosto" >0.00</span>
+              </li>
+
         </div>
 
         <div id="mainModal">
@@ -163,6 +226,7 @@
               <input type="number" id="segNum" placeholder="123" maxlength="3">
               <label for="segNum">Código de Seguridad</label>
 
+
               <input type="text" placeholder="mm/aa" name="vencimiento" id="vencimiento" maxlength="5">
               <label for="vencimiento">Vencimiento</label>
             </div>
@@ -175,10 +239,15 @@
               <label for="accNum">Acc Number</label>
             </div>
           </div>
+
+        </div>
+        <br>
+
           <div class="closeModalBtn"><button id="closeBtn">Close</button></div>
         </div>
       </div>
     </section>
+
 
   </main>
   <div id="spinner-wrapper">

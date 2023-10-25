@@ -258,16 +258,13 @@ display: none;
   font-size: 20px;
 }
 
-/* Estilo para acortar los campos de texto */
+/* Estilo para acortar los campos de texto 
 #checkoutForm input[type="text"] {
   width: 30%;
 
 
 }
-
-#form {
-
-}
+*/
 
 .table-container {
   margin-bottom: 0;
@@ -289,6 +286,7 @@ display: none;
   color: red;
   scale: calc(1.15);
 }
+/*
 #total{
 margin-left: 70px;
 margin-right: 70px;
@@ -296,4 +294,4 @@ margin-top: 10px;
 margin-bottom: 40px;
 height: auto;
 width: auto;
-}
+}*/
