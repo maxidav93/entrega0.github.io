@@ -1,27 +1,53 @@
-const tipoEnvio = document.getElementById("tipoEnvio");
-const elementoCosto = document.getElementById("subtotalCosto")
-const carritoContainer = document.getElementById('carritoContainer');
-const campoCostoEnvio = document.getElementById("envioCosto");
-const campoCostoTotal = document.getElementById("totalCosto");
-let carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
-
-
 document.addEventListener("DOMContentLoaded", () => {
-  mostrarInformacionEnHTML();
-});
 
-function mostrarInformacionEnHTML() {
-  if (!carritoActual || carritoActual.length === 0) {
-    carritoContainer.innerHTML = '<p class="alert alert-warning">El carrito está vacío</p>';
-    return;
-  }
+  // Seccion de constantes
 
-  const tableContainer = document.createElement("div");
-  tableContainer.classList.add("table-responsive");
+  const tipoEnvio = document.getElementById("tipoEnvio");
+  const elementoCosto = document.getElementById("subtotalCosto")
+  const carritoContainer = document.getElementById('carritoContainer');
+  const campoCostoEnvio = document.getElementById("envioCosto");
+  const campoCostoTotal = document.getElementById("totalCosto");
+  let carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
 
-  const tabla = document.createElement('table');
-  tabla.classList.add('table', 'table-striped', 'table-bordered', 'w-100', 'table-responsive');
-  tabla.innerHTML = `
+
+  //constantes de validacion
+  const direccion = document.getElementById("inputAddress");
+  const esquina = document.getElementById("inputAddress2");
+  const ciudad = document.getElementById("inputCity");
+  const cp = document.getElementById("inputZip");
+  const comprar = document.getElementById("finalizarCompra");
+  const envio = document.getElementById("tipoEnvio");
+
+
+
+
+  //constantes de modal 
+  const openModal = document.getElementById("openModal");
+  const closeModal = document.getElementById("closeBtn")
+  const mainModal = document.getElementById("mainModal");
+  const creditCheckbox = document.getElementById("creditOption");
+  const transferCheckbox = document.getElementById("transferOption");
+  const creditInputs = document.querySelector(".creditInputs");
+  const transferInputs = document.querySelector(".transferInputs");
+  const inputVencimiento = document.getElementById("vencimiento");
+  const accNumInput = document.getElementById("accNum");
+  const pageOverlay = document.querySelector(".page-overlay");
+  const divModal = document.getElementById("paymentModal");
+  const cardNum = document.getElementById("cardNum");
+  const segNum = document.getElementById("segNum");
+
+  function mostrarInformacionEnHTML() {
+    if (!carritoActual || carritoActual.length === 0) {
+      carritoContainer.innerHTML = '<p class="alert alert-warning">El carrito está vacío</p>';
+      return;
+    }
+
+    const tableContainer = document.createElement("div");
+    tableContainer.classList.add("table-responsive");
+
+    const tabla = document.createElement('table');
+    tabla.classList.add('table', 'table-striped', 'table-bordered', 'w-100', 'table-responsive');
+    tabla.innerHTML = `
     <thead class="thead-dark text-center">
       <tr>
         <th>Producto</th>
@@ -35,255 +61,341 @@ function mostrarInformacionEnHTML() {
     <tbody class="text-center">
       <!-- Los datos del carrito se agregarán aquí dinámicamente -->
     </tbody>
-  `;
+   `;
 
 
-  // Obtener el cuerpo de la tabla para agregar filas
-  const tbody = tabla.querySelector('tbody');
+    // Obtener el cuerpo de la tabla para agregar filas
+    const tbody = tabla.querySelector('tbody');
 
-  carritoActual.forEach(producto => {
-    const fila = document.createElement("tr");
+    carritoActual.forEach(producto => {
+      const fila = document.createElement("tr");
 
-    // Celda de la imagen
-    const imagenCell = document.createElement("td");
-    imagenCell.innerHTML = `<img src="${producto.image}" alt="${producto.name}" style="width: 70px;">`;
+      // Celda de la imagen
+      const imagenCell = document.createElement("td");
+      imagenCell.innerHTML = `<img src="${producto.image}" alt="${producto.name}" style="width: 70px;">`;
 
-    // Celda del nombre
-    const nombreCell = document.createElement("td");
-    nombreCell.textContent = producto.name;
+      // Celda del nombre
+      const nombreCell = document.createElement("td");
+      nombreCell.textContent = producto.name;
 
-    // Celda de la cantidad con el botón de eliminación
-    const cantidadCell = document.createElement("td");
-    const cantidadInput = document.createElement("input");
-    cantidadInput.type = "number";
-    cantidadInput.classList.add("btn", "btn-sm", "cantidad");
-    cantidadInput.value = producto.count;
-    cantidadInput.min = 1;
-    cantidadInput.dataset.productoId = producto.id;
-    cantidadCell.appendChild(cantidadInput);
+      // Celda de la cantidad con el botón de eliminación
+      const cantidadCell = document.createElement("td");
+      const cantidadInput = document.createElement("input");
+      cantidadInput.type = "number";
+      cantidadInput.classList.add("btn", "btn-sm", "cantidad");
+      cantidadInput.value = producto.count;
+      cantidadInput.min = 1;
+      cantidadInput.dataset.productoId = producto.id;
+      cantidadCell.appendChild(cantidadInput);
 
-    // Celda del costo
-    const costoCell = document.createElement("td");
-    costoCell.textContent = producto.unitCost;
+      // Celda del costo
+      const costoCell = document.createElement("td");
+      costoCell.textContent = producto.unitCost;
 
-    // Celda de la moneda
-    const monedaCell = document.createElement("td");
-    monedaCell.textContent = producto.currency;
+      // Celda de la moneda
+      const monedaCell = document.createElement("td");
+      monedaCell.textContent = producto.currency;
 
-    // Celda del subtotal
-    const subtotalCell = document.createElement("td");
+      // Celda del subtotal
+      const subtotalCell = document.createElement("td");
 
-    // Botón de eliminación
-    const eliminarButton = document.createElement("i");
-    eliminarButton.classList.add("btn", "custom-delete-btn", "fas", "fa-trash-alt");
-    eliminarButton.dataset.productoId = producto.id;
-    eliminarButton.addEventListener("click", () => {
+      // Botón de eliminación
+      const eliminarButton = document.createElement("i");
+      eliminarButton.classList.add("btn", "custom-delete-btn", "fas", "fa-trash-alt");
+      eliminarButton.dataset.productoId = producto.id;
+      eliminarButton.addEventListener("click", () => {
 
-      let productoId = producto.id;
-      var confirmacion = confirm('¿Estás seguro de que deseas eliminar este producto?');
-      // Si el usuario hace clic en "Aceptar" en la alerta de confirmación
-      if (confirmacion) {
-        carritoActual = carritoActual.filter(item => item.id !== productoId);
-        localStorage.setItem('carrito', JSON.stringify(carritoActual));
-        mostrarInformacionEnHTML();
+        let productoId = producto.id;
+        var confirmacion = confirm('¿Estás seguro de que deseas eliminar este producto?');
+        // Si el usuario hace clic en "Aceptar" en la alerta de confirmación
+        if (confirmacion) {
+          carritoActual = carritoActual.filter(item => item.id !== productoId);
+          localStorage.setItem('carrito', JSON.stringify(carritoActual));
+          mostrarInformacionEnHTML();
+          mostrarCosto();
+        }
+      });
+
+      // Celda de la acción con el botón de eliminación
+      const accionCell = document.createElement("td");
+      accionCell.appendChild(eliminarButton);
+
+      // Función para actualizar el subtotal
+      const actualizarSubtotal = () => {
+        const cantidad = parseInt(cantidadInput.value);
+        let subtotalValue = 0;
+
+
+        subtotalValue = cantidad * producto.unitCost;
+        subtotalCell.textContent = ` ${(subtotalValue).toFixed(2)}`;
+
+
+        // Actualizar el producto en el carritoActual con la nueva cantidad
+        const productoIndex = carritoActual.findIndex(item => item.id === producto.id);
+        if (productoIndex !== -1) {
+          carritoActual[productoIndex].count = cantidad;
+          localStorage.setItem('carrito', JSON.stringify(carritoActual));
+        }
+
         mostrarCosto();
-      }
+      };
+
+      cantidadInput.addEventListener("change", actualizarSubtotal);
+      actualizarSubtotal();
+
+      // Agregar todas las celdas a la fila
+      fila.appendChild(imagenCell);
+      fila.appendChild(nombreCell);
+      fila.appendChild(cantidadCell);
+      fila.appendChild(costoCell);
+      fila.appendChild(monedaCell);
+      fila.appendChild(subtotalCell);
+      fila.appendChild(accionCell);
+
+      // Agregar la fila al cuerpo de la tabla
+      tbody.appendChild(fila);
     });
 
-    // Celda de la acción con el botón de eliminación
-    const accionCell = document.createElement("td");
-    accionCell.appendChild(eliminarButton);
+    // Agregar la tabla al contenedor
+    tableContainer.appendChild(tabla);
 
-    // Función para actualizar el subtotal
-    const actualizarSubtotal = () => {
-      const cantidad = parseInt(cantidadInput.value);
-      let subtotalValue = 0;
+    // Limpiar el contenedor y agregar la tabla
+    carritoContainer.innerHTML = "";
+    carritoContainer.appendChild(tableContainer);
+  }
+  mostrarInformacionEnHTML();
 
+  function mostrarCosto() {
+    let subtotal = 0;
 
-      subtotalValue = cantidad * producto.unitCost;
-      subtotalCell.textContent = ` ${(subtotalValue).toFixed(2)}`;
-
-
-      // Actualizar el producto en el carritoActual con la nueva cantidad
-      const productoIndex = carritoActual.findIndex(item => item.id === producto.id);
-      if (productoIndex !== -1) {
-        carritoActual[productoIndex].count = cantidad;
-        localStorage.setItem('carrito', JSON.stringify(carritoActual));
+    carritoActual.forEach(producto => {
+      if (producto.currency === 'UYU') {
+        subtotal += producto.count * producto.unitCost / 40;
+      } else {
+        subtotal += producto.count * producto.unitCost;
       }
 
-      mostrarCosto();
-    };
+    });
 
-    cantidadInput.addEventListener("change", actualizarSubtotal);
-    actualizarSubtotal();
 
-    // Agregar todas las celdas a la fila
-    fila.appendChild(imagenCell);
-    fila.appendChild(nombreCell);
-    fila.appendChild(cantidadCell);
-    fila.appendChild(costoCell);
-    fila.appendChild(monedaCell);
-    fila.appendChild(subtotalCell);
-    fila.appendChild(accionCell);
 
-    // Agregar la fila al cuerpo de la tabla
-    tbody.appendChild(fila);
-  });
+    elementoCosto.textContent = `${parseFloat(subtotal).toFixed(2)}`;
 
-  // Agregar la tabla al contenedor
-  tableContainer.appendChild(tabla);
 
-  // Limpiar el contenedor y agregar la tabla
-  carritoContainer.innerHTML = "";
-  carritoContainer.appendChild(tableContainer);
-}
-
-function mostrarCosto() {
-  let subtotal = 0;
-
-  carritoActual.forEach(producto => {
-    if (producto.currency === 'UYU') {
-      subtotal += producto.count * producto.unitCost / 40;
-    } else {
-      subtotal += producto.count * producto.unitCost;
+    function obtenerTipodeEnvio() {
+      let valorSeleccionado = tipoEnvio.value;
+      // Define las tarifas de envío para cada tipo
+      const tarifasEnvio = {
+        premium: 0.15,   // 15%
+        express: 0.07,   // 7%
+        estandar: 0.05   // 5%
+      };
+      return tarifasEnvio[valorSeleccionado];
     }
 
+
+    function calcularCosto() {
+      let valorSeleccionado = obtenerTipodeEnvio() ?? 0
+      let costoEnvio = subtotal * valorSeleccionado;
+      campoCostoEnvio.textContent = `${parseFloat(costoEnvio).toFixed(2)}`;
+      calcularTotal();
+
+    }
+
+
+    function calcularTotal() {
+      let total = parseFloat(elementoCosto.textContent) + parseFloat(campoCostoEnvio.textContent);
+      campoCostoTotal.textContent = total.toFixed(2);
+    }
+    calcularTotal();
+
+    campoCostoEnvio.addEventListener("change", calcularCosto());
+    tipoEnvio.addEventListener("change", () => calcularCosto());
+
+
+    document.getElementById("subtotalCosto").textContent = `${parseFloat(subtotal).toFixed(2)}`;
+  }
+
+
+
+
+  /* Payment Modal Section */
+
+
+  function disableInputs(section) {
+    const inputs = section.querySelectorAll("input");
+    for (const input of inputs) {
+      input.setAttribute("disabled", "true");
+    }
+
+  }
+
+  function enableInputs(section) {
+    const inputs = section.querySelectorAll("input");
+    for (const input of inputs) {
+      input.removeAttribute("disabled");
+    }
+  }
+
+  window.addEventListener("load", () => {
+    mainModal.style.display = "none"
+  });
+
+  openModal.addEventListener("click", () => {
+    if (mainModal.style.display === "none") {
+      mainModal.style.display = "flex";
+      pageOverlay.style.display = "block";
+    }
+  });
+
+  closeModal.addEventListener("click", () => {
+    if (mainModal.style.display === "flex" || pageOverlay.style.display === "block") {
+      mainModal.style.display = "none";
+      pageOverlay.style.display = "none";
+    }
   });
 
 
+  // formato de input de vencimiento 
+  inputVencimiento.addEventListener("input", function () {
+    let inputValue = inputVencimiento.value;
 
-  elementoCosto.textContent = `${parseFloat(subtotal).toFixed(2)}`;
-
-
-  function obtenerTipodeEnvio() {
-    let valorSeleccionado = tipoEnvio.value;
-    // Define las tarifas de envío para cada tipo
-    const tarifasEnvio = {
-      premium: 0.15,   // 15%
-      express: 0.07,   // 7%
-      estandar: 0.05   // 5%
-    };
-    return tarifasEnvio[valorSeleccionado];
-  }
+    if (/^\d{2}$/.test(inputValue)) {
+      inputVencimiento.value = inputValue + "/";
+    } else if (/^\d{2}\/\d{2}$/.test(inputValue)) {
+      inputVencimiento.value = inputValue.slice(0, 5);
+    }
+  });
 
 
-  function calcularCosto() {
-    let valorSeleccionado = obtenerTipodeEnvio() ?? 0
-    let costoEnvio = subtotal * valorSeleccionado;
-    campoCostoEnvio.textContent = `${parseFloat(costoEnvio).toFixed(2)}`;
-    calcularTotal();
+  // formato de input de numero de cuenta
 
-  }
+  accNumInput.addEventListener("input", function () {
+    const value = accNumInput.value.replace(/[^\d]/g, '');
 
-
-  function calcularTotal() {
-    let total = parseFloat(elementoCosto.textContent) + parseFloat(campoCostoEnvio.textContent);
-    campoCostoTotal.textContent = total.toFixed(2);
-  }
-  calcularTotal();
-
-  campoCostoEnvio.addEventListener("change", calcularCosto());
-  tipoEnvio.addEventListener("change", () => calcularCosto());
-
-
-  document.getElementById("subtotalCosto").textContent = `${parseFloat(subtotal).toFixed(2)}`;
-}
-
-
-
-
-/* Payment Modal Section */
-
-const openModal = document.getElementById("openModal");
-const closeModal = document.getElementById("closeBtn")
-const mainModal = document.getElementById("mainModal");
-const creditCheckbox = document.getElementById("creditOption");
-const transferCheckbox = document.getElementById("transferOption");
-const creditInputs = document.querySelector(".creditInputs");
-const transferInputs = document.querySelector(".transferInputs");
-const inputVencimiento = document.getElementById("vencimiento");
-const accNumInput = document.getElementById("accNum");
-const pageOverlay = document.querySelector(".page-overlay");
-
-
-window.addEventListener("load", () => {
-  mainModal.style.display= "none"
-});
-
-openModal.addEventListener("click", () => {
-  if (mainModal.style.display === "none") {
-    mainModal.style.display = "flex";
-    pageOverlay.style.display = "block"; 
-  }
-});
-
-closeModal.addEventListener("click", () => {
-  if (mainModal.style.display === "flex" || pageOverlay.style.display === "block") {
-    mainModal.style.display = "none";
-    pageOverlay.style.display = "none";
-  }
-});
-
-
-// formato de input de vencimiento 
-inputVencimiento.addEventListener("input", function () {
-  let inputValue = inputVencimiento.value;
-
-  if (/^\d{2}$/.test(inputValue)) {
-    inputVencimiento.value = inputValue + "/";
-  } else if (/^\d{2}\/\d{2}$/.test(inputValue)) {
-    inputVencimiento.value = inputValue.slice(0, 5);
-  }
-});
-
-
-// formato de input de numero de cuenta
-
-accNumInput.addEventListener("input", function () {
-  const value = accNumInput.value.replace(/[^\d]/g, '');
-
-  if (value.length > 12) {
+    if (value.length > 12) {
       accNumInput.value = value.slice(0, 12);
-  } else if (value.length > 8) {
+    } else if (value.length > 8) {
       accNumInput.value = value.slice(0, 4) + '-' + value.slice(4, 8) + '-' + value.slice(8);
-  } else if (value.length > 4) {
+    } else if (value.length > 4) {
       accNumInput.value = value.slice(0, 4) + '-' + value.slice(4);
-  } else {
+    } else {
       accNumInput.value = value;
-  }
-});
+    }
+  });
 
-creditCheckbox.addEventListener("change", function () {
-  if (creditCheckbox.checked) {
+  creditCheckbox.addEventListener("change", function () {
+    if (creditCheckbox.checked) {
       enableInputs(creditInputs);
-      transferCheckbox.checked = false; 
+      transferCheckbox.checked = false;
       disableInputs(transferInputs);
-  } else {
+    } else {
       disableInputs(creditInputs);
-  }
-});
+    }
+  });
 
-transferCheckbox.addEventListener("change", function () {
-  if (transferCheckbox.checked) {
+  transferCheckbox.addEventListener("change", function () {
+    if (transferCheckbox.checked) {
       enableInputs(transferInputs);
       creditCheckbox.checked = false;
       disableInputs(creditInputs);
-  } else {
+    } else {
       disableInputs(transferInputs);
+    }
+  });
+
+
+
+
+
+  //Seccion para validaciones
+  function mostrarError(element, message) {
+    element.classList.add("error"); // Agrega clase de Bootstrap para resaltar el campo
+    const alertDiv = document.createElement("div");
+    alertDiv.className = "invalid-feedback";
+    alertDiv.textContent = message;
+    element.parentNode.appendChild(alertDiv);
+
   }
+  function mostrarExito(element) {
+    element.classList.remove("error"); // Elimina la clase de Bootstrap para resaltar el campo
+
+
+    const successDiv = document.createElement("div");
+    successDiv.className = "valid-feedback";
+
+    element.parentNode.appendChild(successDiv);
+  };
+
+  function showError(input, message) {
+    input.classList.add("is-invalid"); // Agrega clase de Bootstrap para resaltar el campo
+    const alertDiv = document.createElement("div");
+    alertDiv.className = "invalid-feedback";
+    alertDiv.textContent = message;
+    input.parentNode.appendChild(alertDiv);
+  };
+
+  function showSuccess(input) {
+    input.classList.remove("is-invalid"); // Elimina la clase de Bootstrap para resaltar el campo
+    input.classList.add("is-valid"); // Agrega clase de Bootstrap para indicar éxito
+
+    const successDiv = document.createElement("div");
+    successDiv.className = "valid-feedback";
+
+    input.parentNode.appendChild(successDiv);
+  };
+
+  comprar.addEventListener("click", function (event) {
+    event.preventDefault(); // Evita el envío del formulario por defecto
+
+    // Validar y quitar mensajes de alerta previos
+    const feedbackElements = document.querySelectorAll(".invalid-feedback, .valid-feedback");
+    feedbackElements.forEach((element) => element.remove());
+
+
+    if (direccion.value.trim() === "") {
+      showError(direccion, "Debe ingresar una direccion");
+    } else {
+      showSuccess(direccion);
+    };
+    if (esquina.value.trim() === "") {
+      showError(esquina, "Completa el campo");
+    } else {
+      showSuccess(esquina);
+    };
+    if (ciudad.value.trim() === "") {
+      showError(ciudad, "Debe ingresar una ciudad");
+    } else {
+      showSuccess(ciudad);
+    };
+    if (cp.value.trim() === "") {
+      showError(cp, "Debe ingresar un codigo postal");
+    } else if (isNaN(cp.value)) {
+      showError(cp, "solo se permiten numeros");
+    }
+    else {
+      showSuccess(cp);
+    };
+    if (envio.value == 0 || envio.value == "") {
+      showError(envio, "seleccione un tipo de envio ");
+    } else {
+      showSuccess(envio);
+    };
+    if (!creditCheckbox.checked && cardNum.value.trim()==""|| !creditCheckbox.checked && segNum.value.trim()==""|| !creditCheckbox.checked && inputVencimiento.value.trim()=="") {
+      showError(segNum)
+    }
+
+
+
+
+
+
+
+
+    // Si todos los campos están validados, puedes enviar el formulario
+    if (document.querySelectorAll(".is-invalid").length === 0) {
+      // form.submit(); // Descomenta esta línea para enviar el formulario
+    }
+  });
+
 });
-
-function enableInputs(section) {
-  const inputs = section.querySelectorAll("input");
-  for (const input of inputs) {
-      input.removeAttribute("disabled");
-  }
-}
-
-function disableInputs(section) {
-  const inputs = section.querySelectorAll("input");
-  for (const input of inputs) {
-      input.setAttribute("disabled", "true");
-  }
-
-}

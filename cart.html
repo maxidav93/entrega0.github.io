@@ -95,7 +95,7 @@
         <div class="col-12">
 
           <label for="tipoEnvio" class="form-label">Tipo de Envío</label>
-          <select class="form-select" id="tipoEnvio" required>
+          <select class="form-select" id="tipoEnvio" >
             <option value="" disabled selected>Selecciona un tipo de envío</option>
             <option value="premium">Premium 2 a 5 días(15%)</option>
             <option value="express">Express 5 a 8 días(7%)</option>
@@ -150,7 +150,7 @@
     </div>
     <section id="modal">
       <div class="modalCont">
-        <div id="paymentModal">
+        <div id="paymentModal" class="">
           <div class="secModalTitle">FORMA DE PAGO</div>
           <div class="modalCont">
             <div class="modalType"></div>
@@ -196,7 +196,7 @@
       </div>
       </div>
     </section>
-
+    <button class="btn btn-primary" type="submit" id="finalizarCompra">Finalizar compra</button>
 
   </main>
   <div id="spinner-wrapper">
