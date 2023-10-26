@@ -20,7 +20,7 @@ function mostrarInformacionEnHTML() {
   tableContainer.classList.add("table-responsive");
 
   const tabla = document.createElement('table');
-  tabla.classList.add('table', 'table-striped', 'table-bordered', 'w-100', 'table-responsive');
+  tabla.classList.add('table', 'w-100', 'table-responsive');
   tabla.innerHTML = `
     <thead class="thead-dark text-center">
       <tr>
