@@ -13,10 +13,10 @@ let carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
   const comprar = document.getElementById("finalizarCompra");
   const envio = document.getElementById("tipoEnvio");
   const formaPago = document.getElementById("irAformadepago");
-  
 
 
-  //constantes de modal 
+
+  //constantes de modal
   const openModal = document.getElementById("openModal");
   const closeModal = document.getElementById("closeBtn")
   const mainModal = document.getElementById("mainModal");
@@ -163,7 +163,7 @@ function mostrarInformacionEnHTML() {
   carritoContainer.innerHTML = "";
   carritoContainer.appendChild(tableContainer);
 }
-
+// Pauta 1
 function mostrarCosto() {
   let subtotal = 0;
 
@@ -272,7 +272,7 @@ closeModal.addEventListener("click", () => {
 });
 
 
-// formato de input de vencimiento 
+// formato de input de vencimiento
 inputVencimiento.addEventListener("input", function () {
   let inputValue = inputVencimiento.value;
 
@@ -361,7 +361,7 @@ function errorFaltaEnvio(input) {
 
 function successFormaPago(input, message) {
   input.classList.remove("is-invalid"); // Elimina la clase de Bootstrap para resaltar el campo
-  input.classList.add("is-valid"); 
+  input.classList.add("is-valid");
   const alertDiv = document.createElement("div");
   alertDiv.className = "valid-feedback";
   alertDiv.textContent = message;
@@ -425,15 +425,15 @@ comprar.addEventListener("click", function (event) {
   else {
     showSuccess(cp);
   };
- 
 
-  
+
+
 // Si todos los campos están validados, puedes enviar el formulario
 if (document.querySelectorAll(".is-invalid").length === 0) {
   setTimeout(() => {
     appendAlert('Se ha realizado su compra!', 'success');
-  }, 1000); 
-} 
+  }, 1000);
+}
 
 const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
 const appendAlert = (message, type) => {
@@ -461,7 +461,7 @@ const appendAlert = (message, type) => {
    showError(openModal, "Debe seleccionar forma de pago")
  } else {
   successFormaPago(openModal, "Forma de pago seleccionada")
-  
- 
+
+
  }
 });
