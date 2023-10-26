@@ -13,7 +13,7 @@ let carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
   const comprar = document.getElementById("finalizarCompra");
   const envio = document.getElementById("tipoEnvio");
   const formaPago = document.getElementById("irAformadepago");
-
+  
 
 
   //constantes de modal 
@@ -225,7 +225,6 @@ function finalizarCompra() {
 };
 
 
-
  function campoEnvio() {
   if (envio.value == 0 || envio.value == "") {
     errorFaltaEnvio(envio);
@@ -386,6 +385,13 @@ comprar.addEventListener("click", function (event) {
   feedbackElements.forEach((element) => element.remove());
 
 
+ if (!creditCheckbox.checked && !transferCheckbox.checked) {
+   showError(openModal, "Debe seleccionar forma de pago")
+   showError(openModal);
+ } else {
+   showSuccess(openModal)
+ }
+
   if (direccion.value.trim() === "") {
     showError(direccion, "Debe ingresar una direccion");
   } else {
@@ -410,9 +416,7 @@ comprar.addEventListener("click", function (event) {
     showSuccess(cp);
   };
  
- if (!creditCheckbox.checked && cardNum.value.trim()==""|| !creditCheckbox.checked && segNum.value.trim()==""|| !creditCheckbox.checked && inputVencimiento.value.trim()=="") {
-    showError(segNum)
-  }
+
   
 // Si todos los campos están validados, puedes enviar el formulario
 if (document.querySelectorAll(".is-invalid").length === 0) {
@@ -434,7 +438,4 @@ const appendAlert = (message, type) => {
   alertPlaceholder.append(wrapper)
 }
 
-
-
- })
-
+ });
