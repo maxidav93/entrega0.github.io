@@ -5,6 +5,31 @@ const campoCostoEnvio = document.getElementById("envioCosto");
 const campoCostoTotal = document.getElementById("totalCosto");
 let carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
 
+  //constantes de validacion
+  const direccion = document.getElementById("inputAddress");
+  const esquina = document.getElementById("inputAddress2");
+  const ciudad = document.getElementById("inputCity");
+  const cp = document.getElementById("inputZip");
+  const comprar = document.getElementById("finalizarCompra");
+  const envio = document.getElementById("tipoEnvio");
+  const formaPago = document.getElementById("irAformadepago");
+
+
+
+  //constantes de modal 
+  const openModal = document.getElementById("openModal");
+  const closeModal = document.getElementById("closeBtn")
+  const mainModal = document.getElementById("mainModal");
+  const creditCheckbox = document.getElementById("creditOption");
+  const transferCheckbox = document.getElementById("transferOption");
+  const creditInputs = document.querySelector(".creditInputs");
+  const transferInputs = document.querySelector(".transferInputs");
+  const inputVencimiento = document.getElementById("vencimiento");
+  const accNumInput = document.getElementById("accNum");
+  const pageOverlay = document.querySelector(".page-overlay");
+  const divModal = document.getElementById("paymentModal");
+  const cardNum = document.getElementById("cardNum");
+  const segNum = document.getElementById("segNum");
 
 document.addEventListener("DOMContentLoaded", () => {
   mostrarInformacionEnHTML();
@@ -184,36 +209,58 @@ function mostrarCosto() {
 
   campoCostoEnvio.addEventListener("change", calcularCosto());
   tipoEnvio.addEventListener("change", () => calcularCosto());
-
-
+  tipoEnvio.addEventListener("change", () => campoEnvio());
+  formaPago.addEventListener("click", () => finalizarCompra());
   document.getElementById("subtotalCosto").textContent = `${parseFloat(subtotal).toFixed(2)}`;
 }
 
 
+function finalizarCompra() {
+  if (envio.value == 0 || envio.value == "") {
+    errorFaltaEnvio(envio);
+  } else {
+    exitoEnvio(envio);
+    window.location.href = 'detallesEnvio.html';
+  };
+};
 
 
-/* Payment Modal Section */
 
-const openModal = document.getElementById("openModal");
-const closeModal = document.getElementById("closeBtn")
-const mainModal = document.getElementById("mainModal");
-const creditCheckbox = document.getElementById("creditOption");
-const transferCheckbox = document.getElementById("transferOption");
-const creditInputs = document.querySelector(".creditInputs");
-const transferInputs = document.querySelector(".transferInputs");
-const inputVencimiento = document.getElementById("vencimiento");
-const accNumInput = document.getElementById("accNum");
-const pageOverlay = document.querySelector(".page-overlay");
+ function campoEnvio() {
+  if (envio.value == 0 || envio.value == "") {
+    errorFaltaEnvio(envio);
+  } else {
+    exitoEnvio(envio);
+  };
+};
 
+
+ /* Payment Modal Section */
+
+
+ function disableInputs(section) {
+  const inputs = section.querySelectorAll("input");
+  for (const input of inputs) {
+    input.setAttribute("disabled", "true");
+  }
+
+}
+
+function enableInputs(section) {
+  const inputs = section.querySelectorAll("input");
+  for (const input of inputs) {
+    input.removeAttribute("disabled");
+  }
+}
 
 window.addEventListener("load", () => {
-  mainModal.style.display= "none"
+  mainModal.style.display = "none"
 });
 
 openModal.addEventListener("click", () => {
   if (mainModal.style.display === "none") {
     mainModal.style.display = "flex";
-    pageOverlay.style.display = "block"; 
+    pageOverlay.style.display = "block";
   }
 });
 
@@ -243,52 +290,151 @@ accNumInput.addEventListener("input", function () {
   const value = accNumInput.value.replace(/[^\d]/g, '');
 
   if (value.length > 12) {
-      accNumInput.value = value.slice(0, 12);
+    accNumInput.value = value.slice(0, 12);
   } else if (value.length > 8) {
-      accNumInput.value = value.slice(0, 4) + '-' + value.slice(4, 8) + '-' + value.slice(8);
+    accNumInput.value = value.slice(0, 4) + '-' + value.slice(4, 8) + '-' + value.slice(8);
   } else if (value.length > 4) {
-      accNumInput.value = value.slice(0, 4) + '-' + value.slice(4);
+    accNumInput.value = value.slice(0, 4) + '-' + value.slice(4);
   } else {
-      accNumInput.value = value;
+    accNumInput.value = value;
   }
 });
 
 creditCheckbox.addEventListener("change", function () {
   if (creditCheckbox.checked) {
-      enableInputs(creditInputs);
-      transferCheckbox.checked = false; 
-      disableInputs(transferInputs);
+    enableInputs(creditInputs);
+    transferCheckbox.checked = false;
+    disableInputs(transferInputs);
   } else {
-      disableInputs(creditInputs);
+    disableInputs(creditInputs);
   }
 });
 
 transferCheckbox.addEventListener("change", function () {
   if (transferCheckbox.checked) {
-      enableInputs(transferInputs);
-      creditCheckbox.checked = false;
-      disableInputs(creditInputs);
+    enableInputs(transferInputs);
+    creditCheckbox.checked = false;
+    disableInputs(creditInputs);
   } else {
-      disableInputs(transferInputs);
+    disableInputs(transferInputs);
   }
 });
 
-function enableInputs(section) {
-  const inputs = section.querySelectorAll("input");
-  for (const input of inputs) {
-      input.removeAttribute("disabled");
-  }
-}
 
-function disableInputs(section) {
-  const inputs = section.querySelectorAll("input");
-  for (const input of inputs) {
-      input.setAttribute("disabled", "true");
-  }
-}
-  let boton = document.getElementById("finalizarCompra");
 
-  function finalizarCompra() {
-  window.location.href = 'detallesEnvio.html';
+
+
+//Seccion para validaciones
+
+function errorFaltaEnvio(input) {
+  input.classList.add("is-invalid"); // Agrega clase de Bootstrap para resaltar el campo
+};
+
+function exitoEnvio(input) {
+  input.classList.remove("is-invalid"); // Elimina la clase de Bootstrap para resaltar el campo
+  input.classList.add("is-valid"); // Agrega clase de Bootstrap para indicar éxito
+};
+
+
+function mostrarError(element, message) {
+  element.classList.add("error"); // Agrega clase de Bootstrap para resaltar el campo
+  const alertDiv = document.createElement("div");
+  alertDiv.className = "invalid-feedback";
+  alertDiv.textContent = message;
+  element.parentNode.appendChild(alertDiv);
+
+}
+function mostrarExito(element) {
+  element.classList.remove("error"); // Elimina la clase de Bootstrap para resaltar el campo
+
+
+  const successDiv = document.createElement("div");
+  successDiv.className = "valid-feedback";
+
+  element.parentNode.appendChild(successDiv);
+};
+
+function errorFaltaEnvio(input) {
+  input.classList.add("is-invalid"); // Agrega clase de Bootstrap para resaltar el campo
+
+};
+
+function showError(input, message) {
+  input.classList.add("is-invalid"); // Agrega clase de Bootstrap para resaltar el campo
+  const alertDiv = document.createElement("div");
+  alertDiv.className = "invalid-feedback";
+  alertDiv.textContent = message;
+  input.parentNode.appendChild(alertDiv);
+};
+
+function showSuccess(input) {
+  input.classList.remove("is-invalid"); // Elimina la clase de Bootstrap para resaltar el campo
+  input.classList.add("is-valid"); // Agrega clase de Bootstrap para indicar éxito
+
+  const successDiv = document.createElement("div");
+  successDiv.className = "valid-feedback";
+
+  input.parentNode.appendChild(successDiv);
+};
+
+
+comprar.addEventListener("click", function (event) {
+  event.preventDefault(); // Evita el envío del formulario por defecto
+
+  // Validar y quitar mensajes de alerta previos
+  const feedbackElements = document.querySelectorAll(".invalid-feedback, .valid-feedback");
+  feedbackElements.forEach((element) => element.remove());
+
+
+  if (direccion.value.trim() === "") {
+    showError(direccion, "Debe ingresar una direccion");
+  } else {
+    showSuccess(direccion);
   };
+  if (esquina.value.trim() === "") {
+    showError(esquina, "Completa el campo");
+  } else {
+    showSuccess(esquina);
+  };
+  if (ciudad.value.trim() === "") {
+    showError(ciudad, "Debe ingresar una ciudad");
+  } else {
+    showSuccess(ciudad);
+  };
+  if (cp.value.trim() === "") {
+    showError(cp, "Debe ingresar un codigo postal");
+  } else if (isNaN(cp.value)) {
+    showError(cp, "solo se permiten numeros");
+  }
+  else {
+    showSuccess(cp);
+  };
+ 
+ if (!creditCheckbox.checked && cardNum.value.trim()==""|| !creditCheckbox.checked && segNum.value.trim()==""|| !creditCheckbox.checked && inputVencimiento.value.trim()=="") {
+    showError(segNum)
+  }
+  
+// Si todos los campos están validados, puedes enviar el formulario
+if (document.querySelectorAll(".is-invalid").length === 0) {
+  setTimeout(() => {
+    appendAlert('Se ha realizado su compra!', 'success');
+  }, 1000); 
+} 
+
+const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+const appendAlert = (message, type) => {
+  const wrapper = document.createElement('div')
+  wrapper.innerHTML = [
+    `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+    `   <div>${message}</div>`,
+    '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+    '</div>'
+  ].join('')
+
+  alertPlaceholder.append(wrapper)
+}
+
+
+
+ })
 

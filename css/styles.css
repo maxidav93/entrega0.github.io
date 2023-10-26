@@ -291,7 +291,7 @@ height: 35px;
 width: 20vw;
 margin-left: 15px;
 }
-#finalizarCompra {
+.botones {
   background-color: orange;
   border-color: orange;
 }

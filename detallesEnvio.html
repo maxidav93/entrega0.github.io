@@ -73,36 +73,42 @@
         </div>
     </nav>
     <main class="pb-5">
+        <a href="cart.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+              </svg>
+              Volver al carrito
+        </a>
         <br>
-        <div class="col-4">
-            <div id="formContainer" class=" border p-3">
-                <h5>Datos de envío:</h5>
-                <br>
-                <form id="form" class="row g-3 ">
-                    <div class="col-12">
-                        <label for="inputAddress" class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="inputAddress" placeholder="Calle y número">
-                    </div>
-                    <div class="col-12">
-                        <label for="inputAddress2" class="form-label">Esquina</label>
-                        <input type="text" class="form-control" id="inputAddress2" placeholder="Esquina">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="inputCity" class="form-label">Ciudad</label>
-                        <input type="text" class="form-control" id="inputCity">
-                    </div>
-                    <div class="col-md-4">
-                        <label for="inputState" class="form-label">Barrio</label>
-                        <select id="inputState" class="form-select">
-                            <option selected>Elige...</option>
-                            <option>...</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="inputZip" class="form-label">Código postal</label>
-                        <input type="text" class="form-control" id="inputZip">
-                    </div>
-                </form>
+        <h5 class="col-12 col-md-8 mx-auto my-3 p-3">Datos de envío:</h5>
+    <div id="formContainer" class="col-12 col-md-8 mx-auto my-3 border shadow p-3">
+      <form id="form" class="row g-3 ">
+     
+        <div class="col-12">
+          <label for="inputAddress" class="form-label">Dirección</label>
+          <input type="text" class="form-control" id="inputAddress" placeholder="Calle y número">
+        </div>
+        <div class="col-12">
+          <label for="inputAddress2" class="form-label">Esquina</label>
+          <input type="text" class="form-control" id="inputAddress2" placeholder="Esquina">
+        </div>
+        <div class="col-md-6">
+          <label for="inputCity" class="form-label">Ciudad</label>
+          <input type="text" class="form-control" id="inputCity">
+        </div>
+        <div class="col-md-4">
+          <label for="inputState" class="form-label">Barrio</label>
+          <select id="inputState" class="form-select">
+            <option selected>Elige...</option>
+            <option>...</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label for="inputZip" class="form-label">Código postal</label>
+          <input type="text" class="form-control" id="inputZip">
+        </div>
+      </form>
+
             </div>
 
             <section id="modal">
@@ -155,7 +161,8 @@
           
                 </div>
               </section>
-
+              <button class="btn btn-primary botones" type="submit" id="finalizarCompra">Comprar</button>
+              <div id="liveAlertPlaceholder"></div>
     </main>
     <div id="spinner-wrapper">
         <div class="lds-ring">
