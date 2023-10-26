@@ -285,5 +285,10 @@ function disableInputs(section) {
   for (const input of inputs) {
       input.setAttribute("disabled", "true");
   }
-
 }
+  let boton = document.getElementById("finalizarCompra");
+
+  function finalizarCompra() {
+  window.location.href = 'detallesEnvio.html';
+  };
+

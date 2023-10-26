@@ -286,12 +286,12 @@ display: none;
   color: red;
   scale: calc(1.15);
 }
-/*
-#total{
-margin-left: 70px;
-margin-right: 70px;
-margin-top: 10px;
-margin-bottom: 40px;
-height: auto;
-width: auto;
-}*/
+.form-select {
+height: 35px;
+width: 20vw;
+margin-left: 15px;
+}
+#finalizarCompra {
+  background-color: orange;
+  border-color: orange;
+}
