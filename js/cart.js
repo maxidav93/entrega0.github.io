@@ -30,6 +30,7 @@ let carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
   const divModal = document.getElementById("paymentModal");
   const cardNum = document.getElementById("cardNum");
   const segNum = document.getElementById("segNum");
+  const formadepago = document.getElementById("formadepago")
 
 document.addEventListener("DOMContentLoaded", () => {
   mostrarInformacionEnHTML();
@@ -358,6 +359,15 @@ function errorFaltaEnvio(input) {
 
 };
 
+function successFormaPago(input, message) {
+  input.classList.remove("is-invalid"); // Elimina la clase de Bootstrap para resaltar el campo
+  input.classList.add("is-valid"); 
+  const alertDiv = document.createElement("div");
+  alertDiv.className = "valid-feedback";
+  alertDiv.textContent = message;
+  input.parentNode.appendChild(alertDiv);
+};
+
 function showError(input, message) {
   input.classList.add("is-invalid"); // Agrega clase de Bootstrap para resaltar el campo
   const alertDiv = document.createElement("div");
@@ -439,3 +449,19 @@ const appendAlert = (message, type) => {
 }
 
  });
+ closeModal.addEventListener("click", function (event) {
+  event.preventDefault(); // Evita el envío del formulario por defecto
+
+  // Validar y quitar mensajes de alerta previos
+  const feedbackElements = document.querySelectorAll(".invalid-feedback, .valid-feedback");
+  feedbackElements.forEach((element) => element.remove());
+
+
+ if (!creditCheckbox.checked && !transferCheckbox.checked) {
+   showError(openModal, "Debe seleccionar forma de pago")
+ } else {
+  successFormaPago(openModal, "Forma de pago seleccionada")
+  
+ 
+ }
+});
