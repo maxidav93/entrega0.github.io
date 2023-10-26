@@ -107,48 +107,54 @@
 
             <section id="modal">
                 <div class="modalCont">
-                    <div id="paymentModal">
-                        <div class="secModalTitle">FORMA DE PAGO</div>
-                        <div class="modalCont">
-                            <div class="modalType"></div>
-                            <button id="openModal">Selecciona</button>
-                        </div>
-
-
+                  <div id="paymentModal">
+                    <div class="secModalTitle">FORMA DE PAGO</div>
+                    <div class="modalCont">
+                      <div class="modalType"></div>
+                      <button id="openModal">Selecciona</button>
                     </div>
-
-                    <div id="mainModal">
-                        <div class="modalTitle">
-                            <h1>Forma de pago</h1>
-                        </div>
-                        <div class="credit">
-                            <input type="checkbox" name="credit" id="creditOption">
-                            <label for="creditOption">Tarjeta de crédito</label>
-                            <div class="creditInputs">
-                                <input type="number" id="cardNum">
-                                <label for="cardNum">Numero de tarjeta</label>
-
-                                <input type="number" id="segNum" placeholder="123" maxlength="3">
-                                <label for="segNum">Código de Seguridad</label>
-
-
-                                <input type="text" placeholder="mm/aa" name="vencimiento" id="vencimiento"
-                                    maxlength="5">
-                                <label for="vencimiento">Vencimiento</label>
-                            </div>
-                        </div>
-                        <div class="bankTransfer">
-                            <input type="checkbox" name="transferOption" id="transferOption">
-                            <label for="transferOption">Transferencia Bancaria</label>
-                            <div class="transferInputs">
-                                <input type="text" id="accNum" placeholder="XXXX-XXXX-XXXX" maxlength="14">
-                                <label for="accNum">Acc Number</label>
-                            </div>
-
-                            <div class="closeModalBtn"><button id="closeBtn">Close</button></div>
-                        </div>
-
+          
+          
+                  </div>
+          
+                  <div id="mainModal">
+                    <div class="modalTitle">
+                      <h1>Forma de pago</h1>
                     </div>
+                    <div class="credit">
+                      <input type="checkbox" name="credit" id="creditOption" class="checkbox" checked>
+                      <label for="creditOption">Tarjeta de crédito</label>
+                      <div class="creditInputs">
+                        <div class="cardNumInput">
+                          <input type="number" id="cardNum">
+                          <label for="cardNum">Número de tarjeta</label>
+                        </div>
+                        <div class="segNumInput">
+                          <input type="number" id="segNum" placeholder="123" maxlength="3">
+                          <label for="segNum">Código de Seguridad</label>
+                        </div>
+                        <div class="venInput">
+                          <input type="text" placeholder="mm/aa" name="vencimiento" id="vencimiento" maxlength="5">
+                          <label for="vencimiento">Vencimiento</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="bankTransfer">
+                      <input type="checkbox" class="checkbox" name="transferOption" id="transferOption">
+                      <label for="transferOption">Transferencia Bancaria</label>
+                      <div class="transferInputs">
+                        <input type="text" id="accNum" placeholder="XXXX-XXXX-XXXX" maxlength="14">
+                        <label for="accNum">Número de cuenta
+                        </label>
+                      </div>
+          
+                      <div class="closeModalBtn"><button id="closeBtn">Cerrar</button></div>
+                    </div>
+          
+                  </div>
+          
+                </div>
+              </section>
 
     </main>
     <div id="spinner-wrapper">
