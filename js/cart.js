@@ -5,32 +5,33 @@ const campoCostoEnvio = document.getElementById("envioCosto");
 const campoCostoTotal = document.getElementById("totalCosto");
 let carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
 
-  //constantes de validacion
-  const direccion = document.getElementById("inputAddress");
-  const esquina = document.getElementById("inputAddress2");
-  const ciudad = document.getElementById("inputCity");
-  const cp = document.getElementById("inputZip");
-  const comprar = document.getElementById("finalizarCompra");
-  const envio = document.getElementById("tipoEnvio");
-  const formaPago = document.getElementById("irAformadepago");
-  
+//constantes de validacion
+const direccion = document.getElementById("inputAddress");
+const esquina = document.getElementById("inputAddress2");
+const ciudad = document.getElementById("inputCity");
+const cp = document.getElementById("inputZip");
+const comprar = document.getElementById("finalizarCompra");
+const envio = document.getElementById("tipoEnvio");
+const formaPago = document.getElementById("irAformadepago");
 
 
-  //constantes de modal 
-  const openModal = document.getElementById("openModal");
-  const closeModal = document.getElementById("closeBtn")
-  const mainModal = document.getElementById("mainModal");
-  const creditCheckbox = document.getElementById("creditOption");
-  const transferCheckbox = document.getElementById("transferOption");
-  const creditInputs = document.querySelector(".creditInputs");
-  const transferInputs = document.querySelector(".transferInputs");
-  const inputVencimiento = document.getElementById("vencimiento");
-  const accNumInput = document.getElementById("accNum");
-  const pageOverlay = document.querySelector(".page-overlay");
-  const divModal = document.getElementById("paymentModal");
-  const cardNum = document.getElementById("cardNum");
-  const segNum = document.getElementById("segNum");
-  const formadepago = document.getElementById("formadepago")
+
+
+//constantes de modal 
+const openModal = document.getElementById("openModal");
+const closeModal = document.getElementById("closeBtn")
+const mainModal = document.getElementById("mainModal");
+const creditCheckbox = document.getElementById("creditOption");
+const transferCheckbox = document.getElementById("transferOption");
+const creditInputs = document.querySelector(".creditInputs");
+const transferInputs = document.querySelector(".transferInputs");
+const inputVencimiento = document.getElementById("vencimiento");
+const accNumInput = document.getElementById("accNum");
+const pageOverlay = document.querySelector(".page-overlay");
+const divModal = document.getElementById("paymentModal");
+const cardNum = document.getElementById("cardNum");
+const segNum = document.getElementById("segNum");
+const formadepago = document.getElementById("formadepago")
 
 document.addEventListener("DOMContentLoaded", () => {
   mostrarInformacionEnHTML();
@@ -226,7 +227,7 @@ function finalizarCompra() {
 };
 
 
- function campoEnvio() {
+function campoEnvio() {
   if (envio.value == 0 || envio.value == "") {
     errorFaltaEnvio(envio);
   } else {
@@ -235,10 +236,10 @@ function finalizarCompra() {
 };
 
 
- /* Payment Modal Section */
+/* Payment Modal Section */
 
 
- function disableInputs(section) {
+function disableInputs(section) {
   const inputs = section.querySelectorAll("input");
   for (const input of inputs) {
     input.setAttribute("disabled", "true");
@@ -264,8 +265,53 @@ openModal.addEventListener("click", () => {
   }
 });
 
-closeModal.addEventListener("click", () => {
-  if (mainModal.style.display === "flex" || pageOverlay.style.display === "block") {
+closeModal.addEventListener("click", function (event) {
+  event.preventDefault(); // Evita el envío del formulario por defecto
+
+  // Validar y quitar mensajes de alerta previos
+  const feedbackElements = document.querySelectorAll(".invalid-feedback, .valid-feedback");
+  feedbackElements.forEach((element) => element.remove());
+
+  let canCloseModal = true; // Variable para verificar si se puede cerrar el modal
+
+  if (!creditCheckbox.checked && !transferCheckbox.checked) {
+    // Si ninguna casilla está marcada, se permite cerrar el modal
+    canCloseModal = true;
+  } else {
+    if (!creditCheckbox.checked) {
+      showError(openModal, "Debe seleccionar forma de pago");
+      canCloseModal = false; // No se permite cerrar el modal
+    } else {
+      successFormaPago(openModal);
+    }
+  }
+
+  if (creditCheckbox.checked) { 
+    if (cardNum.value.trim() === "" || isNaN(cardNum.value) || cardNum.value.length < 14) {
+      showError(cardNum, "Ingrese un número de tarjeta válido (Debe tener al menos 14 dígitos)");
+      canCloseModal = false; // No se permite cerrar el modal
+    }
+    if (segNum.value.trim() === "" || isNaN(segNum.value) || segNum.value.length < 3) {
+      showError(segNum, "Ingrese un número de seguridad válido (Debe tener al menos 3 dígitos)");
+      canCloseModal = false; // No se permite cerrar el modal
+    }
+    if (inputVencimiento.value.trim() === "" ) {
+      showError(inputVencimiento, "Ingrese una fecha de vencimiento válida (mm/aa)");
+      canCloseModal = false; // No se permite cerrar el modal
+    }
+  }
+
+  if (transferCheckbox.checked) {
+    const numCuenta = accNumInput.value.replace(/[^0-9]/g, ''); // Elimina caracteres no numéricos
+    if (numCuenta.length < 12) {
+      showError(accNumInput, "El número de cuenta debe tener al menos 12 dígitos");
+      canCloseModal = false; // No se permite cerrar el modal
+    } else {
+      canCloseModal = true;
+    }
+  }
+
+  if (canCloseModal) {
     mainModal.style.display = "none";
     pageOverlay.style.display = "none";
   }
@@ -361,7 +407,7 @@ function errorFaltaEnvio(input) {
 
 function successFormaPago(input, message) {
   input.classList.remove("is-invalid"); // Elimina la clase de Bootstrap para resaltar el campo
-  input.classList.add("is-valid"); 
+  input.classList.add("is-valid");
   const alertDiv = document.createElement("div");
   alertDiv.className = "valid-feedback";
   alertDiv.textContent = message;
@@ -394,74 +440,52 @@ comprar.addEventListener("click", function (event) {
   const feedbackElements = document.querySelectorAll(".invalid-feedback, .valid-feedback");
   feedbackElements.forEach((element) => element.remove());
 
-
- if (!creditCheckbox.checked && !transferCheckbox.checked) {
-   showError(openModal, "Debe seleccionar forma de pago")
-   showError(openModal);
- } else {
-   showSuccess(openModal)
- }
+  if (!creditCheckbox.checked && !transferCheckbox.checked) {
+    showError(openModal, "Debe seleccionar forma de pago");
+  }
 
   if (direccion.value.trim() === "") {
-    showError(direccion, "Debe ingresar una direccion");
-  } else {
-    showSuccess(direccion);
-  };
+    showError(direccion, "Debe ingresar una dirección");
+  }
+
   if (esquina.value.trim() === "") {
-    showError(esquina, "Completa el campo");
-  } else {
-    showSuccess(esquina);
-  };
+    showError(esquina, "Debe completar el campo 'Esquina'");
+  }
+
   if (ciudad.value.trim() === "") {
     showError(ciudad, "Debe ingresar una ciudad");
-  } else {
-    showSuccess(ciudad);
-  };
-  if (cp.value.trim() === "") {
-    showError(cp, "Debe ingresar un codigo postal");
-  } else if (isNaN(cp.value)) {
-    showError(cp, "solo se permiten numeros");
   }
-  else {
-    showSuccess(cp);
-  };
- 
 
-  
-// Si todos los campos están validados, puedes enviar el formulario
-if (document.querySelectorAll(".is-invalid").length === 0) {
-  setTimeout(() => {
+  if (cp.value.trim() === "") {
+    showError(cp, "Debe ingresar un código postal");
+  } else if (isNaN(cp.value)) {
+    showError(cp, "Solo se permiten números en el código postal");
+  }
+
+  // Validar el carrito actual
+  if (!carritoActual || carritoActual.length === 0) {
+    showError(comprar, "El carrito de compra está vacío");
+  }
+
+  // Si no hay elementos con la clase "is-invalid," puedes enviar el formulario
+  if (document.querySelectorAll(".is-invalid").length === 0) {
     appendAlert('Se ha realizado su compra!', 'success');
-  }, 1000); 
-} 
+  }
+});
 
-const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
 const appendAlert = (message, type) => {
-  const wrapper = document.createElement('div')
+  const wrapper = document.createElement('div');
   wrapper.innerHTML = [
     `<div class="alert alert-${type} alert-dismissible" role="alert">`,
     `   <div>${message}</div>`,
     '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
     '</div>'
-  ].join('')
+  ].join('');
 
-  alertPlaceholder.append(wrapper)
-}
-
- });
- closeModal.addEventListener("click", function (event) {
-  event.preventDefault(); // Evita el envío del formulario por defecto
-
-  // Validar y quitar mensajes de alerta previos
-  const feedbackElements = document.querySelectorAll(".invalid-feedback, .valid-feedback");
-  feedbackElements.forEach((element) => element.remove());
+  alertPlaceholder.append(wrapper);
+};
 
 
- if (!creditCheckbox.checked && !transferCheckbox.checked) {
-   showError(openModal, "Debe seleccionar forma de pago")
- } else {
-  successFormaPago(openModal, "Forma de pago seleccionada")
-  
- 
- }
-});
+
+
