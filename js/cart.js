@@ -13,7 +13,7 @@ const cp = document.getElementById("inputZip");
 const comprar = document.getElementById("finalizarCompra");
 const envio = document.getElementById("tipoEnvio");
 const formaPago = document.getElementById("irAformadepago");
-
+const avisoCarritoVacio = document.getElementById("aviso")
 
 
 
@@ -218,9 +218,19 @@ function mostrarCosto() {
 
 
 function finalizarCompra() {
-  if (envio.value == 0 || envio.value == "") {
+  if  (!carritoActual || carritoActual.length === 0) {
+  
+    avisoCarritoVacio.innerHTML = "Para continuar con su compra agregue al menos un artículo a su carrito"
+
+    setTimeout(() =>{
+      avisoCarritoVacio.innerHTML = ""
+    }
+    , 5000)
+}
+else if (envio.value == 0 || envio.value == "") {
     errorFaltaEnvio(envio);
-  } else {
+  }  
+  else {
     exitoEnvio(envio);
     window.location.href = 'detallesEnvio.html';
   };
