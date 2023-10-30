@@ -433,55 +433,57 @@ function showError(input, message) {
   input.parentNode.appendChild(alertDiv);
 };
 
-function showSuccess(input) {
-  input.classList.remove("is-invalid"); // Elimina la clase de Bootstrap para resaltar el campo
-  input.classList.add("is-valid"); // Agrega clase de Bootstrap para indicar éxito
-
-  const successDiv = document.createElement("div");
-  successDiv.className = "valid-feedback";
-
-  input.parentNode.appendChild(successDiv);
-};
-
-
-comprar.addEventListener("click", function (event) {
-  event.preventDefault(); // Evita el envío del formulario por defecto
-
+// Agrega una función para verificar la compra
+function verificarCompra() {
   // Validar y quitar mensajes de alerta previos
   const feedbackElements = document.querySelectorAll(".invalid-feedback, .valid-feedback");
   feedbackElements.forEach((element) => element.remove());
 
+  let puedeComprar = true;
+
   if (!creditCheckbox.checked && !transferCheckbox.checked) {
     showError(openModal, "Debe seleccionar forma de pago");
+    puedeComprar = false;
   }
 
   if (direccion.value.trim() === "") {
     showError(direccion, "Debe ingresar una dirección");
+    puedeComprar = false;
   }
 
   if (esquina.value.trim() === "") {
     showError(esquina, "Debe completar el campo 'Esquina'");
+    puedeComprar = false;
   }
 
   if (ciudad.value.trim() === "") {
     showError(ciudad, "Debe ingresar una ciudad");
+    puedeComprar = false;
   }
 
   if (cp.value.trim() === "") {
     showError(cp, "Debe ingresar un código postal");
+    puedeComprar = false;
   } else if (isNaN(cp.value)) {
     showError(cp, "Solo se permiten números en el código postal");
+    puedeComprar = false;
   }
 
-  // Validar el carrito actual
   if (!carritoActual || carritoActual.length === 0) {
     showError(comprar, "El carrito de compra está vacío");
+    puedeComprar = false;
   }
 
-  // Si no hay elementos con la clase "is-invalid," puedes enviar el formulario
-  if (document.querySelectorAll(".is-invalid").length === 0) {
+  if (puedeComprar) {
+    // Si todas las verificaciones pasan, muestra la alerta
     appendAlert('Se ha realizado su compra!', 'success');
   }
+}
+
+// Llama a verificarCompra cuando se haga clic en el botón "Comprar"
+comprar.addEventListener("click", function (event) {
+  event.preventDefault(); // Evita el envío del formulario por defecto
+  verificarCompra();
 });
 
 
