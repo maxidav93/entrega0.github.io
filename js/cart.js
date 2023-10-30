@@ -17,7 +17,7 @@ const avisoCarritoVacio = document.getElementById("aviso")
 
 
 
-//constantes de modal 
+//constantes de modal
 const openModal = document.getElementById("openModal");
 const closeModal = document.getElementById("closeBtn")
 const mainModal = document.getElementById("mainModal");
@@ -32,6 +32,7 @@ const divModal = document.getElementById("paymentModal");
 const cardNum = document.getElementById("cardNum");
 const segNum = document.getElementById("segNum");
 const formadepago = document.getElementById("formadepago")
+
 
 document.addEventListener("DOMContentLoaded", () => {
   mostrarInformacionEnHTML();
@@ -164,7 +165,7 @@ function mostrarInformacionEnHTML() {
   carritoContainer.innerHTML = "";
   carritoContainer.appendChild(tableContainer);
 }
-
+// Pauta 1
 function mostrarCosto() {
   let subtotal = 0;
 
@@ -219,7 +220,7 @@ function mostrarCosto() {
 
 function finalizarCompra() {
   if  (!carritoActual || carritoActual.length === 0) {
-  
+
     avisoCarritoVacio.innerHTML = "Para continuar con su compra agregue al menos un artículo a su carrito"
 
     setTimeout(() =>{
@@ -229,7 +230,7 @@ function finalizarCompra() {
 }
 else if (envio.value == 0 || envio.value == "") {
     errorFaltaEnvio(envio);
-  }  
+  }
   else {
     exitoEnvio(envio);
     window.location.href = 'detallesEnvio.html';
@@ -296,7 +297,7 @@ closeModal.addEventListener("click", function (event) {
     }
   }
 
-  if (creditCheckbox.checked) { 
+  if (creditCheckbox.checked) {
     if (cardNum.value.trim() === "" || isNaN(cardNum.value) || cardNum.value.length < 14) {
       showError(cardNum, "Ingrese un número de tarjeta válido (Debe tener al menos 14 dígitos)");
       canCloseModal = false; // No se permite cerrar el modal
@@ -328,7 +329,7 @@ closeModal.addEventListener("click", function (event) {
 });
 
 
-// formato de input de vencimiento 
+// formato de input de vencimiento
 inputVencimiento.addEventListener("input", function () {
   let inputValue = inputVencimiento.value;
 
@@ -435,61 +436,83 @@ function showError(input, message) {
 function showSuccess(input) {
   input.classList.remove("is-invalid"); // Elimina la clase de Bootstrap para resaltar el campo
   input.classList.add("is-valid"); // Agrega clase de Bootstrap para indicar éxito
-
   const successDiv = document.createElement("div");
   successDiv.className = "valid-feedback";
-
   input.parentNode.appendChild(successDiv);
 };
 
-
-comprar.addEventListener("click", function (event) {
-  event.preventDefault(); // Evita el envío del formulario por defecto
-
+// Agrega una función para verificar la compra
+// Arregla el bug de transferencia bancaria
+function verificarCompra() {
   // Validar y quitar mensajes de alerta previos
   const feedbackElements = document.querySelectorAll(".invalid-feedback, .valid-feedback");
   feedbackElements.forEach((element) => element.remove());
 
+  let puedeComprar = true;
+
   if (!creditCheckbox.checked && !transferCheckbox.checked) {
     showError(openModal, "Debe seleccionar forma de pago");
+    puedeComprar = false;
   }
 
   if (direccion.value.trim() === "") {
     showError(direccion, "Debe ingresar una dirección");
-  }else{
-    showSuccess(direccion)
+
+    puedeComprar = false;
+  } else {
+    showSuccess(direccion);
+
   }
 
   if (esquina.value.trim() === "") {
     showError(esquina, "Debe completar el campo 'Esquina'");
-  }else{
-    showSuccess(esquina)
+
+    puedeComprar = false;
+  } else {
+    showSuccess(esquina);
+
   }
 
   if (ciudad.value.trim() === "") {
     showError(ciudad, "Debe ingresar una ciudad");
-  }else{
-    showSuccess(ciudad)
+
+    puedeComprar = false;
+  } else {
+    showSuccess(ciudad);
+
   }
 
   if (cp.value.trim() === "") {
     showError(cp, "Debe ingresar un código postal");
+    puedeComprar = false;
   } else if (isNaN(cp.value)) {
     showError(cp, "Solo se permiten números en el código postal");
-  } else{
-    showSuccess(cp)
+    puedeComprar = false;
+  } else {
+    showSuccess(cp);
+
   }
 
-  // Validar el carrito actual
   if (!carritoActual || carritoActual.length === 0) {
     showError(comprar, "El carrito de compra está vacío");
+    puedeComprar = false;
   }
 
-  // Si no hay elementos con la clase "is-invalid," puedes enviar el formulario
-  if (document.querySelectorAll(".is-invalid").length === 0) {
+  if (puedeComprar) {
+    // Si todas las verificaciones pasan, muestra la alerta
     appendAlert('Se ha realizado su compra!', 'success');
   }
+}
+
+// Llama a verificarCompra cuando se haga clic en el botón "Comprar"
+comprar.addEventListener("click", function (event) {
+  event.preventDefault(); // Evita el envío del formulario por defecto
+  verificarCompra();
 });
+
+
+
+
 
 const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
 const appendAlert = (message, type) => {
@@ -502,7 +525,13 @@ const appendAlert = (message, type) => {
   ].join('');
 
   alertPlaceholder.append(wrapper);
+    // Programa la eliminación de la alerta después de 3 segundos (3000 ms)
+    setTimeout(() => {
+      wrapper.remove();
+    }, 3000);
 };
+
+
 
 
 

@@ -227,6 +227,7 @@ p {
   font-size: 1.5em;
   cursor: pointer;
 
+
 }
 
 
@@ -240,6 +241,7 @@ display: none;
   font-size: 1.5em;
   cursor: pointer;
   color: yellow;
+
 }
 
 #toggle2 {
@@ -258,7 +260,7 @@ display: none;
   font-size: 20px;
 }
 
-/* Estilo para acortar los campos de texto 
+/* Estilo para acortar los campos de texto
 #checkoutForm input[type="text"] {
   width: 30%;
 
