@@ -1,23 +1,25 @@
 #mainModal {
     position: absolute;
-    top: 50%;
+    top: 30%;
+    left: 40%;
     display: flex;
     flex-direction: column;
     background-color: #fff;
     color: #0f0f0f;
     width: 40%;
+    max-width: 20em;
+    min-width:15em ;
     justify-content: center;
-    transform: translateX(80%);
     z-index: 20;
     padding: 10px;
     border-radius:15px ;
 }
 
-input[type="checkbox"]{
+#modal > input[type="checkbox"]{
     appearance: none;
 }
 
-input[type="checkbox"] + label::before {
+#modal > input[type="checkbox"] + label::before {
     border: 1px solid #0f0f0f;
     content: "\2713";
     height: 20px;
@@ -30,7 +32,7 @@ input[type="checkbox"] + label::before {
     margin-right:10px ;
 }
 
-input[type="checkbox"]:checked + label::before{
+#modal > input[type="checkbox"]:checked + label::before{
     background-color: #fa7203;
     color: #fa7203;
 }
@@ -67,13 +69,15 @@ input[type="checkbox"]:checked + label::before{
 }
 
 #closeBtn {
-    position: fixed;
-    right: 0;
-    bottom: 0;
     margin: 0 .4em .4em 0;
     padding: 4px;
     border-radius: 10px;
     border: none;
     background-color: #f39915;;
 
+}
+
+.closeModalBtn{
+    display: flex;
+    flex-direction: row-reverse;
 }
