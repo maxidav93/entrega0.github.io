@@ -456,20 +456,28 @@ comprar.addEventListener("click", function (event) {
 
   if (direccion.value.trim() === "") {
     showError(direccion, "Debe ingresar una dirección");
+  }else{
+    showSuccess(direccion)
   }
 
   if (esquina.value.trim() === "") {
     showError(esquina, "Debe completar el campo 'Esquina'");
+  }else{
+    showSuccess(esquina)
   }
 
   if (ciudad.value.trim() === "") {
     showError(ciudad, "Debe ingresar una ciudad");
+  }else{
+    showSuccess(ciudad)
   }
 
   if (cp.value.trim() === "") {
     showError(cp, "Debe ingresar un código postal");
   } else if (isNaN(cp.value)) {
     showError(cp, "Solo se permiten números en el código postal");
+  } else{
+    showSuccess(cp)
   }
 
   // Validar el carrito actual
