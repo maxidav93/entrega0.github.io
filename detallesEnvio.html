@@ -9,6 +9,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
+    <link href="css/footerCarrito.css" rel="stylesheet">
     <link rel="stylesheet" href="css/cart.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
@@ -83,7 +84,7 @@
         <h5 class="col-12 col-md-8 mx-auto my-3 p-3">Datos de envío:</h5>
     <div id="formContainer" class="col-12 col-md-8 mx-auto my-3 border shadow p-3">
       <form id="form" class="row g-3 ">
-     
+
         <div class="col-12">
           <label for="inputAddress" class="form-label">Dirección</label>
           <input type="text" class="form-control" id="inputAddress" placeholder="Calle y número">
@@ -119,10 +120,10 @@
                       <div class="modalType"></div>
                       <button id="openModal">Selecciona</button>
                     </div>
-          
-          
+
+
                   </div>
-          
+
                   <div id="mainModal">
                     <div class="modalTitle">
                       <h1>Forma de pago</h1>
@@ -132,15 +133,15 @@
                       <label for="creditOption">Tarjeta de crédito</label>
                       <div class="creditInputs">
                         <div class="cardNumInput">
-                          <input type="number" id="cardNum">
+                          <input  id="cardNum">
                           <label for="cardNum">Número de tarjeta</label>
                         </div>
                         <div class="segNumInput">
-                          <input type="number" id="segNum" placeholder="123" maxlength="3">
+                          <input  id="segNum" placeholder="123" maxlength="3">
                           <label for="segNum">Código de Seguridad</label>
                         </div>
                         <div class="venInput">
-                          <input type="text" placeholder="mm/aa" name="vencimiento" id="vencimiento" maxlength="5">
+                          <input type="text" placeholder="mm/aa" name="vencimiento" id="vencimiento" maxlength="7">
                           <label for="vencimiento">Vencimiento</label>
                         </div>
                       </div>
@@ -153,15 +154,15 @@
                         <label for="accNum">Número de cuenta
                         </label>
                       </div>
-          
+
                       <div class="closeModalBtn"><button id="closeBtn">Cerrar</button></div>
                     </div>
-          
+
                   </div>
-          
+
                 </div>
               </section>
-          
+
               <button class="btn btn-primary botones" type="submit" id="finalizarCompra">Comprar</button>
               <div id="liveAlertPlaceholder"></div>
     </main>
