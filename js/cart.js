@@ -433,6 +433,14 @@ function showError(input, message) {
   input.parentNode.appendChild(alertDiv);
 };
 
+function showSuccess(input) {
+  input.classList.remove("is-invalid"); // Elimina la clase de Bootstrap para resaltar el campo
+  input.classList.add("is-valid"); // Agrega clase de Bootstrap para indicar éxito
+  const successDiv = document.createElement("div");
+  successDiv.className = "valid-feedback";
+  input.parentNode.appendChild(successDiv);
+};
+
 // Agrega una función para verificar la compra
 // Arregla el bug de transferencia bancaria
 function verificarCompra() {
@@ -450,16 +458,22 @@ function verificarCompra() {
   if (direccion.value.trim() === "") {
     showError(direccion, "Debe ingresar una dirección");
     puedeComprar = false;
+  } else {
+    showSuccess(direccion);
   }
 
   if (esquina.value.trim() === "") {
     showError(esquina, "Debe completar el campo 'Esquina'");
     puedeComprar = false;
+  } else {
+    showSuccess(esquina);
   }
 
   if (ciudad.value.trim() === "") {
     showError(ciudad, "Debe ingresar una ciudad");
     puedeComprar = false;
+  } else {
+    showSuccess(ciudad);
   }
 
   if (cp.value.trim() === "") {
@@ -468,6 +482,8 @@ function verificarCompra() {
   } else if (isNaN(cp.value)) {
     showError(cp, "Solo se permiten números en el código postal");
     puedeComprar = false;
+  } else {
+    showSuccess(cp);
   }
 
   if (!carritoActual || carritoActual.length === 0) {
@@ -488,6 +504,9 @@ comprar.addEventListener("click", function (event) {
 });
 
 
+
+
+
 const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
 const appendAlert = (message, type) => {
   const wrapper = document.createElement('div');
@@ -499,6 +518,10 @@ const appendAlert = (message, type) => {
   ].join('');
 
   alertPlaceholder.append(wrapper);
+    // Programa la eliminación de la alerta después de 3 segundos (3000 ms)
+    setTimeout(() => {
+      wrapper.remove();
+    }, 3000);
 };
 
 
