@@ -434,6 +434,7 @@ function showError(input, message) {
 };
 
 // Agrega una función para verificar la compra
+// Arregla el bug de transferencia bancaria
 function verificarCompra() {
   // Validar y quitar mensajes de alerta previos
   const feedbackElements = document.querySelectorAll(".invalid-feedback, .valid-feedback");
