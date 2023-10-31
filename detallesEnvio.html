@@ -82,7 +82,7 @@
         </a>
         <br>
         <h5 class="col-12 col-md-8 mx-auto my-3 p-3">Datos de envío:</h5>
-    <div id="formContainer" class="col-12 col-md-8 mx-auto my-3 border shadow p-3">
+    <div id="formContainer" class="col-12 col-md-8 mx-auto my-3 border p-3">
       <form id="form" class="row g-3 ">
 
         <div class="col-12">
@@ -93,21 +93,16 @@
           <label for="inputAddress2" class="form-label">Esquina</label>
           <input type="text" class="form-control" id="inputAddress2" placeholder="Esquina">
         </div>
+        
         <div class="col-md-6">
           <label for="inputCity" class="form-label">Ciudad</label>
           <input type="text" class="form-control" id="inputCity">
         </div>
-        <div class="col-md-4">
-          <label for="inputState" class="form-label">Barrio</label>
-          <select id="inputState" class="form-select">
-            <option selected>Elige...</option>
-            <option>...</option>
-          </select>
-        </div>
-        <div class="col-md-2">
+        <div class="col-md-4 offset-md-2">
           <label for="inputZip" class="form-label">Código postal</label>
           <input type="text" class="form-control" id="inputZip">
         </div>
+      </div>
       </form>
 
             </div>
@@ -115,12 +110,15 @@
             <section id="modal">
                 <div class="modalCont">
                   <div id="paymentModal">
-                    <div id= "formadepago" class="secModalTitle">FORMA DE PAGO</div>
-                    <div class="modalCont">
-                      <div class="modalType"></div>
-                      <button id="openModal">Selecciona</button>
+                    <h5 class="col-12 col-md-8 mx-auto my-3 p-3" id= "formadepago">Forma de pago:</h5>
+                    <div class="col-12 col-md-8 mx-auto my-3 p-3">
+                      <div class="modalType "></div>
+                    <div class="modalCont d-flex justify-content-between">
+                      <button id="openModal" class="justify-content-start">Selecciona</button>
+                      <button class="btn btn-primary botones justify-content-end" type="submit" id="finalizarCompra">Comprar</button>
                     </div>
-
+                    <div id="errorfaltaFormadepago"></div>
+                  </div>
 
                   </div>
 
@@ -155,7 +153,12 @@
                         </label>
                       </div>
 
-                      <div class="closeModalBtn"><button id="closeBtn">Cerrar</button></div>
+                      <div class="closeModalBtn">
+                        <div id="errorFormadePago"></div>
+                        <button id="closeBtn" class="botonesModal">Aceptar</button>
+                        <button id="cancelarModal" class="botonesModal">Cancelar</button>
+                        
+                      </div>
                     </div>
 
                   </div>
@@ -163,7 +166,7 @@
                 </div>
               </section>
 
-              <button class="btn btn-primary botones" type="submit" id="finalizarCompra">Comprar</button>
+              
               <div id="liveAlertPlaceholder"></div>
     </main>
     <div id="spinner-wrapper">
