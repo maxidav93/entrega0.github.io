@@ -167,7 +167,6 @@ nav a {
 
 main {
   min-height: calc(100vh - 210px);
-
 }
 
 a.custom-card,
@@ -295,4 +294,8 @@ margin-left: 15px;
 .botones {
   background-color: orange;
   border-color: orange;
+}
+.cart-link {
+margin: 30px;
+color: white;
 }
