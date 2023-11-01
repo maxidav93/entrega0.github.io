@@ -8,7 +8,9 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     .bd-placeholder-img {
       font-size: 1.125rem;
@@ -46,59 +48,95 @@
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
           <li class="nav-item">
-              <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                <ul class="navbar-nav">
-                  <li class="nav-item dropdown">
-                    <button class="btn btn-dark " data-bs-toggle="dropdown" aria-expanded="false"
-                      style="display: flex; gap: 0.3em;">
-                      <div id="nombreNav"></div>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
-                        class="bi bi-person-circle" viewBox="0 0 16 16">
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                        <path fill-rule="evenodd"
-                          d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                      </svg>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-dark">
-                      <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
-                      <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a id="logout" class="dropdown-item" href="#">Cerrar sesión</a></li>
-                      <input type="checkbox" id="toggle">
-                      <label for="toggle" id="label_toggle"><i class="fa-solid fa-moon"></i></label>
+            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+              <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                  <button class="btn btn-dark " data-bs-toggle="dropdown" aria-expanded="false"
+                    style="display: flex; gap: 0.3em;">
+                    <div id="nombreNav"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
+                      class="bi bi-person-circle" viewBox="0 0 16 16">
+                      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                      <path fill-rule="evenodd"
+                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                    </svg>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-dark">
+                    <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+                    <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+                    <li>
+                      <hr class="dropdown-divider">
+                    </li>
+                    <li><a id="logout" class="dropdown-item" href="#">Cerrar sesión</a></li>
+                    <input type="checkbox" id="toggle">
+                    <label for="toggle" id="label_toggle"><i class="fa-solid fa-moon"></i></label>
 
-                      <input type="checkbox" id="toggle2">
-                      <label for="toggle2" id="label_toggle2"><i class="fa-solid fa-sun"></i></label>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-            </li>
+                    <input type="checkbox" id="toggle2">
+                    <label for="toggle2" id="label_toggle2"><i class="fa-solid fa-sun"></i></label>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </li>
           </li>
         </ul>
       </div>
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+    <div id="divDatos">
+    <h2>Perfil</h2>
+    <hr>
+
+    <div class="row">
+      <div class="col" id="div1">
+        <label>Primer Nombre*</label>
+        <input type="text" class="form-control" aria-label="First name" id="primerNombre">
+      </div>
+      <div class="col">
+        <label>Segundo Nombre</label>
+        <input type="text" class="form-control"  id="segundoNombre">
       </div>
     </div>
+    <div class="row" id="div2">
+      <div class="col">
+        <label>Primer Apellido*</label>
+        <input type="text" class="form-control"   id="primerApellido">
+      </div>
+      <div class="col">
+        <label>Segundo apellido</label>
+        <input type="text" class="form-control"   id="segundoApellido">
+      </div>
+    </div>
+    <div class="row" id="div3">
+      <div class="col">
+        <label>E-mail*</label>
+        <input type="text" class="form-control"  id="emailContacto">
+      </div>
+      <div class="col">
+        <label>Telefono de contacto</label>
+        <input type="text" class="form-control"  id="contacto">
+      </div>
+    </div>
+    <hr>
+    <button id="btnPerfil">Guardar cambios</button>
+    </div>
+  </div>
   </main>
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
         <a href="#">Volver arriba</a>
       </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
+      </p>
     </div>
   </footer>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/my-profile.js"></script>
   <script src="js/logout.js"></script>
-  
+
 </body>
 
 </html>
