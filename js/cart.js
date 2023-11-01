@@ -288,6 +288,8 @@ function toggleModal() {
 };
 //funcion que limpia los checkbox
 function limpiarCheckbox() {
+  const feedbackElements = document.querySelectorAll(".invalid-feedback, .valid-feedback");
+  feedbackElements.forEach((element) => element.remove());
   creditCheckbox.checked = false
   transferCheckbox.checked = false
   cardNum.value = ""
