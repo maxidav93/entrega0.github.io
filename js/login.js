@@ -19,10 +19,16 @@ registerBtn.addEventListener("click", () => {
   loginSection.style.display = "none";
 });
 
-document.addEventListener("DOMContentLoaded", async function () {
-  const loginForm = document.getElementById("loginSubmit"); 
+// Función para validar el formato del correo electrónico
+function validateEmail(EmailRegistrado) {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailRegex.test(EmailRegistrado);
+}
 
-  loginForm.addEventListener("click", async function (event) { 
+document.addEventListener("DOMContentLoaded", async function () {
+  const loginForm = document.getElementById("loginSubmit");
+
+  loginForm.addEventListener("click", async function (event) {
     event.preventDefault();
 
     const username = document.getElementById('username').value;
@@ -30,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     const EmailRegistrado = document.getElementById("emailUsuario").value;
 
-    if (username && password) {
+    if (username && password && validateEmail(EmailRegistrado)) {
       //Almacenar datos iniciales de carrito del usuario
       await loadCarrito()
       // Almacenar la sesión como iniciada en localStorage
@@ -41,7 +47,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       // Redireccionar a la página de portada.
       window.location.href = 'index.html';
     } else {
-      alert('Campos incompletos. Por favor inténtalo de nuevo.');
+      alert('Campos incompletos o correo electrónico no válido. Por favor inténtalo de nuevo.');
     }
   });
 
@@ -61,9 +67,9 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.setItem('newUsername', newUsername);
       localStorage.setItem('newPassword', newPassword);
       localStorage.setItem('EmaildeRegistro', newEmail);
-      
+
       alert("¡Registro exitoso para " + newUsername + "! :D");
-      
+
 
       window.location.href = 'index.html';
     } else {
