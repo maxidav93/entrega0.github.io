@@ -7,13 +7,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const emailInput = document.getElementById("emailContacto");
     const contactoInput = document.getElementById("contacto");
 
-    // Recupera el correo electrónico del usuario del Local Storage
-    const emailRegistrado = localStorage.getItem("emailregistrado");
+// Recupera el correo electrónico del usuario del Local Storage
+const emailRegistrado = localStorage.getItem("emailRegistrado");
 
-    // Verifica si el correo electrónico existe en el Local Storage y establece el valor en el campo de entrada de email
-    if (emailRegistrado) {
-        emailInput.value = emailRegistrado;
-    }
+// Verifica si el correo electrónico existe en el Local Storage y establece el valor en el campo de entrada de email
+if (emailRegistrado) {
+    emailInput.value = emailRegistrado;
+}
+
 
     const btnPerfil = document.getElementById("btnPerfil");
 
