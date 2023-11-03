@@ -21,6 +21,8 @@ if (emailRegistrado) {
     btnPerfil.addEventListener("click", () => {
         const primerNombre = primerNombreInput.value.trim();
         const primerApellido = primerApellidoInput.value.trim();
+        const segundoNombre = segundoNombreInput.value.trim();
+        const segundoApellido = segundoApellidoInput.value.trim();
         const email = emailInput.value.trim();
 
         const feedbackElements = document.querySelectorAll(".invalid-feedback, .valid-feedback");
@@ -36,6 +38,18 @@ if (emailRegistrado) {
             showError(primerApellidoInput, "Este campo es obligatorio.");
         } else {
             showSuccess(primerApellidoInput);
+        }
+
+        if (segundoNombre === "") {
+            showError(segundoNombreInput, "Este campo es obligatorio.");
+        } else {
+            showSuccess(segundoNombreInput);
+        }
+
+        if (segundoApellido === "") {
+            showError(segundoApellidoInput, "Este campo es obligatorio.");
+        } else {
+            showSuccess(segundoApellidoInput);
         }
 
         if (email === "") {
