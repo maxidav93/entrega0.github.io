@@ -301,6 +301,27 @@ margin: 30px;
 color: white;
 }
 
-.alert.alert-dismissible {
-  transition: opacity 2s;
+#divDatos{
+  display: flexbox;
+    justify-content: center;
+    width: 70%;
+    margin-left: 10rem;
 }
+.col{
+  margin: 1rem;
+}
+h2{
+  margin : 1rem;
+}
+#btnPerfil{
+  display: block;
+    width: 15%;
+    padding: 6px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+
+    margin: 1rem;
+}
+

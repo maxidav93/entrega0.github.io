@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const EmailRegistrado = document.getElementById("emailUsuario").value;
 
     if (username && password) {
       //Almacenar datos iniciales de carrito del usuario
@@ -35,6 +36,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       // Almacenar la sesión como iniciada en localStorage
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem("username", username);
+      localStorage.setItem("emailRegistrado", EmailRegistrado);
       alert("¡Te damos la bienvenida nuevamente " + username + "! :D")
       // Redireccionar a la página de portada.
       window.location.href = 'index.html';
@@ -53,10 +55,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const newUsername = document.getElementById('newUsername').value;
     const newPassword = document.getElementById('newPassword').value;
+    const newEmail = document.getElementById('emailUsuarioRegistro').value;
 
-    if (newUsername && newPassword) {
+    if (newUsername && newPassword && newEmail) {
       localStorage.setItem('newUsername', newUsername);
       localStorage.setItem('newPassword', newPassword);
+      localStorage.setItem('EmaildeRegistro', newEmail);
       
       alert("¡Registro exitoso para " + newUsername + "! :D");
       
