@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-// Obtén los elementos de los campos de entrada
+    // Obtén los elementos de los campos de entrada
     const primerNombreInput = document.getElementById("primerNombre");
     const segundoNombreInput = document.getElementById("segundoNombre");
     const primerApellidoInput = document.getElementById("primerApellido");
@@ -7,13 +7,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const emailInput = document.getElementById("emailContacto");
     const contactoInput = document.getElementById("contacto");
 
-// Recupera el correo electrónico del usuario del Local Storage
-const emailRegistrado = localStorage.getItem("emailRegistrado");
+    // Recupera el correo electrónico del usuario del Local Storage
+    const emailRegistrado = localStorage.getItem("emailRegistrado");
 
-// Verifica si el correo electrónico existe en el Local Storage y establece el valor en el campo de entrada de email
-if (emailRegistrado) {
-    emailInput.value = emailRegistrado;
-}
+    // Verifica si el correo electrónico existe en el Local Storage y establece el valor en el campo de entrada de email
+    if (emailRegistrado) {
+        emailInput.value = emailRegistrado;
+    }
 
 
     const btnPerfil = document.getElementById("btnPerfil");
@@ -40,17 +40,20 @@ if (emailRegistrado) {
             showSuccess(primerApellidoInput);
         }
 
-        if (segundoNombre === "") {
-            showError(segundoNombreInput, "Este campo es obligatorio.");
-        } else {
+        if (segundoNombre !== "") {
             showSuccess(segundoNombreInput);
+        } else {
+            removeSuccess(segundoNombreInput);
         }
 
-        if (segundoApellido === "") {
-            showError(segundoApellidoInput, "Este campo es obligatorio.");
-        } else {
+
+
+        if (segundoApellido !== "") {
             showSuccess(segundoApellidoInput);
+        } else {
+            removeSuccess(segundoApellidoInput);
         }
+
 
         if (email === "") {
             showError(emailInput, "El correo electrónico es obligatorio.");
@@ -63,10 +66,16 @@ if (emailRegistrado) {
         if (contactoInput.value.trim() !== "") {
             if (isNaN(contactoInput.value)) {
                 showError(contactoInput, "Debe ingresar un número válido.");
+                removeSuccess(contactoInput); // Remueve el éxito en caso de error
             } else {
                 showSuccess(contactoInput);
+                removeError(contactoInput); // Remueve el error si es un número válido
             }
+        } else {
+            removeSuccess(contactoInput); // Remueve el éxito si el campo está vacío
+            removeError(contactoInput); // Remueve el error si el campo está vacío
         }
+
 
         // Función para validar el correo electrónico
         function validateEmail(email) {
@@ -91,6 +100,25 @@ if (emailRegistrado) {
             successDiv.className = "valid-feedback";
             input.parentNode.appendChild(successDiv);
         }
+
+        // Función para eliminar el éxito
+        function removeSuccess(input) {
+            input.classList.remove("is-valid"); // Elimina la clase de Bootstrap para indicar éxito
+            const successDiv = input.parentNode.querySelector(".valid-feedback");
+            if (successDiv) {
+                successDiv.remove();
+            }
+        }
+        // Función para eliminar el error
+        function removeError(input) {
+            input.classList.remove("is-invalid"); // Elimina la clase de Bootstrap para resaltar el campo
+            const errorDiv = input.parentNode.querySelector(".invalid-feedback");
+            if (errorDiv) {
+                errorDiv.remove();
+            }
+        }
+
+
 
         // Guardar los datos en el Local Storage
         localStorage.setItem("primerNombre", primerNombreInput.value);
