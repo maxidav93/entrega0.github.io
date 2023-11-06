@@ -34,7 +34,7 @@ const cardNum = document.getElementById("cardNum");
 const segNum = document.getElementById("segNum");
 const formadepago = document.getElementById("formadepago")
 const cancelarModal = document.getElementById("cancelarModal")
-let modalAbierto; 
+let modalAbierto;
 
 document.addEventListener("DOMContentLoaded", () => {
   mostrarInformacionEnHTML();
@@ -282,7 +282,7 @@ function toggleModal() {
   } else {
     mainModal.style.display = "flex";
     pageOverlay.style.display = "block";
-    
+
     modalAbierto = true;
   }
 };
@@ -294,8 +294,8 @@ function limpiarCheckbox() {
   transferCheckbox.checked = false
   cardNum.value = ""
   segNum.value = ""
-  inputVencimiento.value = "" 
-  accNumInput.value = "" 
+  inputVencimiento.value = ""
+  accNumInput.value = ""
 
 
   toggleModal()
@@ -306,7 +306,7 @@ openModal.addEventListener("click", () => toggleModal());
 cancelarModal.addEventListener("click", () => limpiarCheckbox());
 
 aceptarMetodoPago.addEventListener("click", (e) => {
-  e.preventDefault() 
+  e.preventDefault()
   validarFormadePago()
 });
 
@@ -340,7 +340,7 @@ function validarFormadePago() {
     const numCuenta = accNumInput.value.replace(/[^0-9]/g, ''); // Elimina caracteres no numéricos
     if (numCuenta.length < 12) {
       showError(accNumInput, "El número de cuenta debe tener al menos 12 dígitos");
-    } 
+    }
     else {
       toggleModal()
     }
@@ -544,11 +544,20 @@ const appendAlert = (message, type) => {
   ].join('');
 
   alertPlaceholder.append(wrapper);
-    // Programa la eliminación de la alerta después de 3 segundos (3000 ms)
+
+  // Establece la opacidad inicial en 1 (visible)
+  wrapper.style.opacity = 2;
+
+  // Programa la reducción gradual de la opacidad después de 3 segundos (3000 ms)
+  setTimeout(() => {
+    wrapper.style.opacity = 1;
+    // Elimina la alerta después de completar la transición de desvanecimiento
     setTimeout(() => {
       wrapper.remove();
-    }, 3000);
+    }, 500); // Puedes ajustar el tiempo de transición aquí (0.5 segundos)
+  }, 3000); // Retraso inicial de 3 segundos
 };
+
 
 
 
