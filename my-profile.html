@@ -54,12 +54,7 @@
                   <button class="btn btn-dark " data-bs-toggle="dropdown" aria-expanded="false"
                     style="display: flex; gap: 0.3em;">
                     <div id="nombreNav"></div>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
-                      class="bi bi-person-circle" viewBox="0 0 16 16">
-                      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                      <path fill-rule="evenodd"
-                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                    </svg>
+                    <div id="miniImagenPerfil"></div>
                   </button>
                   <ul class="dropdown-menu dropdown-menu-dark">
                     <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
@@ -85,37 +80,47 @@
   </nav>
   <main class="vh-100">
     <div id="divDatos">
+  <div class="d-flex justify-content-between">
     <h2>Perfil</h2>
+    <div id="imagearea" class="w-100 d-flex justify-content-end"></div>
+  </div>
     <hr>
 
-    <div class="row">
-      <div class="col" id="div1">
+    <div class="row m-4">
+      <div class="col-6" id="div1">
         <label>Primer Nombre*</label>
         <input type="text" class="form-control" aria-label="First name" id="primerNombre">
       </div>
-      <div class="col">
+      <div class="col-6">
         <label>Segundo Nombre</label>
         <input type="text" class="form-control"  id="segundoNombre">
       </div>
     </div>
-    <div class="row" id="div2">
-      <div class="col">
+    <div class="row m-4" id="div2">
+      <div class="col-6">
         <label>Primer Apellido*</label>
         <input type="text" class="form-control"   id="primerApellido">
       </div>
-      <div class="col">
+      <div class="col-6">
         <label>Segundo apellido</label>
         <input type="text" class="form-control"   id="segundoApellido">
       </div>
     </div>
-    <div class="row" id="div3">
-      <div class="col">
+    <div class="row m-4" id="div3">
+      <div class="col-6">
         <label>E-mail*</label>
         <input type="text" class="form-control"  id="emailContacto">
       </div>
-      <div class="col">
+      <div class="col-6">
         <label>Telefono de contacto</label>
         <input type="text" class="form-control"  id="contacto">
+      </div>
+    </div>
+  
+    <div class="row m-4">
+      <div class="col-6">
+        <label>Imagen de perfil</label>
+        <input type="file" class="form-control"  id="imagen">
       </div>
     </div>
     <hr>

@@ -325,3 +325,16 @@ h2{
     margin: 1rem;
 }
 
+.profileImage{
+  margin-top: 15px;
+   width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.miniProfileImage {
+  width: 30px; /* Tamaño deseado para la miniatura */
+  height: 30px;
+  object-fit: cover; /* O 'contain' según tus preferencias */
+  border-radius: 50%; /* Para hacer una miniatura redonda */
+}

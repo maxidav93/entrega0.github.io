@@ -6,6 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const segundoApellidoInput = document.getElementById("segundoApellido");
     const emailInput = document.getElementById("emailContacto");
     const contactoInput = document.getElementById("contacto");
+    const imagenPerfil = document.getElementById("imagen")
+    const imagenArea = document.getElementById("imagearea");
+
 
     // Recupera el correo electrónico del usuario del Local Storage
     const emailRegistrado = localStorage.getItem("emailRegistrado");
@@ -74,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             removeSuccess(contactoInput); // Remueve el éxito si el campo está vacío
             removeError(contactoInput); // Remueve el error si el campo está vacío
+            guardarImagen();
         }
 
 
@@ -117,7 +121,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 errorDiv.remove();
             }
         }
-
+        function guardarImagen() {
+           
+          
+            if (imagenPerfil.files && imagenPerfil.files[0]) {
+              const reader = new FileReader();
+          
+              reader.onload = function (e) {
+                // Muestra la imagen en la página (opcional)
+                imagenArea.innerHTML = `<img src="${e.target.result}" alt="Imagen de perfil" class="profileImage">`;
+          
+                // Guarda la imagen en localStorage
+                localStorage.setItem('imagenPerfil', e.target.result);
+              };
+          
+              // Lee el contenido de la imagen como una URL de datos
+              reader.readAsDataURL(imagenPerfil.files[0]);
+            }
+          }
 
 
         // Guardar los datos en el Local Storage
@@ -128,10 +149,25 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("email", email);
         localStorage.setItem("contacto", contactoInput.value || "0"); // Si es nulo o vacío, guarda "0"
     });
+
+
+
+    function mostrarImagen() {
+        // Obtener la imagen almacenada en localStorage
+        const imagenGuardada = localStorage.getItem('imagenPerfil');
+        const miniImagenPerfil = document.getElementById('miniImagenPerfil');
+      
+        
+        // Verificar si hay una imagen almacenada
+        if (imagenGuardada) {
+            // Utiliza imagenGuardada en lugar de e.target.result
+            imagenArea.innerHTML = `<img src="${imagenGuardada}" alt="Imagen de perfil" class="profileImage rounded">`;
+            miniImagenPerfil.innerHTML = `<img src="${imagenGuardada}" alt="Miniatura de perfil" class="miniProfileImage">`;
+        }
+    }
+
+    mostrarImagen();
 });
-
-
-
 
 
 
