@@ -154,15 +154,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function mostrarImagen() {
         // Obtener la imagen almacenada en localStorage
-        const imagenGuardada = localStorage.getItem('imagenPerfil');
-        const miniImagenPerfil = document.getElementById('miniImagenPerfil');
-      
+        const imagenGuardada = localStorage.getItem('imagenPerfil');      
         
         // Verificar si hay una imagen almacenada
         if (imagenGuardada) {
             // Utiliza imagenGuardada en lugar de e.target.result
             imagenArea.innerHTML = `<img src="${imagenGuardada}" alt="Imagen de perfil" class="profileImage rounded">`;
-            miniImagenPerfil.innerHTML = `<img src="${imagenGuardada}" alt="Miniatura de perfil" class="miniProfileImage">`;
+    
         }
     }
 
