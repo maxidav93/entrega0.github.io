@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (primerNombre === "") {
             showError(primerNombreInput, "Este campo es obligatorio.");
+            localStorage.setItem("primerNombre", primerNombreInput.value); // Solo guarda si hay un valor válido
         } else {
             showSuccess(primerNombreInput);
         }
