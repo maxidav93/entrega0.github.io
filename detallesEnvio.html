@@ -19,8 +19,6 @@
 
 <body>
   <div class="page-overlay" style="display: none;"></div>
-
-  <!--  START OF NAV SECTION  -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -45,12 +43,7 @@
                   <button class="btn btn-dark " data-bs-toggle="dropdown" aria-expanded="false"
                     style="display: flex; gap: 0.3em;">
                     <div id="nombreNav"></div>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
-                      class="bi bi-person-circle" viewBox="0 0 16 16">
-                      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                      <path fill-rule="evenodd"
-                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                    </svg>
+                    <div id="miniImagenPerfil"></div>
                   </button>
                   <ul class="dropdown-menu dropdown-menu-dark">
                     <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
@@ -62,139 +55,238 @@
                     <input type="checkbox" id="toggle">
                     <label for="toggle" id="label_toggle"><i class="fa-solid fa-moon"></i></label>
 
-                    <input type="checkbox" id="toggle2">
-                    <label for="toggle2" id="label_toggle2"><i class="fa-solid fa-sun"></i></label>
+                    <!--  START OF NAV SECTION  -->
+                    <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
+                      <div class="container">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                          data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                          aria-label="Toggle navigation">
+                          <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                          <ul class="navbar-nav w-100 justify-content-between">
+                            <li class="nav-item">
+                              <a class="nav-link" href="index.html">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="categories.html">Categorías</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="sell.html">Vender</a>
+                            </li>
+                            <li class="nav-item">
+                              <div class="nav-item" id="navbarNavDarkDropdown">
+                                <ul class="navbar-nav">
+                                  <li class="nav-item dropdown">
+                                    <button class="btn btn-dark " data-bs-toggle="dropdown" aria-expanded="false"
+                                      style="display: flex; gap: 0.3em;">
+                                      <div id="nombreNav"></div>
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
+                                        class="bi bi-person-circle" viewBox="0 0 16 16">
+                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                        <path fill-rule="evenodd"
+                                          d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                                      </svg>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-dark">
+                                      <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+                                      <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+                                      <li>
+                                        <hr class="dropdown-divider">
+                                      </li>
+                                      <li><a id="logout" class="dropdown-item" href="#">Cerrar sesión</a></li>
+                                      <input type="checkbox" id="toggle">
+                                      <label for="toggle" id="label_toggle"><i class="fa-solid fa-moon"></i></label>
 
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </li>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <!--  END OF NAV SECTION  -->
+                                      <input type="checkbox" id="toggle2">
+                                      <label for="toggle2" id="label_toggle2"><i class="fa-solid fa-sun"></i></label>
 
-  <!--  START OF MAIN SECTION  -->
-  <main class="pb-5">
-    <a href="cart.html">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
-        viewBox="0 0 16 16">
-        <path fill-rule="evenodd"
-          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
-      </svg>
-      Volver al carrito
-    </a>
-    <br>
-    <h5 class="col-12 col-md-8 mx-auto my-3 p-3">Datos de envío:</h5>
-    <div id="formContainer" class="col-12 col-md-8 mx-auto my-3 border shadow p-3">
-      <form id="form" class="row g-3 ">
+                                    </ul>
+                                  </li>
+                                </ul>
+                              </div>
+                        </div>
+                    </nav>
+                    <main class="vh-100">
+                      <div class="cart-link">
+                        <a href="cart.html" class="btn btn-light  ">
+                          <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                              class="bi bi-arrow-left" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd"
+                                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                            </svg></span>
+                        </a>
+                      </div>
+                      <h5 class="col-12 col-md-8 mx-auto my-3 p-3">Datos de envío:</h5>
+                      <div id="formContainer" class="col-12 col-md-8 mx-auto my-3 border p-3">
+                        <form id="form" class="row g-3 ">
 
-        <div class="col-12">
-          <label for="inputAddress" class="form-label">Dirección</label>
-          <input type="text" class="form-control" id="inputAddress" placeholder="Calle y número">
-        </div>
-        <div class="col-12">
-          <label for="inputAddress2" class="form-label">Esquina</label>
-          <input type="text" class="form-control" id="inputAddress2" placeholder="Esquina">
-        </div>
-        <div class="col-md-6">
-          <label for="inputCity" class="form-label">Ciudad</label>
-          <input type="text" class="form-control" id="inputCity">
-        </div>
-        <div class="col-md-4">
-          <label for="inputState" class="form-label">Barrio</label>
-          <select id="inputState" class="form-select">
-            <option selected>Elige...</option>
-            <option>...</option>
-          </select>
-        </div>
-        <div class="col-md-2">
-          <label for="inputZip" class="form-label">Código postal</label>
-          <input type="text" class="form-control" id="inputZip">
-        </div>
-      </form>
+                          <div class="col-12">
+                            <label for="inputAddress" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="inputAddress" placeholder="Calle y número">
+                          </div>
+                          <div class="col-12">
+                            <label for="inputAddress2" class="form-label">Esquina</label>
+                            <input type="text" class="form-control" id="inputAddress2" placeholder="Esquina">
+                          </div>
 
-    </div>
+                          <div class="col-md-6">
+                            <label for="inputCity" class="form-label">Ciudad</label>
+                            <input type="text" class="form-control" id="inputCity">
+                          </div>
+                          <div class="col-md-4 offset-md-2">
+                            <label for="inputZip" class="form-label">Código postal</label>
+                            <input type="text" class="form-control" id="inputZip">
+                          </div>
+                      </div>
+                      </form>
 
-    <section id="modal">
-      <div class="modalCont">
-        <div id="paymentModal">
-          <div id="formadepago" class="secModalTitle">FORMA DE PAGO</div>
-          <div class="modalCont">
-            <div class="modalType"></div>
-            <button id="openModal">Selecciona</button>
-          </div>
-
-
-        </div>
-
-        <div id="mainModal">
-          <div class="modalTitle">
-            <h1>Forma de pago</h1>
-          </div>
-          <div class="credit">
-            <input type="checkbox" name="credit" id="creditOption" class="checkbox">
-            <label for="creditOption">Tarjeta de crédito</label>
-            <div class="creditInputs">
-              <div class="cardNumInput">
-                <input id="cardNum" maxlength="19">
-                <label for="cardNum">Número de tarjeta</label>
-              </div>
-              <div class="segNumInput">
-                <input id="segNum" placeholder="123" maxlength="3">
-                <label for="segNum">Código de Seguridad</label>
-              </div>
-              <div class="venInput">
-                <input type="text" placeholder="mm/aa" name="vencimiento" id="vencimiento" maxlength="5">
-                <label for="vencimiento">Vencimiento</label>
-              </div>
-            </div>
-          </div>
-          <div class="bankTransfer">
-            <input type="checkbox" class="checkbox" name="transferOption" id="transferOption">
-            <label for="transferOption">Transferencia Bancaria</label>
-            <div class="transferInputs">
-              <input type="text" id="accNum" placeholder="XXXX-XXXX-XXXX" maxlength="14">
-              <label for="accNum">Número de cuenta
-              </label>
             </div>
 
-            <div class="closeModalBtn"><button id="closeBtn">Cerrar</button></div>
-          </div>
+            <section id="modal">
+              <div class="modalCont">
+                <div id="paymentModal">
+                  <div id="formadepago" class="secModalTitle">FORMA DE PAGO</div>
+                  <div class="modalCont">
+                    <div class="modalType"></div>
+                    <button id="openModal">Selecciona</button>
+                  </div>
 
-        </div>
 
-      </div>
-    </section>
+                </div>
 
-    <button class="btn btn-primary botones" type="submit" id="finalizarCompra">Comprar</button>
-    <div id="liveAlertPlaceholder"></div>
-  </main>
+                <div id="mainModal">
+                  <div class="modalTitle">
+                    <h1>Forma de pago</h1>
+                  </div>
+                  <div class="credit">
+                    <input type="checkbox" name="credit" id="creditOption" class="checkbox">
+                    <label for="creditOption">Tarjeta de crédito</label>
+                    <div class="creditInputs">
+                      <div class="cardNumInput">
+                        <input id="cardNum" maxlength="19">
+                        <label for="cardNum">Número de tarjeta</label>
+                      </div>
+                      <div class="segNumInput">
+                        <input id="segNum" placeholder="123" maxlength="3">
+                        <label for="segNum">Código de Seguridad</label>
+                      </div>
+                      <div class="venInput">
+                        <input type="text" placeholder="mm/aa" name="vencimiento" id="vencimiento" maxlength="5">
+                        <label for="vencimiento">Vencimiento</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="bankTransfer">
+                    <input type="checkbox" class="checkbox" name="transferOption" id="transferOption">
+                    <label for="transferOption">Transferencia Bancaria</label>
+                    <div class="transferInputs">
+                      <input type="text" id="accNum" placeholder="XXXX-XXXX-XXXX" maxlength="14">
+                      <label for="accNum">Número de cuenta
+                      </label>
+                    </div>
 
-  <!--  END OF MAIN SECTION  -->
-  <div id="spinner-wrapper">
-    <div class="lds-ring">
-    </div>
-  </div>
+                    <div class="closeModalBtn"><button id="closeBtn">Cerrar</button>
+                    </div>
+                  </div>
 
-  <!--  START OF FOOTER SECTION  -->
-  <footer class="text-muted">
-    <div class="container">
 
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a
-          Programar</a>
-      </p>
-    </div>
-  </footer>
+                  <section id="modal">
+                    <div class="modalCont">
+                      <div id="paymentModal">
+                        <h5 class="col-12 col-md-8 mx-auto my-3 p-3" id="formadepago">Forma de pago:</h5>
+                        <div class="col-12 col-md-8 mx-auto my-3 p-3">
+                          <div class="modalType "></div>
+                          <div class="modalCont d-flex justify-content-between">
+                            <button id="openModal" class="justify-content-start btn btn-secondary  ">Selecciona</button>
+                            <button class="btn btn-primary w-25 botones justify-content-end" type="submit"
+                              id="finalizarCompra">Comprar</button>
+                          </div>
+                          <div id="errorfaltaFormadepago"></div>
+                        </div>
 
-  <!--  END OF FOOTER SECTION  -->
-  <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/init.js"></script>
-  <script src="js/cart.js"></script>
-  <script src="js/logout.js"></script>
+                      </div>
+
+                      <div id="mainModal">
+                        <div class="modalTitle">
+                          <h1>Forma de pago</h1>
+                        </div>
+                        <div class="credit">
+                          <input type="checkbox" name="credit" id="creditOption" class="checkbox">
+                          <label for="creditOption">Tarjeta de crédito</label>
+                          <div class="creditInputs">
+                            <div class="cardNumInput">
+                              <input id="cardNum" maxlength="19">
+                              <label for="cardNum">Número de tarjeta</label>
+                            </div>
+                            <div class="segNumInput">
+                              <input id="segNum" placeholder="123" maxlength="3">
+                              <label for="segNum">Código de Seguridad</label>
+                            </div>
+                            <div class="venInput">
+                              <input type="text" placeholder="mm/aa" name="vencimiento" id="vencimiento" maxlength="5">
+                              <label for="vencimiento">Vencimiento</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="bankTransfer">
+                          <input type="checkbox" class="checkbox" name="transferOption" id="transferOption">
+                          <label for="transferOption">Transferencia Bancaria</label>
+                          <div class="transferInputs">
+                            <input type="text" id="accNum" placeholder="XXXX-XXXX-XXXX" maxlength="14">
+                            <label for="accNum">Número de cuenta
+                            </label>
+                          </div>
+
+                          <div class="closeModalBtn">
+                            <div id="errorFormadePago"></div>
+                            <button id="closeBtn" class="botonesModal">Aceptar</button>
+                            <button id="cancelarModal" class="botonesModal">Cancelar</button>
+
+                          </div>
+                        </div>
+
+                      </div>
+
+                    </div>
+                  </section>
+
+
+                  <div id="liveAlertPlaceholder"></div>
+                  </main>
+                  <div id="spinner-wrapper">
+                    <div class="lds-ring">
+
+                    </div>
+
+                  </div>
+            </section>
+
+            <button class="btn btn-primary botones" type="submit" id="finalizarCompra">Comprar</button>
+            <div id="liveAlertPlaceholder"></div>
+            </main>
+
+            <!--  END OF MAIN SECTION  -->
+            <div id="spinner-wrapper">
+              <div class="lds-ring">
+              </div>
+            </div>
+
+            <!--  START OF FOOTER SECTION  -->
+            <footer class="text-muted">
+              <div class="container">
+
+                <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a
+                    Programar</a>
+                </p>
+              </div>
+            </footer>
+
+            <!--  END OF FOOTER SECTION  -->
+            <script src="js/bootstrap.bundle.min.js"></script>
+            <script src="js/init.js"></script>
+            <script src="js/cart.js"></script>
+            <script src="js/logout.js"></script>
 
 </body>
 
