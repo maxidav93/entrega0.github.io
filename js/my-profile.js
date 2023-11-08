@@ -55,9 +55,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (primerNombre === "") {
             showError(primerNombreInput, "Este campo es obligatorio.");
-            localStorage.setItem("primerNombre", primerNombreInput.value); // Solo guarda si hay un valor válido
+            localStorage.removeItem("primerNombre"); // Elimina el valor del localStorage
         } else {
             showSuccess(primerNombreInput);
+            localStorage.setItem("primerNombre", primerNombreInput.value); // Solo guarda si hay un valor válido
         }
 
         if (primerApellido === "") {
