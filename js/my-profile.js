@@ -79,11 +79,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-        if (segundoApellido !== "") {
-            showSuccess(segundoApellidoInput);
+        if (segundoApellido === "") {
+            removeSuccess(segundoApellidoInput);
             localStorage.removeItem("segundoApellido"); // Elimina el valor del localStorage
         } else {
-            removeSuccess(segundoApellidoInput);
+            showSuccess(segundoApellidoInput);
             localStorage.setItem("segundoApellido", segundoApellidoInput.value); // Solo guarda si hay un valor válido
         }
 
