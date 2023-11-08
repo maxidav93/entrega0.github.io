@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.removeItem("primerApellido"); // Elimina el valor del localStorage
         } else {
             showSuccess(primerApellidoInput);
-            localStorage.setItem("primerApellido", primerNombreInput.value); // Solo guarda si hay un valor válido
+            localStorage.setItem("primerApellido", primerApellidoInput.value); // Solo guarda si hay un valor válido
         }
 
         if (segundoNombre === "") {
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.removeItem("segundoNombre"); // Elimina el valor del localStorage
         } else {
             showSuccess(segundoNombreInput);
-            localStorage.setItem("segundoNombre", primerNombreInput.value); // Solo guarda si hay un valor válido
+            localStorage.setItem("segundoNombre", segundoNombreInput.value); // Solo guarda si hay un valor válido
         }
 
 
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.removeItem("segundoApellido"); // Elimina el valor del localStorage
         } else {
             removeSuccess(segundoApellidoInput);
-            localStorage.setItem("segundoApellido", primerNombreInput.value); // Solo guarda si hay un valor válido
+            localStorage.setItem("segundoApellido", segundoApellidoInput.value); // Solo guarda si hay un valor válido
         }
 
 
