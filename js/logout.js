@@ -22,10 +22,11 @@ function mostrarImagen() {
     const miniImagenPerfil = document.getElementById('miniImagenPerfil');
   
     
-    // Verificar si hay una imagen almacenada
     if (imagenGuardada) {
-        // Utiliza imagenGuardada en lugar de e.target.result
         miniImagenPerfil.innerHTML = `<img src="${imagenGuardada}" alt="Miniatura de perfil" class="miniProfileImage">`;
+    }
+    else {
+        miniImagenPerfil.innerHTML = `<img src="img/imagenPredetPerfil.jpg" alt="Miniatura de perfil" class="miniProfileImage">`;
     }
 }
 

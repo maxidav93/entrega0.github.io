@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const contactoInput = document.getElementById("contacto");
     const imagenPerfil = document.getElementById("imagen")
     const imagenArea = document.getElementById("imagearea");
+    const miniImagenPerfil = document.getElementById('miniImagenPerfil');
+    const botonBorrarImagen = document.getElementById("botonBorrarImagen")
 
 
     // Recupera el correo electrónico del usuario del Local Storage
@@ -121,24 +123,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 errorDiv.remove();
             }
         }
-        function guardarImagen() {
+       
            
           
-            if (imagenPerfil.files && imagenPerfil.files[0]) {
-              const reader = new FileReader();
-          
-              reader.onload = function (e) {
-                // Muestra la imagen en la página (opcional)
-                imagenArea.innerHTML = `<img src="${e.target.result}" alt="Imagen de perfil" class="profileImage">`;
-          
-                // Guarda la imagen en localStorage
-                localStorage.setItem('imagenPerfil', e.target.result);
-              };
-          
-              // Lee el contenido de la imagen como una URL de datos
-              reader.readAsDataURL(imagenPerfil.files[0]);
-            }
-          }
+            
 
 
         // Guardar los datos en el Local Storage
@@ -150,7 +138,24 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("contacto", contactoInput.value || "0"); // Si es nulo o vacío, guarda "0"
     });
 
+    imagenPerfil.addEventListener("change", function () {
+        if (imagenPerfil.files && imagenPerfil.files[0]) {
+            const reader = new FileReader();
+        
+            reader.onload = function (e) {
+              // Muestra la imagen en la página (opcional)
+              imagenArea.innerHTML = `<img src="${e.target.result}" alt="Imagen de perfil" class="profileImage rounded">`;
+              miniImagenPerfil.innerHTML = `<img src="${e.target.result}" alt="Miniatura de perfil" class="miniProfileImage">`;
 
+        
+              // Guarda la imagen en localStorage
+              localStorage.setItem('imagenPerfil', e.target.result);
+            };
+        
+            // Lee el contenido de la imagen como una URL de datos
+            reader.readAsDataURL(imagenPerfil.files[0]);
+          }
+        });
 
     function mostrarImagen() {
         // Obtener la imagen almacenada en localStorage
@@ -160,9 +165,37 @@ document.addEventListener("DOMContentLoaded", function () {
         if (imagenGuardada) {
             // Utiliza imagenGuardada en lugar de e.target.result
             imagenArea.innerHTML = `<img src="${imagenGuardada}" alt="Imagen de perfil" class="profileImage rounded">`;
-    
+            miniImagenPerfil.innerHTML = `<img src="${imagenGuardada}" alt="Miniatura de perfil" class="miniProfileImage">`;
         }
+
+        else {
+            imagenArea.innerHTML = `<img src="img/imagenPredetPerfil.jpg" alt="Imagen de perfil" class="profileImage rounded">`;
+            miniImagenPerfil.innerHTML = `<img src="img/imagenPredetPerfil.jpg" alt="Miniatura de perfil" class="miniProfileImage">`;
+        }
+
     }
+
+    botonBorrarImagen.addEventListener("click", function () {
+        const imagenPredeterminadaHTML = `<img src="img/imagenPredetPerfil.jpg" alt="Imagen de perfil" class="profileImage rounded">`;
+    
+        if (imagenArea.innerHTML === imagenPredeterminadaHTML) {
+            alert("No tiene ninguna imagen cargada en su perfil");
+        } else {
+            const confirmacion = window.confirm("¿Estás seguro de que deseas borrar la imagen de perfil?");
+            
+            if (confirmacion) {
+                localStorage.removeItem(`imagenPerfil`);
+                imagenPerfil.value = "";
+    
+                // Mostrar la imagen predeterminada
+                mostrarImagen();
+            } else {
+                console.log("Borrado cancelado por el usuario");
+            }
+        }
+    });
+    
+    
 
     mostrarImagen();
 });
@@ -171,6 +204,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+const imageContainer = document.getElementById("imageContainer");
+const imageButtons = document.getElementById("imageButtons");
+
+imageContainer.addEventListener("mouseover", function () {
+    imageButtons.style.opacity = 1;
+});
+
+imageContainer.addEventListener("mouseout", function () {
+    imageButtons.style.opacity = 0;
+});
 
 
 
