@@ -95,10 +95,12 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 showSuccess(contactoInput);
                 removeError(contactoInput); // Remueve el error si es un número válido
+                localStorage.setItem("contacto", contactoInput.value); // Solo guarda si hay un valor válido
             }
         } else {
             removeSuccess(contactoInput); // Remueve el éxito si el campo está vacío
             removeError(contactoInput); // Remueve el error si el campo está vacío
+            localStorage.removeItem("contacto"); // Elimina el valor del localStorage
             guardarImagen();
         }
 
@@ -155,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("primerApellido", primerApellidoInput.value);
         localStorage.setItem("segundoApellido", segundoApellidoInput.value);
         localStorage.setItem("email", email);
-        localStorage.setItem("contacto", contactoInput.value || "0"); // Si es nulo o vacío, guarda "0"
+        localStorage.setItem("contacto", contactoInput.value);
     });
 
     imagenPerfil.addEventListener("change", function () {
