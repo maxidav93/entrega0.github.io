@@ -14,12 +14,13 @@ const comprar = document.getElementById("finalizarCompra");
 const envio = document.getElementById("tipoEnvio");
 const formaPago = document.getElementById("irAformadepago");
 const avisoCarritoVacio = document.getElementById("aviso")
-
+const errorFormadePago = document.getElementById("errorFormadePago")
+const errorfaltaFormadepago = document.getElementById("errorfaltaFormadepago")
 
 
 //constantes de modal
 const openModal = document.getElementById("openModal");
-const closeModal = document.getElementById("closeBtn")
+const aceptarMetodoPago = document.getElementById("closeBtn")
 const mainModal = document.getElementById("mainModal");
 const creditCheckbox = document.getElementById("creditOption");
 const transferCheckbox = document.getElementById("transferOption");
@@ -32,7 +33,8 @@ const divModal = document.getElementById("paymentModal");
 const cardNum = document.getElementById("cardNum");
 const segNum = document.getElementById("segNum");
 const formadepago = document.getElementById("formadepago")
-
+const cancelarModal = document.getElementById("cancelarModal")
+let modalAbierto;
 
 document.addEventListener("DOMContentLoaded", () => {
   mostrarInformacionEnHTML();
@@ -269,46 +271,68 @@ window.addEventListener("load", () => {
   mainModal.style.display = "none"
 });
 
-openModal.addEventListener("click", () => {
-  if (mainModal.style.display === "none") {
+
+//funcion que maneja la abertura y cierre del modal
+function toggleModal() {
+  if (modalAbierto) {
+    mainModal.style.display = "none";
+    pageOverlay.style.display = "none";
+    modalAbierto = false;
+
+  } else {
     mainModal.style.display = "flex";
     pageOverlay.style.display = "block";
+
+    modalAbierto = true;
   }
+};
+//funcion que limpia los checkbox
+function limpiarCheckbox() {
+  const feedbackElements = document.querySelectorAll(".invalid-feedback, .valid-feedback");
+  feedbackElements.forEach((element) => element.remove());
+  creditCheckbox.checked = false
+  transferCheckbox.checked = false
+  cardNum.value = ""
+  segNum.value = ""
+  inputVencimiento.value = ""
+  accNumInput.value = ""
+
+
+  toggleModal()
+}
+
+
+openModal.addEventListener("click", () => toggleModal());
+cancelarModal.addEventListener("click", () => limpiarCheckbox());
+
+aceptarMetodoPago.addEventListener("click", (e) => {
+  e.preventDefault()
+  validarFormadePago()
 });
 
-closeModal.addEventListener("click", function (event) {
-  event.preventDefault(); // Evita el envío del formulario por defecto
+//funcion que ejectuta las validaciones del modal
+function validarFormadePago() {
 
-  // Validar y quitar mensajes de alerta previos
+  console.log(`toy en validar forma de pago`)
   const feedbackElements = document.querySelectorAll(".invalid-feedback, .valid-feedback");
   feedbackElements.forEach((element) => element.remove());
 
-  let canCloseModal = true; // Variable para verificar si se puede cerrar el modal
-
   if (!creditCheckbox.checked && !transferCheckbox.checked) {
-    // Si ninguna casilla está marcada, se permite cerrar el modal
-    canCloseModal = true;
-  } else {
-    if (!creditCheckbox.checked) {
-      showError(openModal, "Debe seleccionar forma de pago");
-      canCloseModal = false; // No se permite cerrar el modal
-    } else {
-      successFormaPago(openModal);
-    }
+    showError(errorFormadePago, "Seleccione forma de pago");
   }
 
   if (creditCheckbox.checked) {
     if (cardNum.value.trim() === "" || isNaN(cardNum.value) || cardNum.value.length < 14) {
       showError(cardNum, "Ingrese un número de tarjeta válido (Debe tener al menos 14 dígitos)");
-      canCloseModal = false; // No se permite cerrar el modal
+
     }
     if (segNum.value.trim() === "" || isNaN(segNum.value) || segNum.value.length < 3) {
       showError(segNum, "Ingrese un número de seguridad válido (Debe tener al menos 3 dígitos)");
-      canCloseModal = false; // No se permite cerrar el modal
     }
     if (inputVencimiento.value.trim() === "" ) {
       showError(inputVencimiento, "Ingrese una fecha de vencimiento válida (mm/aa)");
-      canCloseModal = false; // No se permite cerrar el modal
+    }else {
+      toggleModal()
     }
   }
 
@@ -316,17 +340,12 @@ closeModal.addEventListener("click", function (event) {
     const numCuenta = accNumInput.value.replace(/[^0-9]/g, ''); // Elimina caracteres no numéricos
     if (numCuenta.length < 12) {
       showError(accNumInput, "El número de cuenta debe tener al menos 12 dígitos");
-      canCloseModal = false; // No se permite cerrar el modal
-    } else {
-      canCloseModal = true;
+    }
+    else {
+      toggleModal()
     }
   }
-
-  if (canCloseModal) {
-    mainModal.style.display = "none";
-    pageOverlay.style.display = "none";
-  }
-});
+};
 
 
 // formato de input de vencimiento
@@ -451,7 +470,7 @@ function verificarCompra() {
   let puedeComprar = true;
 
   if (!creditCheckbox.checked && !transferCheckbox.checked) {
-    showError(openModal, "Debe seleccionar forma de pago");
+    showError(errorfaltaFormadepago, "Debe seleccionar forma de pago");
     puedeComprar = false;
   }
 
@@ -525,11 +544,20 @@ const appendAlert = (message, type) => {
   ].join('');
 
   alertPlaceholder.append(wrapper);
-    // Programa la eliminación de la alerta después de 3 segundos (3000 ms)
+
+  // Establece la opacidad inicial en 1 (visible)
+  wrapper.style.opacity = 2;
+
+  // Programa la reducción gradual de la opacidad después de 3 segundos (3000 ms)
+  setTimeout(() => {
+    wrapper.style.opacity = 1;
+    // Elimina la alerta después de completar la transición de desvanecimiento
     setTimeout(() => {
       wrapper.remove();
-    }, 3000);
+    }, 500); // Puedes ajustar el tiempo de transición aquí (0.5 segundos)
+  }, 3000); // Retraso inicial de 3 segundos
 };
+
 
 
 
