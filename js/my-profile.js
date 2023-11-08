@@ -63,22 +63,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (primerApellido === "") {
             showError(primerApellidoInput, "Este campo es obligatorio.");
+            localStorage.removeItem("primerApellido"); // Elimina el valor del localStorage
         } else {
             showSuccess(primerApellidoInput);
+            localStorage.setItem("primerApellido", primerNombreInput.value); // Solo guarda si hay un valor válido
         }
 
         if (segundoNombre === "") {
             removeSuccess(segundoNombreInput);
+            localStorage.removeItem("segundoNombre"); // Elimina el valor del localStorage
         } else {
             showSuccess(segundoNombreInput);
+            localStorage.setItem("segundoNombre", primerNombreInput.value); // Solo guarda si hay un valor válido
         }
 
 
 
         if (segundoApellido !== "") {
             showSuccess(segundoApellidoInput);
+            localStorage.removeItem("segundoApellido"); // Elimina el valor del localStorage
         } else {
             removeSuccess(segundoApellidoInput);
+            localStorage.setItem("segundoApellido", primerNombreInput.value); // Solo guarda si hay un valor válido
         }
 
 
