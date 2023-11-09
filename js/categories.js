@@ -139,6 +139,8 @@ document.addEventListener("DOMContentLoaded", function(e){
         showCategoriesList();
     });
 });
+
+/*
 document.addEventListener("DOMContentLoaded", function () {
     var tooltips = document.querySelectorAll('[data-toggle="tooltip"]');
     tooltips.forEach(function (tooltip) {
@@ -200,3 +202,4 @@ function restaurarEstado() {
 window.addEventListener("load", restaurarEstado);
 
 
+*/
