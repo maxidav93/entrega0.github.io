@@ -158,14 +158,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
-        // Guardar los datos en el Local Storage
-        localStorage.setItem("primerNombre", primerNombreInput.value);
-        localStorage.setItem("segundoNombre", segundoNombreInput.value);
-        localStorage.setItem("primerApellido", primerApellidoInput.value);
-        localStorage.setItem("segundoApellido", segundoApellidoInput.value);
-        localStorage.setItem("email", email);
-        localStorage.setItem("contacto", contactoInput.value);
     });
 
     imagenPerfil.addEventListener("change", function () {
