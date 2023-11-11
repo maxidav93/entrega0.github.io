@@ -40,6 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
   mostrarInformacionEnHTML();
 });
 
+// Creacion de la tabla del carrito de compras
+
 function mostrarInformacionEnHTML() {
   if (!carritoActual || carritoActual.length === 0) {
     carritoContainer.innerHTML = '<p class="alert alert-warning">El carrito está vacío</p>';
@@ -167,7 +169,10 @@ function mostrarInformacionEnHTML() {
   carritoContainer.innerHTML = "";
   carritoContainer.appendChild(tableContainer);
 }
-// Pauta 1
+
+
+// Cálculo de tarifas, subtotal, envío, etc. 
+
 function mostrarCosto() {
   let subtotal = 0;
 
@@ -180,10 +185,7 @@ function mostrarCosto() {
 
   });
 
-
-
   elementoCosto.textContent = `${parseFloat(subtotal).toFixed(2)}`;
-
 
   function obtenerTipodeEnvio() {
     let valorSeleccionado = tipoEnvio.value;
@@ -196,7 +198,6 @@ function mostrarCosto() {
     return tarifasEnvio[valorSeleccionado];
   }
 
-
   function calcularCosto() {
     let valorSeleccionado = obtenerTipodeEnvio() ?? 0
     let costoEnvio = subtotal * valorSeleccionado;
@@ -204,7 +205,6 @@ function mostrarCosto() {
     calcularTotal();
 
   }
-
 
   function calcularTotal() {
     let total = parseFloat(elementoCosto.textContent) + parseFloat(campoCostoEnvio.textContent);
@@ -220,17 +220,17 @@ function mostrarCosto() {
 }
 
 
+// Validaciones para finalizar compra 
+
 function finalizarCompra() {
-  if  (!carritoActual || carritoActual.length === 0) {
-
+  if (!carritoActual || carritoActual.length === 0) {
     avisoCarritoVacio.innerHTML = "Para continuar con su compra agregue al menos un artículo a su carrito"
-
-    setTimeout(() =>{
+    setTimeout(() => {
       avisoCarritoVacio.innerHTML = ""
     }
-    , 5000)
-}
-else if (envio.value == 0 || envio.value == "") {
+      , 5000)
+  }
+  else if (envio.value == 0 || envio.value == "") {
     errorFaltaEnvio(envio);
   }
   else {
@@ -329,9 +329,9 @@ function validarFormadePago() {
     if (segNum.value.trim() === "" || isNaN(segNum.value) || segNum.value.length < 3) {
       showError(segNum, "Ingrese un número de seguridad válido (Debe tener al menos 3 dígitos)");
     }
-    if (inputVencimiento.value.trim() === "" ) {
+    if (inputVencimiento.value.trim() === "") {
       showError(inputVencimiento, "Ingrese una fecha de vencimiento válida (mm/aa)");
-    }else {
+    } else {
       toggleModal()
     }
   }
@@ -375,6 +375,8 @@ accNumInput.addEventListener("input", function () {
     accNumInput.value = value;
   }
 });
+
+//Habilitar y deshabilitar los inputs de forma de pago.
 
 creditCheckbox.addEventListener("change", function () {
   if (creditCheckbox.checked) {

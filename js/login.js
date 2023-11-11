@@ -4,6 +4,10 @@ const loginSection = document.getElementById("loginSection");
 const registerSection = document.getElementById("registerSection");
 const API_URL = "https://japceibal.github.io/emercado-api/user_cart/25801.json";
 
+
+// AddEventListeners Para mostrar el LoginSection/RegisterSection 
+
+//login de forma predeterminada
 window.addEventListener("load", () => {
   loginSection.style.display = "block";
   registerSection.style.display = "none";
@@ -25,6 +29,7 @@ function validateEmail(EmailRegistrado) {
   return emailRegex.test(EmailRegistrado);
 }
 
+//Validaciones para loguearse 
 document.addEventListener("DOMContentLoaded", async function () {
   const loginForm = document.getElementById("loginSubmit");
 
@@ -53,6 +58,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 })
 
+//Validaciones para Registrarse 
 document.addEventListener("DOMContentLoaded", function () {
   const registerForm = document.getElementById("registerSubmit");
 
@@ -78,6 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+//Se carga el carrito desde que nos logueamos/registramos
 async function loadCarrito() {
   try {
     const carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
