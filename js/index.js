@@ -24,117 +24,110 @@ if (!isLoggedIn) {
     window.location.href = 'login.html';
 }
 
-function cambiarImagenFondo(url) {
-    var jumbotron = document.querySelector(".jumbotron");
-    jumbotron.style.background = "url('" + url + "') center / cover no-repeat";
+/* SECCIÓN MODO OSCURO Y CLARO */
 
+const checkbox = document.getElementById("toggle");
+const checkbox2 = document.getElementById("toggle2");
+const IMAGEN_CLARO = 'img/cover_back.png';
+const IMAGEN_OSCURO = 'img/imagenIndexSinFondo2.png';
+const IMAGEN_PANTALLA_CHICA_CLARO = 'img/imagenResponsiveFondoBlanco.png';
+const IMAGEN_PANTALLA_CHICA_OSCURO = 'img/imagenResponsiveSinFondo.png';
 
-}
+function cambiarImagenModo(modo, imagenGrande, imagenPantallaChica, fondo) {
+    const ilustracion = document.getElementById("ilustracion");
+    const ilustracionPantallasChicas = document.getElementById("ilustracionPantallasChicas");
+    const albumDiv = document.getElementsByClassName("album")[0];
 
-function cambiarClase() {
-    var checkbox = document.getElementById("toggle");
-    var albumDiv = document.querySelector(".album");
-    var jumbotron = document.querySelector(".jumbotron");
-    var btn = document.querySelector(".btn.btn-light.btn-lg.btn-block");
-
-
-    if (checkbox.checked) {
-        albumDiv.classList.remove("bg-light");
-        albumDiv.classList.add("bg-dark");
-        localStorage.setItem("background", "bg-dark");
-
-        // Cambiar el color de fondo del .jumbotron
-        jumbotron.classList.remove("bg-light");
-        jumbotron.classList.add("bg-dark");
-
-        // Cambiar la imagen de fondo
-        cambiarImagenFondo('img/imagenIndexSinFondo2.png', '#212529');
-         // Cambiar la clase del botón
-         btn.classList.remove("btn-light");
-         btn.classList.add("btn-dark");
-    }
-    setTimeout(function() {
-        checkbox.checked = false;
-    }, 100);
-}
-
-var checkbox = document.getElementById("toggle");
-checkbox.addEventListener("click", cambiarClase);
-
-function cambiarClase2() {
-    var checkbox = document.getElementById("toggle2");
-    var albumDiv = document.querySelector(".album");
-    var btn = document.querySelector(".btn.btn-dark.btn-lg.btn-block");
-
-    if (checkbox.checked) {
-        albumDiv.classList.remove("bg-dark");
-        albumDiv.classList.add("bg-light");
-        localStorage.setItem("background", "bg-light");
-
-        // Cambiamos solo la imagen de fondo en .jumbotron
-        cambiarImagenFondo('img/cover_back.png');
-        // Cambiar la clase del botón
-        btn.classList.remove("btn-dark");
-        btn.classList.add("btn-light");
-    }
-    setTimeout(function() {
-        checkbox.checked = false;
-    }, 100); // Después de 1000ms (1 segundo), desmarcar el checkbox
-}
-
-var checkbox2 = document.getElementById("toggle2");
-checkbox2.addEventListener("click", cambiarClase2);
-
-// Función para restaurar el estado del modo oscuro almacenado en localStorage
-function restaurarEstadoModoOscuro() {
-    var albumDiv = document.querySelector(".album");
-    var jumbotron = document.querySelector(".jumbotron");
-    var btn = document.querySelector(".btn.btn-light.btn-lg.btn-block");
-    var checkbox = document.getElementById("toggle");
-
-    // Verificar si el modo oscuro está habilitado en localStorage
-    var modoOscuroActivado = localStorage.getItem("background") === "bg-dark";
-
-    // Establecer el estado del checkbox según el modo oscuro
-    checkbox.checked = modoOscuroActivado;
-
-    if (modoOscuroActivado) {
-        // Si el modo oscuro está habilitado, aplicar los estilos oscuros
-        albumDiv.classList.remove("bg-light");
-        albumDiv.classList.add("bg-dark");
-        // Cambiar el color de fondo del .jumbotron
-        jumbotron.classList.remove("bg-light");
-        jumbotron.classList.add("bg-dark");
-        // Cambiar la clase del botón
-        btn.classList.remove("btn-light");
-        btn.classList.add("btn-dark");
-        // Llamar a la función para cambiar la imagen de fondo
-        cambiarImagenFondo('img/imagenIndexSinFondo2.png', '#212529');
+    if (ilustracion.offsetParent !== null) {
+        ilustracion.src = imagenGrande;
     } else {
-        // Si el modo oscuro no está habilitado, aplicar los estilos de luz
-        albumDiv.classList.remove("bg-dark");
-        albumDiv.classList.add("bg-light");
-        // Cambiar el color de fondo del .jumbotron
-        jumbotron.classList.remove("bg-dark");
-        jumbotron.classList.add("bg-light");
-        // Cambiar la clase del botón
-        btn.classList.remove("btn-dark");
-        btn.classList.add("btn-light");
-        // Llamar a la función para cambiar la imagen de fondo
-        cambiarImagenFondo('img/cover_back.png');
+        ilustracionPantallasChicas.src = imagenPantallaChica;
     }
 
-    // Desactivar el checkbox después de 1 segundo
-    setTimeout(function () {
+    albumDiv.style.backgroundColor = fondo;
+
+    // Guardar la información en el Local Storage
+    guardarInformacionModo(modo, {
+        imagenGrande,
+        imagenPantallaChica,
+        fondo,
+    });
+}
+
+function guardarInformacionModo(nombreModo, info) {
+    localStorage.setItem(nombreModo, JSON.stringify(info));
+}
+
+function cambiarBoton(claseAgregar, claseQuitar) {
+    const btn = document.querySelector(".btn.btn-lg.btn-block");
+
+    if (btn) {
+        btn.classList.remove(claseQuitar);
+        btn.classList.add(claseAgregar);
+    } else {
+        console.error("El botón no se encontró en el DOM.");
+    }
+}
+
+function cambiarAmodo(modo, checkbox, claseAgregar, claseQuitar, imagenGrande, imagenPantallaChica, fondo) {
+    console.log(`Haciendo clic en el botón de ${modo}`);
+
+    if (checkbox.checked) {
+        localStorage.setItem("background", fondo);
+        cambiarImagenModo(modo, imagenGrande, imagenPantallaChica, fondo);
+        cambiarBoton(claseAgregar, claseQuitar);
+        setTimeout(() => {
+            checkbox.checked = false;
+        }, 100);
+    }
+
+    console.log('Fin');
+}
+
+function cambiarAmodoOscuro() {
+    cambiarAmodo('modoOscuro', checkbox, 'btn-dark', 'btn-light', IMAGEN_OSCURO, IMAGEN_PANTALLA_CHICA_OSCURO, '#212529');
+    setTimeout(() => {
         checkbox.checked = false;
     }, 100);
 }
 
-// Llama a la función para restaurar el estado del modo oscuro cuando la página se carga
-window.addEventListener("load", restaurarEstadoModoOscuro);
+function cambiarAmodoClaro() {
+    cambiarAmodo('modoClaro', checkbox2, 'btn-light', 'btn-dark', IMAGEN_CLARO, IMAGEN_PANTALLA_CHICA_CLARO, '#f8f9fa');
+    setTimeout(() => {
+        checkbox2.checked = false;
+    }, 100);
+}
 
+function restaurarEstadoModo(modo, opciones) {
+    const modoActivado = localStorage.getItem("background") === opciones.fondo;
+    checkbox.checked = modoActivado;
 
+    if (modoActivado) {
+        const modoInfo = JSON.parse(localStorage.getItem(modo));
+        if (modoInfo) {
+            cambiarImagenModo(modo, modoInfo.imagenGrande, modoInfo.imagenPantallaChica, modoInfo.fondo);
+            cambiarBoton(opciones.claseAgregar, opciones.claseQuitar);
+        }
+    }
+    setTimeout(() => {
+        checkbox.checked = false;
+    }, 100);
+}
 
+// función para restaurar el estado del modo oscuro cuando la página se carga
+window.addEventListener("load", function () {
+    restaurarEstadoModo('modoOscuro', { claseAgregar: 'btn-dark', claseQuitar: 'btn-light', fondo: '#212529' });
+    restaurarEstadoModo('modoClaro', { claseAgregar: 'btn-light', claseQuitar: 'btn-dark', fondo: '#f8f9fa' });
+});
 
+window.addEventListener("resize", function () {
+    // Agrega un pequeño retraso para manejar el cambio de tamaño
+    setTimeout(() => {
+        restaurarEstadoModo('modoOscuro', { claseAgregar: 'btn-dark', claseQuitar: 'btn-light', fondo: '#212529' });
+        restaurarEstadoModo('modoClaro', { claseAgregar: 'btn-light', claseQuitar: 'btn-dark', fondo: '#f8f9fa' });
+    }, 100);
+});
 
+checkbox2.addEventListener("click", cambiarAmodoClaro);
+checkbox.addEventListener("click", cambiarAmodoOscuro);
 
