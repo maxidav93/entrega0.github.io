@@ -88,10 +88,16 @@ function cambiarAmodo(modo, checkbox, claseAgregar, claseQuitar, imagenGrande, i
 
 function cambiarAmodoOscuro() {
     cambiarAmodo('modoOscuro', checkbox, 'btn-dark', 'btn-light', IMAGEN_OSCURO, IMAGEN_PANTALLA_CHICA_OSCURO, '#212529');
+    setTimeout(() => {
+        checkbox.checked = false;
+    }, 100);
 }
 
 function cambiarAmodoClaro() {
     cambiarAmodo('modoClaro', checkbox2, 'btn-light', 'btn-dark', IMAGEN_CLARO, IMAGEN_PANTALLA_CHICA_CLARO, '#f8f9fa');
+    setTimeout(() => {
+        checkbox2.checked = false;
+    }, 100);
 }
 
 function restaurarEstadoModo(modo, opciones) {
@@ -105,6 +111,9 @@ function restaurarEstadoModo(modo, opciones) {
             cambiarBoton(opciones.claseAgregar, opciones.claseQuitar);
         }
     }
+    setTimeout(() => {
+        checkbox.checked = false;
+    }, 100);
 }
 
 // función para restaurar el estado del modo oscuro cuando la página se carga
@@ -118,7 +127,7 @@ window.addEventListener("resize", function () {
     setTimeout(() => {
         restaurarEstadoModo('modoOscuro', { claseAgregar: 'btn-dark', claseQuitar: 'btn-light', fondo: '#212529' });
         restaurarEstadoModo('modoClaro', { claseAgregar: 'btn-light', claseQuitar: 'btn-dark', fondo: '#f8f9fa' });
-    }, 300);
+    }, 100);
 });
 
 checkbox2.addEventListener("click", cambiarAmodoClaro);
