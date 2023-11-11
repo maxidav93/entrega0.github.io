@@ -1,9 +1,9 @@
 const tipoEnvio = document.getElementById("tipoEnvio");
-const elementoCosto = document.getElementById("subtotalCosto")
-const carritoContainer = document.getElementById('carritoContainer');
+const elementoCosto = document.getElementById("subtotalCosto");
+const carritoContainer = document.getElementById("carritoContainer");
 const campoCostoEnvio = document.getElementById("envioCosto");
 const campoCostoTotal = document.getElementById("totalCosto");
-let carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
+let carritoActual = JSON.parse(localStorage.getItem("carrito")) || [];
 
 //constantes de validacion
 const direccion = document.getElementById("inputAddress");
@@ -13,14 +13,13 @@ const cp = document.getElementById("inputZip");
 const comprar = document.getElementById("finalizarCompra");
 const envio = document.getElementById("tipoEnvio");
 const formaPago = document.getElementById("irAformadepago");
-const avisoCarritoVacio = document.getElementById("aviso")
-const errorFormadePago = document.getElementById("errorFormadePago")
-const errorfaltaFormadepago = document.getElementById("errorfaltaFormadepago")
-
+const avisoCarritoVacio = document.getElementById("aviso");
+const errorFormadePago = document.getElementById("errorFormadePago");
+const errorfaltaFormadepago = document.getElementById("errorfaltaFormadepago");
 
 //constantes de modal
 const openModal = document.getElementById("openModal");
-const aceptarMetodoPago = document.getElementById("closeBtn")
+const aceptarMetodoPago = document.getElementById("closeBtn");
 const mainModal = document.getElementById("mainModal");
 const creditCheckbox = document.getElementById("creditOption");
 const transferCheckbox = document.getElementById("transferOption");
@@ -32,9 +31,20 @@ const pageOverlay = document.querySelector(".page-overlay");
 const divModal = document.getElementById("paymentModal");
 const cardNum = document.getElementById("cardNum");
 const segNum = document.getElementById("segNum");
-const formadepago = document.getElementById("formadepago")
-const cancelarModal = document.getElementById("cancelarModal")
+const formadepago = document.getElementById("formadepago");
+const cancelarModal = document.getElementById("cancelarModal");
 let modalAbierto;
+
+
+
+//Función que oculta el modal de formas de pago
+window.addEventListener("load", () => {
+  mainModal.style.display = "none";
+});
+
+
+
+/*seccion carrito*/
 
 document.addEventListener("DOMContentLoaded", () => {
   mostrarInformacionEnHTML();
@@ -42,15 +52,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function mostrarInformacionEnHTML() {
   if (!carritoActual || carritoActual.length === 0) {
-    carritoContainer.innerHTML = '<p class="alert alert-warning">El carrito está vacío</p>';
+    carritoContainer.innerHTML =
+      '<p class="alert alert-warning">El carrito está vacío</p>';
     return;
   }
 
   const tableContainer = document.createElement("div");
   tableContainer.classList.add("table-responsive");
 
-  const tabla = document.createElement('table');
-  tabla.classList.add('table', 'w-100', 'table-responsive');
+  const tabla = document.createElement("table");
+  tabla.classList.add("table", "w-100", "table-responsive");
   tabla.innerHTML = `
     <thead class="thead-dark text-center">
       <tr>
@@ -67,11 +78,10 @@ function mostrarInformacionEnHTML() {
     </tbody>
   `;
 
-
   // Obtener el cuerpo de la tabla para agregar filas
-  const tbody = tabla.querySelector('tbody');
+  const tbody = tabla.querySelector("tbody");
 
-  carritoActual.forEach(producto => {
+  carritoActual.forEach((producto) => {
     const fila = document.createElement("tr");
 
     // Celda de la imagen
@@ -105,16 +115,22 @@ function mostrarInformacionEnHTML() {
 
     // Botón de eliminación
     const eliminarButton = document.createElement("i");
-    eliminarButton.classList.add("btn", "custom-delete-btn", "fas", "fa-trash-alt");
+    eliminarButton.classList.add(
+      "btn",
+      "custom-delete-btn",
+      "fas",
+      "fa-trash-alt"
+    );
     eliminarButton.dataset.productoId = producto.id;
     eliminarButton.addEventListener("click", () => {
-
       let productoId = producto.id;
-      var confirmacion = confirm('¿Estás seguro de que deseas eliminar este producto?');
+      var confirmacion = confirm(
+        "¿Estás seguro de que deseas eliminar este producto?"
+      );
       // Si el usuario hace clic en "Aceptar" en la alerta de confirmación
       if (confirmacion) {
-        carritoActual = carritoActual.filter(item => item.id !== productoId);
-        localStorage.setItem('carrito', JSON.stringify(carritoActual));
+        carritoActual = carritoActual.filter((item) => item.id !== productoId);
+        localStorage.setItem("carrito", JSON.stringify(carritoActual));
         mostrarInformacionEnHTML();
         mostrarCosto();
       }
@@ -129,16 +145,16 @@ function mostrarInformacionEnHTML() {
       const cantidad = parseInt(cantidadInput.value);
       let subtotalValue = 0;
 
-
       subtotalValue = cantidad * producto.unitCost;
-      subtotalCell.textContent = ` ${(subtotalValue).toFixed(2)}`;
-
+      subtotalCell.textContent = ` ${subtotalValue.toFixed(2)}`;
 
       // Actualizar el producto en el carritoActual con la nueva cantidad
-      const productoIndex = carritoActual.findIndex(item => item.id === producto.id);
+      const productoIndex = carritoActual.findIndex(
+        (item) => item.id === producto.id
+      );
       if (productoIndex !== -1) {
         carritoActual[productoIndex].count = cantidad;
-        localStorage.setItem('carrito', JSON.stringify(carritoActual));
+        localStorage.setItem("carrito", JSON.stringify(carritoActual));
       }
 
       mostrarCosto();
@@ -167,47 +183,49 @@ function mostrarInformacionEnHTML() {
   carritoContainer.innerHTML = "";
   carritoContainer.appendChild(tableContainer);
 }
-// Pauta 1
+
+/*final de sección carrito*/
+
+
+
+
+/*sección costos*/
+
 function mostrarCosto() {
   let subtotal = 0;
 
-  carritoActual.forEach(producto => {
-    if (producto.currency === 'UYU') {
-      subtotal += producto.count * producto.unitCost / 40;
+  carritoActual.forEach((producto) => {
+    if (producto.currency === "UYU") {
+      subtotal += (producto.count * producto.unitCost) / 40;
     } else {
       subtotal += producto.count * producto.unitCost;
     }
-
   });
 
-
-
   elementoCosto.textContent = `${parseFloat(subtotal).toFixed(2)}`;
-
 
   function obtenerTipodeEnvio() {
     let valorSeleccionado = tipoEnvio.value;
     // Define las tarifas de envío para cada tipo
     const tarifasEnvio = {
-      premium: 0.15,   // 15%
-      express: 0.07,   // 7%
-      estandar: 0.05   // 5%
+      premium: 0.15, // 15%
+      express: 0.07, // 7%
+      estandar: 0.05, // 5%
     };
     return tarifasEnvio[valorSeleccionado];
   }
 
-
   function calcularCosto() {
-    let valorSeleccionado = obtenerTipodeEnvio() ?? 0
+    let valorSeleccionado = obtenerTipodeEnvio() ?? 0;
     let costoEnvio = subtotal * valorSeleccionado;
     campoCostoEnvio.textContent = `${parseFloat(costoEnvio).toFixed(2)}`;
     calcularTotal();
-
   }
 
-
   function calcularTotal() {
-    let total = parseFloat(elementoCosto.textContent) + parseFloat(campoCostoEnvio.textContent);
+    let total =
+      parseFloat(elementoCosto.textContent) +
+      parseFloat(campoCostoEnvio.textContent);
     campoCostoTotal.textContent = total.toFixed(2);
   }
   calcularTotal();
@@ -216,48 +234,57 @@ function mostrarCosto() {
   tipoEnvio.addEventListener("change", () => calcularCosto());
   tipoEnvio.addEventListener("change", () => campoEnvio());
   formaPago.addEventListener("click", () => finalizarCompra());
-  document.getElementById("subtotalCosto").textContent = `${parseFloat(subtotal).toFixed(2)}`;
+  document.getElementById("subtotalCosto").textContent = `${parseFloat(
+    subtotal
+  ).toFixed(2)}`;
 }
-
-
-function finalizarCompra() {
-  if  (!carritoActual || carritoActual.length === 0) {
-
-    avisoCarritoVacio.innerHTML = "Para continuar con su compra agregue al menos un artículo a su carrito"
-
-    setTimeout(() =>{
-      avisoCarritoVacio.innerHTML = ""
-    }
-    , 5000)
-}
-else if (envio.value == 0 || envio.value == "") {
-    errorFaltaEnvio(envio);
-  }
-  else {
-    exitoEnvio(envio);
-    window.location.href = 'detallesEnvio.html';
-  };
-};
-
 
 function campoEnvio() {
   if (envio.value == 0 || envio.value == "") {
     errorFaltaEnvio(envio);
   } else {
     exitoEnvio(envio);
-  };
-};
+  }
+}
+
+/*final sección costos*/
 
 
-/* Payment Modal Section */
+
+/*Sección de VALIDACIONES*/
+
+/*primera validación del carrito en cart.html 
+verifica que el carrito no esté vacío y que se haya elegido forma de pago, se ejecuta con Onclick desde el html*/
+
+function finalizarCompra() {
+  if (!carritoActual || carritoActual.length === 0) {
+    avisoCarritoVacio.innerHTML =
+      "Para continuar con su compra agregue al menos un artículo a su carrito";
+
+    setTimeout(() => {
+      avisoCarritoVacio.innerHTML = "";
+    }, 5000);
+  } else if (envio.value == 0 || envio.value == "") {
+    errorFaltaEnvio(envio);
+  } else {
+    exitoEnvio(envio);
+    window.location.href = "detallesEnvio.html";
+  }
+}
+/*finalización de pimera validación*/
 
 
+
+
+/* validaciones del modal forma de pago */
+
+
+//funciones que manejan la habilitación y deshabilitación de los input
 function disableInputs(section) {
   const inputs = section.querySelectorAll("input");
   for (const input of inputs) {
     input.setAttribute("disabled", "true");
   }
-
 }
 
 function enableInputs(section) {
@@ -267,54 +294,55 @@ function enableInputs(section) {
   }
 }
 
-window.addEventListener("load", () => {
-  mainModal.style.display = "none"
-});
 
 
 //funcion que maneja la abertura y cierre del modal
 function toggleModal() {
+  if (!creditCheckbox.checked && !transferCheckbox.checked) {
+    disableInputs(creditInputs);
+    disableInputs(transferInputs);
+  }
   if (modalAbierto) {
     mainModal.style.display = "none";
     pageOverlay.style.display = "none";
     modalAbierto = false;
-
   } else {
     mainModal.style.display = "flex";
     pageOverlay.style.display = "block";
 
     modalAbierto = true;
   }
-};
-//funcion que limpia los checkbox
-function limpiarCheckbox() {
-  const feedbackElements = document.querySelectorAll(".invalid-feedback, .valid-feedback");
-  feedbackElements.forEach((element) => element.remove());
-  creditCheckbox.checked = false
-  transferCheckbox.checked = false
-  cardNum.value = ""
-  segNum.value = ""
-  inputVencimiento.value = ""
-  accNumInput.value = ""
-
-
-  toggleModal()
 }
 
+//funcion que limpia los checkbox
+function limpiarCheckbox() {
+  const feedbackElements = document.querySelectorAll(
+    ".invalid-feedback, .valid-feedback"
+  );
+  feedbackElements.forEach((element) => element.remove());
+  creditCheckbox.checked = false;
+  transferCheckbox.checked = false;
+  cardNum.value = "";
+  segNum.value = "";
+  inputVencimiento.value = "";
+  accNumInput.value = "";
+
+  toggleModal();
+}
 
 openModal.addEventListener("click", () => toggleModal());
 cancelarModal.addEventListener("click", () => limpiarCheckbox());
 
 aceptarMetodoPago.addEventListener("click", (e) => {
-  e.preventDefault()
-  validarFormadePago()
+  e.preventDefault();
+  validarFormadePago();
 });
 
 //funcion que ejectuta las validaciones del modal
 function validarFormadePago() {
-
-  console.log(`toy en validar forma de pago`)
-  const feedbackElements = document.querySelectorAll(".invalid-feedback, .valid-feedback");
+  const feedbackElements = document.querySelectorAll(
+    ".invalid-feedback, .valid-feedback"
+  );
   feedbackElements.forEach((element) => element.remove());
 
   if (!creditCheckbox.checked && !transferCheckbox.checked) {
@@ -322,31 +350,48 @@ function validarFormadePago() {
   }
 
   if (creditCheckbox.checked) {
-    if (cardNum.value.trim() === "" || isNaN(cardNum.value) || cardNum.value.length < 14) {
-      showError(cardNum, "Ingrese un número de tarjeta válido (Debe tener al menos 14 dígitos)");
-
+    if (
+      cardNum.value.trim() === "" ||
+      isNaN(cardNum.value) ||
+      cardNum.value.length < 14
+    ) {
+      showError(
+        cardNum,
+        "Ingrese un número de tarjeta válido (Debe tener al menos 14 dígitos)"
+      );
     }
-    if (segNum.value.trim() === "" || isNaN(segNum.value) || segNum.value.length < 3) {
-      showError(segNum, "Ingrese un número de seguridad válido (Debe tener al menos 3 dígitos)");
+    if (
+      segNum.value.trim() === "" ||
+      isNaN(segNum.value) ||
+      segNum.value.length < 3
+    ) {
+      showError(
+        segNum,
+        "Ingrese un número de seguridad válido (Debe tener al menos 3 dígitos)"
+      );
     }
-    if (inputVencimiento.value.trim() === "" ) {
-      showError(inputVencimiento, "Ingrese una fecha de vencimiento válida (mm/aa)");
-    }else {
-      toggleModal()
+    if (inputVencimiento.value.trim() === "") {
+      showError(
+        inputVencimiento,
+        "Ingrese una fecha de vencimiento válida (mm/aa)"
+      );
+    } else {
+      toggleModal();
     }
   }
 
   if (transferCheckbox.checked) {
-    const numCuenta = accNumInput.value.replace(/[^0-9]/g, ''); // Elimina caracteres no numéricos
+    const numCuenta = accNumInput.value.replace(/[^0-9]/g, ""); // Elimina caracteres no numéricos
     if (numCuenta.length < 12) {
-      showError(accNumInput, "El número de cuenta debe tener al menos 12 dígitos");
-    }
-    else {
-      toggleModal()
+      showError(
+        accNumInput,
+        "El número de cuenta debe tener al menos 12 dígitos"
+      );
+    } else {
+      toggleModal();
     }
   }
-};
-
+}
 
 // formato de input de vencimiento
 inputVencimiento.addEventListener("input", function () {
@@ -359,58 +404,56 @@ inputVencimiento.addEventListener("input", function () {
   }
 });
 
-
 // formato de input de numero de cuenta
 
 accNumInput.addEventListener("input", function () {
-  const value = accNumInput.value.replace(/[^\d]/g, '');
+  const value = accNumInput.value.replace(/[^\d]/g, "");
 
   if (value.length > 12) {
     accNumInput.value = value.slice(0, 12);
   } else if (value.length > 8) {
-    accNumInput.value = value.slice(0, 4) + '-' + value.slice(4, 8) + '-' + value.slice(8);
+    accNumInput.value =
+      value.slice(0, 4) + "-" + value.slice(4, 8) + "-" + value.slice(8);
   } else if (value.length > 4) {
-    accNumInput.value = value.slice(0, 4) + '-' + value.slice(4);
+    accNumInput.value = value.slice(0, 4) + "-" + value.slice(4);
   } else {
     accNumInput.value = value;
   }
 });
 
-creditCheckbox.addEventListener("change", function () {
-  if (creditCheckbox.checked) {
-    enableInputs(creditInputs);
-    transferCheckbox.checked = false;
-    disableInputs(transferInputs);
+function verifyCheckbox(checkbox1, checkbox2, enabledInput, disableInput) {
+  if (checkbox1.checked) {
+    enableInputs(enabledInput);
+    disableInputs(disableInput);
+    checkbox2.checked = false;
   } else {
-    disableInputs(creditInputs);
+    disableInputs(disableInput);
   }
-});
+}
 
-transferCheckbox.addEventListener("change", function () {
-  if (transferCheckbox.checked) {
-    enableInputs(transferInputs);
-    creditCheckbox.checked = false;
-    disableInputs(creditInputs);
-  } else {
-    disableInputs(transferInputs);
-  }
-});
+creditCheckbox.addEventListener("change", () =>
+  verifyCheckbox(creditCheckbox, transferCheckbox, creditInputs, transferInputs)
+);
 
+transferCheckbox.addEventListener("change", () =>
+  verifyCheckbox(transferCheckbox, creditCheckbox, transferInputs, creditInputs)
+);
 
+/*final de validaciones forma de pago*/
 
 
 
-//Seccion para validaciones
+
+/*funciones que se utilizan para mostrar los errores y éxitos de las validaciones*/
 
 function errorFaltaEnvio(input) {
   input.classList.add("is-invalid"); // Agrega clase de Bootstrap para resaltar el campo
-};
+}
 
 function exitoEnvio(input) {
   input.classList.remove("is-invalid"); // Elimina la clase de Bootstrap para resaltar el campo
   input.classList.add("is-valid"); // Agrega clase de Bootstrap para indicar éxito
-};
-
+}
 
 function mostrarError(element, message) {
   element.classList.add("error"); // Agrega clase de Bootstrap para resaltar el campo
@@ -418,22 +461,19 @@ function mostrarError(element, message) {
   alertDiv.className = "invalid-feedback";
   alertDiv.textContent = message;
   element.parentNode.appendChild(alertDiv);
-
 }
 function mostrarExito(element) {
   element.classList.remove("error"); // Elimina la clase de Bootstrap para resaltar el campo
-
 
   const successDiv = document.createElement("div");
   successDiv.className = "valid-feedback";
 
   element.parentNode.appendChild(successDiv);
-};
+}
 
 function errorFaltaEnvio(input) {
   input.classList.add("is-invalid"); // Agrega clase de Bootstrap para resaltar el campo
-
-};
+}
 
 function successFormaPago(input, message) {
   input.classList.remove("is-invalid"); // Elimina la clase de Bootstrap para resaltar el campo
@@ -442,7 +482,7 @@ function successFormaPago(input, message) {
   alertDiv.className = "valid-feedback";
   alertDiv.textContent = message;
   input.parentNode.appendChild(alertDiv);
-};
+}
 
 function showError(input, message) {
   input.classList.add("is-invalid"); // Agrega clase de Bootstrap para resaltar el campo
@@ -450,7 +490,7 @@ function showError(input, message) {
   alertDiv.className = "invalid-feedback";
   alertDiv.textContent = message;
   input.parentNode.appendChild(alertDiv);
-};
+}
 
 function showSuccess(input) {
   input.classList.remove("is-invalid"); // Elimina la clase de Bootstrap para resaltar el campo
@@ -458,13 +498,20 @@ function showSuccess(input) {
   const successDiv = document.createElement("div");
   successDiv.className = "valid-feedback";
   input.parentNode.appendChild(successDiv);
-};
+}
 
-// Agrega una función para verificar la compra
-// Arregla el bug de transferencia bancaria
+/*Final de funciones que se utilizan para mostrar los errores y éxitos de las validaciones*/
+
+
+
+/*Validación general que chequea todos los elementos de datos de envío 
+y si se ha elegido forma de pago al darle click al botón de comprar*/
+
 function verificarCompra() {
   // Validar y quitar mensajes de alerta previos
-  const feedbackElements = document.querySelectorAll(".invalid-feedback, .valid-feedback");
+  const feedbackElements = document.querySelectorAll(
+    ".invalid-feedback, .valid-feedback"
+  );
   feedbackElements.forEach((element) => element.remove());
 
   let puedeComprar = true;
@@ -480,7 +527,6 @@ function verificarCompra() {
     puedeComprar = false;
   } else {
     showSuccess(direccion);
-
   }
 
   if (esquina.value.trim() === "") {
@@ -489,7 +535,6 @@ function verificarCompra() {
     puedeComprar = false;
   } else {
     showSuccess(esquina);
-
   }
 
   if (ciudad.value.trim() === "") {
@@ -498,7 +543,6 @@ function verificarCompra() {
     puedeComprar = false;
   } else {
     showSuccess(ciudad);
-
   }
 
   if (cp.value.trim() === "") {
@@ -509,7 +553,6 @@ function verificarCompra() {
     puedeComprar = false;
   } else {
     showSuccess(cp);
-
   }
 
   if (!carritoActual || carritoActual.length === 0) {
@@ -519,7 +562,7 @@ function verificarCompra() {
 
   if (puedeComprar) {
     // Si todas las verificaciones pasan, muestra la alerta
-    appendAlert('Se ha realizado su compra!', 'success');
+    appendAlert("Se ha realizado su compra!", "success");
   }
 }
 
@@ -529,38 +572,21 @@ comprar.addEventListener("click", function (event) {
   verificarCompra();
 });
 
-
-
-
-
-const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+const alertPlaceholder = document.getElementById("liveAlertPlaceholder");
 const appendAlert = (message, type) => {
-  const wrapper = document.createElement('div');
+  const wrapper = document.createElement("div");
   wrapper.innerHTML = [
     `<div class="alert alert-${type} alert-dismissible" role="alert">`,
     `   <div>${message}</div>`,
     '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
-    '</div>'
-  ].join('');
+    "</div>",
+  ].join("");
 
   alertPlaceholder.append(wrapper);
-
-  // Establece la opacidad inicial en 1 (visible)
-  wrapper.style.opacity = 2;
-
-  // Programa la reducción gradual de la opacidad después de 3 segundos (3000 ms)
+  // Programa la eliminación de la alerta después de 3 segundos (3000 ms)
   setTimeout(() => {
-    wrapper.style.opacity = 1;
-    // Elimina la alerta después de completar la transición de desvanecimiento
-    setTimeout(() => {
-      wrapper.remove();
-    }, 500); // Puedes ajustar el tiempo de transición aquí (0.5 segundos)
-  }, 3000); // Retraso inicial de 3 segundos
+    wrapper.remove();
+  }, 3000);
 };
 
-
-
-
-
-
-
+/*final de validación general de la compra*/
