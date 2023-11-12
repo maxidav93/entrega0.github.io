@@ -4,7 +4,7 @@ const usernameLocal = localStorage.getItem("username");
 
 //Se quita el estado de logueado del Storage
 logout.addEventListener("click", () => {
-    
+
     var confirmacion = confirm("¿Estás seguro de que deseas cerrar sesión?");
     if (confirmacion) {
         localStorage.removeItem("isLoggedIn")

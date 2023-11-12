@@ -1,49 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 
-/*
-#precioMinimo,
-#precioMaximo,
-#rangoPrecio,
-#limpiarFiltros,
-#ascendente,
-#descendente,
-#relevancia {
-  color: #000000;
-  font-family: 'Montserrat', sans-serif;
-  background-color: #6b6b6b;
-  border-radius: 3px;
-  padding: 3px 3px;
-  max-width: 6em;
-  min-width: 6em;
-  max-height: 2em;
-  min-height: 2em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-#filters-container {
-  margin-bottom: 1em;
-}
-
-#precioMaximo::placeholder {
-  color: #000000;
-}
-
-#precioMinimo::placeholder {
-  color: #000000;
-}
-
-#filters-search {
-  max-width: 30em;
-}
-
-#search-icon {
-  background-color: #000000;
-  color: #f39915;
-}
-*/
 .div-products {
   transition: transform 0.3s;
 }
@@ -52,25 +8,44 @@
   transform: scale(1.07);
 }
 /* Media query para pantallas de 768px o menos */
-@media screen and (max-width: 768px) {
-    /* Estilos para los elementos dentro de #filers-btn en pantallas de 768px o menos */
-    #ascendente,
-    #descendente,
-    #relevancia,
-    #precio,
-    #precioMinimo,
-    #precioMaximo,
-    #rangoPrecio,
-    #limpiarFiltros {
-        width: 100%;
-        margin-bottom: 10px;
-    }
+
+@media screen and (max-width:768px) {
+  #ascendente,
+  #descendente,
+  #relevancia,
+  #precio,
+  #precioMinimo,
+  #precioMaximo,
+  #rangoPrecio,
+  #limpiarFiltros {
+      width: 100%;
+      margin-bottom: 10px;
+  }
+
+  #container-cards {
+    max-width: 100%;
+  }
+
+  #container-content {
+    max-width: 100%;
+    min-width: 100%;
+    justify-content: center;
+  }
+
+  #container-content #product-cards {
+    max-width: 100%;
+    min-width: 100%;
+  }
+
+  .container {
+    padding: 0;
+  }
 }
+
 
 #ascendente,
 #descendente,
 #relevancia {
- 
   border-radius: 3px;
   padding: 3px 3px;
   max-width: 4em;
@@ -80,15 +55,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1); /* Sombreado */
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1); 
 }
 
 .custom-input {
   border-color: #f39a15e4;
-  background-color: #fff; /* Cambia el color de fondo */
+  background-color: #fff; 
   padding: 5px;
   margin: 0 auto;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1); /* Sombreado */
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1); 
 }
 
 #rangoPrecio {
@@ -105,7 +80,7 @@
  color: #fff;
  padding: 6px 35px;
  margin-bottom: 4px;
- box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); /* Sombreado */
+ box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); 
 }
 
 #search-icon {
@@ -132,28 +107,6 @@
   min-width: 100%;
   justify-content: center;
   gap: 2em;
-}
-
-@media screen and (max-width:768px) {
-  #container-cards {
-    max-width: 100%;
-  }
-
-  #container-content {
-    max-width: 100%;
-    min-width: 100%;
-    justify-content: center;
-  }
-
-  #container-content #product-cards {
-    max-width: 100%;
-    min-width: 100%;
-  }
-
-  .container {
-    padding: 0;
-  }
-
 }
 
 #product-cards {

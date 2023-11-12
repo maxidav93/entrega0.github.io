@@ -274,19 +274,19 @@ function agregarAlCarrito() {
   let producto = carrito.find(producto => producto.id === Number(idProdCarrito));
   let objIndex = carrito.findIndex((obj => obj.id === Number(idProdCarrito)));
 
-  if(producto){
-      carrito[objIndex] = {...producto, count:  producto.count + 1 }
-    } else {
-      carrito.push({
-        name : productActual.name,
-        unitCost: productActual.cost,
-        count: 1,
-        currency: productActual.currency,
-        id: productActual.id,
-        image: productActual.images[0],
-      });
-    }
-    localStorage.setItem("carrito", JSON.stringify([...carrito]));
-alert("Se agregó su producto seleccionado al carrito.")
-    mostrarInformacionEnHTML();
+  if (producto) {
+    carrito[objIndex] = { ...producto, count: producto.count + 1 }
+  } else {
+    carrito.push({
+      name: productActual.name,
+      unitCost: productActual.cost,
+      count: 1,
+      currency: productActual.currency,
+      id: productActual.id,
+      image: productActual.images[0],
+    });
   }
+  localStorage.setItem("carrito", JSON.stringify([...carrito]));
+  alert("Se agregó su producto seleccionado al carrito.")
+  mostrarInformacionEnHTML();
+}

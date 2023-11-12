@@ -165,19 +165,19 @@ document.addEventListener("DOMContentLoaded", function () {
             const reader = new FileReader();
 
             reader.onload = function (e) {
-              // Muestra la imagen en la página (opcional)
-              imagenArea.innerHTML = `<img src="${e.target.result}" alt="Imagen de perfil" class="profileImage rounded">`;
-              miniImagenPerfil.innerHTML = `<img src="${e.target.result}" alt="Miniatura de perfil" class="miniProfileImage">`;
+                // Muestra la imagen en la página (opcional)
+                imagenArea.innerHTML = `<img src="${e.target.result}" alt="Imagen de perfil" class="profileImage rounded">`;
+                miniImagenPerfil.innerHTML = `<img src="${e.target.result}" alt="Miniatura de perfil" class="miniProfileImage">`;
 
 
-              // Guarda la imagen en localStorage
-              localStorage.setItem('imagenPerfil', e.target.result);
+                // Guarda la imagen en localStorage
+                localStorage.setItem('imagenPerfil', e.target.result);
             };
 
             // Lee el contenido de la imagen como una URL de datos
             reader.readAsDataURL(imagenPerfil.files[0]);
-          }
-        });
+        }
+    });
 
     function mostrarImagen() {
         // Obtener la imagen almacenada en localStorage

@@ -1,15 +1,15 @@
-document.addEventListener("DOMContentLoaded", function(){
-    document.getElementById("autos").addEventListener("click", function() {
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("autos").addEventListener("click", function () {
         localStorage.setItem("catID", 101);
         localStorage.setItem("catName", "Autos");
         window.location = "products.html"
     });
-    document.getElementById("juguetes").addEventListener("click", function() {
+    document.getElementById("juguetes").addEventListener("click", function () {
         localStorage.setItem("catID", 102);
         localStorage.setItem("catName", "Juguetes");
         window.location = "products.html"
     });
-    document.getElementById("muebles").addEventListener("click", function() {
+    document.getElementById("muebles").addEventListener("click", function () {
         localStorage.setItem("catID", 103);
         localStorage.setItem("catName", "Muebles");
         window.location = "products.html"
@@ -49,11 +49,11 @@ function cambiarClase() {
 
         // Cambiar la imagen de fondo
         cambiarImagenFondo('img/imagenIndexSinFondo2.png', '#212529');
-         // Cambiar la clase del botón
-         btn.classList.remove("btn-light");
-         btn.classList.add("btn-dark");
+        // Cambiar la clase del botón
+        btn.classList.remove("btn-light");
+        btn.classList.add("btn-dark");
     }
-    setTimeout(function() {
+    setTimeout(function () {
         checkbox.checked = false;
     }, 100);
 }
@@ -77,7 +77,7 @@ function cambiarClase2() {
         btn.classList.remove("btn-dark");
         btn.classList.add("btn-light");
     }
-    setTimeout(function() {
+    setTimeout(function () {
         checkbox.checked = false;
     }, 100); // Después de 1000ms (1 segundo), desmarcar el checkbox
 }
