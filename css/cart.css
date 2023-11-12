@@ -1,3 +1,4 @@
+/* MODAL STYLES */
 #mainModal {
     position: absolute;
     top: 30%;
@@ -37,37 +38,6 @@
     color: #fa7203;
 }
 
-
-.page-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 10;
-}
-
-.cardNumInput, .segNumInput, .venInput, .transferInputs {
-    display: flex;
-    flex-direction: column-reverse;
-    appearance: textfield;
-}
-
-.creditInputs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1em;
-}
-
-.bankTransfer {
-    margin-top: .5em;
-}
-
-.transferInputs{
-    width: 190px;
-}
-
 .botonesModal {
     margin: 0 .4em .4em 0;
     padding: 4px;
@@ -77,9 +47,43 @@
 
 }
 
-
+/* CLOSE BTN */
 .closeModalBtn{
     display: flex;
     flex-direction: row-reverse;
 }
 
+
+/* INPUTS */
+.cardNumInput, .segNumInput, .venInput, .transferInputs {
+    display: flex;
+    flex-direction: column-reverse;
+    appearance: textfield;
+}
+
+/* CREDIT INPUTS*/
+.creditInputs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+/* TRANSFER INPUTS*/
+.transferInputs{
+    width: 190px;
+}
+
+.bankTransfer {
+    margin-top: .5em;
+}
+
+/* PAGE OVERLAY*/
+.page-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
