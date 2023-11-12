@@ -153,7 +153,3 @@ document.addEventListener("DOMContentLoaded", function () {
         new bootstrap.Tooltip(tooltip);
     });
 });
-
-
-
-

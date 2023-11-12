@@ -274,18 +274,21 @@ window.addEventListener("load", () => {
 
 //funcion que maneja la abertura y cierre del modal
 function toggleModal() {
+  if (!creditCheckbox.checked && !transferCheckbox.checked) {
+    disableInputs(creditInputs);
+    disableInputs(transferInputs);
+  }
   if (modalAbierto) {
     mainModal.style.display = "none";
     pageOverlay.style.display = "none";
     modalAbierto = false;
-
   } else {
     mainModal.style.display = "flex";
     pageOverlay.style.display = "block";
 
     modalAbierto = true;
   }
-};
+}
 //funcion que limpia los checkbox
 function limpiarCheckbox() {
   const feedbackElements = document.querySelectorAll(".invalid-feedback, .valid-feedback");
@@ -463,7 +466,6 @@ function showSuccess(input) {
 };
 
 // Agrega una función para verificar la compra
-// Arregla el bug de transferencia bancaria
 function verificarCompra() {
   // Validar y quitar mensajes de alerta previos
   const feedbackElements = document.querySelectorAll(".invalid-feedback, .valid-feedback");

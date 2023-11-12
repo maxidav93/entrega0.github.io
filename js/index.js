@@ -33,10 +33,15 @@ const IMAGEN_OSCURO = 'img/imagenIndexSinFondo2.png';
 const IMAGEN_PANTALLA_CHICA_CLARO = 'img/imagenResponsiveFondoBlanco.png';
 const IMAGEN_PANTALLA_CHICA_OSCURO = 'img/imagenResponsiveSinFondo.png';
 
+function cambiarFondo(fondo) {
+    const albumDiv = document.getElementsByClassName("album")[0];
+    albumDiv.style.backgroundColor = fondo;
+    localStorage.setItem("background", fondo);
+}
+
 function cambiarImagenModo(modo, imagenGrande, imagenPantallaChica, fondo) {
     const ilustracion = document.getElementById("ilustracion");
     const ilustracionPantallasChicas = document.getElementById("ilustracionPantallasChicas");
-    const albumDiv = document.getElementsByClassName("album")[0];
 
     if (ilustracion.offsetParent !== null) {
         ilustracion.src = imagenGrande;
@@ -44,16 +49,14 @@ function cambiarImagenModo(modo, imagenGrande, imagenPantallaChica, fondo) {
         ilustracionPantallasChicas.src = imagenPantallaChica;
     }
 
-    albumDiv.style.backgroundColor = fondo;
+    cambiarFondo(fondo);
 
-    // Guardar la información en el Local Storage
     guardarInformacionModo(modo, {
         imagenGrande,
         imagenPantallaChica,
         fondo,
     });
 }
-
 function guardarInformacionModo(nombreModo, info) {
     localStorage.setItem(nombreModo, JSON.stringify(info));
 }
