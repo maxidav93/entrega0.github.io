@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("nombreCat").innerHTML = `Verás aquí todos los productos de la categoría: <strong>${catName}</strong>.`
 
+    // fetch a los productos
     async function fetchProducts(url) {
         try {
             const response = await fetch(url);
@@ -24,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    //funcion para generar un numero random entre dos numeros.
     function generateRandomNumber(min, max, cardIndex) {
         const savedRandomNumbers = JSON.parse(localStorage.getItem('randomNumbers')) || {};
 
@@ -35,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return savedRandomNumbers[cardIndex];
     }
 
+    //funcion para mostrar productos
     function showProducts(array) {
         let content = "";
 
@@ -70,23 +73,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    /* FILTROS */
 
+    // filtrar alfabeticamente
     function sortProductsBy(property, order) {
         return function (a, b) {
             return (order === "asc" ? 1 : -1) * (a[property] - b[property]);
         };
     }
 
+    //ordenar por precio
     function filterProductsByPriceRange(products, min, max) {
         return products.filter(product => product.cost >= min && product.cost <= max);
     }
 
+    //limpiar filtros
     function clearFilters(products) {
         showProducts(products);
         document.getElementById("precioMinimo").value = ""
         document.getElementById("precioMaximo").value = ""
     }
 
+    // addEventListeners para cada boton de los filtros
     async function init() {
         const products = await fetchProducts(url);
         showProducts(products);
@@ -105,6 +113,8 @@ document.addEventListener("DOMContentLoaded", () => {
         buscarInput.addEventListener("input", buscarProductos);
     }
 
+
+    //Buscador de productos 
     function buscarProductos() {
         const searchTerm = buscarInput.value.trim().toUpperCase();
         const cards = document.querySelectorAll(".col-xl-4.col-12.col-md-6.col-lg-3.container-products");
@@ -124,11 +134,13 @@ document.addEventListener("DOMContentLoaded", () => {
     init();
 });
 
+
 function setProductID(id) {
     localStorage.setItem("id", id);
     window.location = "product-info.html"
 
 }
+
 document.addEventListener("DOMContentLoaded", function () {
     var tooltips = document.querySelectorAll('[data-toggle="tooltip"]');
     tooltips.forEach(function (tooltip) {

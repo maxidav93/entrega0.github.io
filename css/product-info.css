@@ -102,6 +102,91 @@ main .main-publication {
   transform: scale(1.05);
 }
 
+#comentarios {
+  margin-left: 1.875em;
+  margin-right: 1.875em;
+}
+
+/* estilo productos relacionados */
+
+#product-cards-container {
+  overflow-x: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: auto;
+  margin: 10px;
+}
+
+
+#related-products {
+  width: 80vw;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 100px;
+}
+
+.card {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+}
+
+
+
+.contendor-gral-prelacionados {
+  margin-left: 30px;
+}
+
+.card-title {
+
+  margin-top: 10px;
+}
+
+/* fin estilo productos relacionados */
+
+#product-cards-container:hover {
+  scale: calc(1.05);
+
+}
+
+#product-cards-container {
+  border-radius: 3px;
+}
+
+#btn-right:hover {
+  scale: calc(1.1);
+  background-color: #ECF0F1;
+}
+
+#btn-left:hover {
+  scale: calc(1.1);
+  background-color: #ECF0F1;
+}
+
+.btn-left,
+.btn-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2px;
+}
+
+.btn-left {
+  left: 10px;
+}
+
+.btn-right {
+  right: 10px;
+}
+
+/* MEDIA QUERIES 1150PX */
 @media (max-width: 1150px) {
   .publicacion {
     flex-direction: column;
@@ -180,96 +265,3 @@ main .main-publication {
   }
 }
 
-
-#comentarios {
-  margin-left: 1.875em;
-  margin-right: 1.875em;
-}
-
-/* estilo productos relacionados */
-
-#product-cards-container {
-  overflow-x: auto;
-  border: 1px solid #ccc;
-  padding: 10px;
-  width: auto;
-  margin: 10px;
-
-
-}
-
-
-#related-products {
-  width: 80vw;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 100px;
-
-}
-
-.card {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.card-image {
-  width: 100%;
-  height: auto;
-  /* Mantiene la proporción original de la imagen */
-}
-
-
-
-.contendor-gral-prelacionados {
-  margin-left: 30px;
-}
-
-.card-title {
-
-  margin-top: 10px;
-}
-
-/* fin estilo productos relacionados */
-
-#product-cards-container:hover {
-  scale: calc(1.05);
-
-}
-
-#product-cards-container {
-  border-radius: 3px;
-}
-
-#btn-right:hover {
-  scale: calc(1.1);
-  background-color: #ECF0F1;
-}
-
-#btn-left:hover {
-  scale: calc(1.1);
-  background-color: #ECF0F1;
-
-}
-
-.btn-left,
-.btn-right {
-  position: absolute;
-  top: 50%;
-  /* Alinea verticalmente al centro */
-  transform: translateY(-50%);
-  /* Alinea verticalmente al centro */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 2px;
-}
-
-.btn-left {
-  left: 10px;
-  /* Ajusta la distancia desde el borde izquierdo */
-}
-
-.btn-right {
-  right: 10px;
-  /* Ajusta la distancia desde el borde derecho */
-}
