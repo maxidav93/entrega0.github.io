@@ -1,3 +1,5 @@
+
+
 const tipoEnvio = document.getElementById("tipoEnvio");
 const elementoCosto = document.getElementById("subtotalCosto")
 const carritoContainer = document.getElementById('carritoContainer');
